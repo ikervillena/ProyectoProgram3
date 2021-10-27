@@ -1,8 +1,8 @@
-package Data.League;
+package DataLogic.League;
 
 import java.util.ArrayList;
 
-/** Represents a  league where teams compete
+/** Represents a league where teams compete
  * @author Iker Villena Ona
  */
 

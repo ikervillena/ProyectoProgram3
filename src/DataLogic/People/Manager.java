@@ -1,4 +1,4 @@
-package Data.People;
+package DataLogic.People;
 
 /** Represents a user of the game, a manager
  * @author Iker Villena Ona

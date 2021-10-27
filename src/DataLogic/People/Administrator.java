@@ -1,4 +1,4 @@
-package Data.People;
+package DataLogic.People;
 
 public class Administrator {
 }

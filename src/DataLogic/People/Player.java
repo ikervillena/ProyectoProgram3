@@ -1,6 +1,4 @@
-package Data.People;
-
-import Data.League.Club;
+package DataLogic.People;
 
 /** Represents a football player
  * @author Iker Villena Ona
