@@ -1,5 +1,9 @@
 package DataLogic.People.Attributes;
 
+/**Represents a position in which a player usuarlly plays: goalkeeper/defender/midfielder/forward.
+ * @author Iker Villena Ona.
+ */
+
 public class Position {
     String name;
     String shortName;
@@ -15,14 +19,6 @@ public class Position {
         this.pointsForAssist = pointsForAssist;
         this.pointsForNoGoalsAgainst = pointsForNoGoalsAgainst;
         this.pointsForGoalsAgainst = pointsForGoalsAgainst;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getShortName() {
-        return shortName;
     }
 
     public int getPointsForGoal() {

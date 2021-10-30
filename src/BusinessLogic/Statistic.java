@@ -2,7 +2,7 @@ package BusinessLogic;
 
 import DataLogic.People.Attributes.Position;
 
-/** Represents a position in which a player usually plays
+/** Represents the statistics for a player in a concrete match: if he has played, scored goals, assists...
  * @author Iker Villena Ona
  */
 
@@ -24,10 +24,9 @@ public class Statistic {
         this.redCard = redCard;
     }
 
-    /** Gets the total points obtained by a player in a match based on his statistics
-     *
-      * @param position The position in which a player usually plays
-     * @return an integer representing total the points obtained by a player in a match
+    /** Gets the total points obtained by a player in a match based on his statistics.
+      * @param position The position in which a player usually plays.
+     * @return an integer representing total the points obtained by a player in a match.
      */
 
     public int getPoints(Position position){

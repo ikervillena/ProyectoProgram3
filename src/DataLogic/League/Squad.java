@@ -4,8 +4,8 @@ import DataLogic.People.Player;
 
 import java.util.ArrayList;
 
-/** Represents a squad formed by players of different positions
- * @author Iker Villena Ona
+/** Represents a squad formed by players of different positions.
+ * @author Iker Villena Ona.
  */
 
 public class Squad {
@@ -14,6 +14,12 @@ public class Squad {
     ArrayList<Player> defenders;
     ArrayList<Player> midfielders;
     ArrayList<Player> forwards;
+
+    /**
+     * Indicates if an allignment is proper or not.
+     * To be proper, the formation must coincide with one of the preestablished ones and there must be a goalkeeper.
+     * @return a boolean showing if the allignment is correct (true) or not (false).
+     */
 
     private boolean properAllignment() {
         boolean correctFormation = false;
