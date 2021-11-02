@@ -11,20 +11,28 @@ public class League {
     String entryCode;
     ArrayList<Team> teamsList;
 
+    public League(ArrayList<Team> teamsList) {
+        this.teamsList = teamsList;
+    }
+
     /**Adds a team to a league, including it in the list of teams.
-     * @param newTeam.
+     * @param newTeam
      */
 
     public void addTeam(Team newTeam){
-        setTeamsList(getTeamsList().add(newTeam));
+        ArrayList<Team> list = teamsList;
+        list.add(newTeam);
+        setTeamsList(list);
     }
 
     /**Removes a team from a league, taking it off the list.
-     * @param removedTeam.
+     * @param removedTeam
      */
 
     public void removeTeam(Team removedTeam){
-        setTeamsList(getTeamsList().remove(removedTeam));
+        ArrayList<Team> list = teamsList;
+        list.remove(removedTeam);
+        setTeamsList(list);
     }
 
     /**Gets the code needed for joining a league.
@@ -36,7 +44,7 @@ public class League {
     }
 
     /**Sets a new code for joining the league.
-     * @param entryCode.
+     * @param entryCode
      */
 
     public void setEntryCode(String entryCode) {
@@ -52,7 +60,7 @@ public class League {
     }
 
     /**Sets the list of teams participating in the league.
-     * @param teamsList.
+     * @param teamsList
      */
 
     private void setTeamsList(ArrayList<Team> teamsList) {

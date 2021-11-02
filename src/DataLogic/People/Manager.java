@@ -9,6 +9,13 @@ public class Manager {
     String username;
     String password;
 
+    // Falta documentar el constructor
+
+    public Manager(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
     /**Gets the username of the manager.
      * @return String with the username.
      */

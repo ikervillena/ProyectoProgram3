@@ -13,7 +13,11 @@ public class Team {
 
     Manager manager;
     ArrayList<Player> playersList;
-    Squad currentSquad;
-    ArrayList<Squad> squadRecord;
+    Squad currentSquad = null;
+    ArrayList<Squad> squadRecord = null;
 
+    // Falta documentar el constructor
+    public Team(Manager manager) {
+        this.manager = manager;
+    }
 }
