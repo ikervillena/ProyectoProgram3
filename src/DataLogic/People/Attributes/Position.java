@@ -1,5 +1,9 @@
 package DataLogic.People.Attributes;
 
+import DBManagement.DataExtractor;
+
+import java.util.ArrayList;
+
 /**Represents a position in which a player usuarlly plays: goalkeeper/defender/midfielder/forward.
  * @author Iker Villena Ona.
  */
@@ -20,6 +24,31 @@ public class Position {
         this.pointsForNoGoalsAgainst = pointsForNoGoalsAgainst;
         this.pointsForGoalsAgainst = pointsForGoalsAgainst;
     }
+
+    public static Position getPosition(String positionName){
+        ArrayList<Position> positionsList = DataExtractor.getPositions();
+        Position position = null;
+        for (Position p : positionsList){
+            if(p.getName().equals(positionName)){
+                position = p;
+            }
+        }
+        return position;
+    }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "name='" + name + '\'' +
+                ", shortName='" + shortName + '\'' +
+                ", pointsForGoal=" + pointsForGoal +
+                ", pointsForAssist=" + pointsForAssist +
+                ", pointsForNoGoalsAgainst=" + pointsForNoGoalsAgainst +
+                ", pointsForGoalsAgainst=" + pointsForGoalsAgainst +
+                '}';
+    }
+
+    public String getName() {return name;}
 
     public int getPointsForGoal() {
         return pointsForGoal;
