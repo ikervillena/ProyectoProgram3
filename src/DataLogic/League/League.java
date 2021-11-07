@@ -1,5 +1,7 @@
 package DataLogic.League;
 
+import DBManagement.DataExtractor;
+
 import java.util.ArrayList;
 
 /** Represents a league where teams compete.
@@ -13,6 +15,15 @@ public class League {
 
     public League(ArrayList<Team> teamsList) {
         this.teamsList = teamsList;
+    }
+
+    /**This method provides the ID number of the league.
+     * For that: it uses the static method "getLeague()" of the class "DataExtractor.java", providing the entry code of the league as a parameter.
+     * @return an integer with the ID number of the league.
+     */
+
+    public int getID(){
+       return DataExtractor.getLeagueID(entryCode);
     }
 
     /**Adds a team to a league, including it in the list of teams.

@@ -44,6 +44,7 @@ public class DBManager {
         }
     }
 
+    /*
     public void insert(String name, double capacity)
     {
         String sql = "INSERT INTO warehouses(name,capacity) VALUES(?,?)";
@@ -63,5 +64,6 @@ public class DBManager {
             System.out.println(e.getMessage());
         }
     }
+     */
 
 }

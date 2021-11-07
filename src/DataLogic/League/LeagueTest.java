@@ -21,7 +21,7 @@ public class LeagueTest {
 
     @Before
     public void setUp(){
-        team = new Team(new Manager("ikervillena","ville"));
+        team = new Team(new Manager("ikervillena","ville","Iker","Villena"));
         ArrayList<Team> teamsList = new ArrayList<Team>();
         teamsList.add(team);
         league = new League(teamsList);
@@ -35,7 +35,7 @@ public class LeagueTest {
     public void addTeam(){
         setUp();
         Assert.assertEquals(1,league.getTeamsList().size());
-        Team newTeam = new Team(new Manager("ikervillena","ville"));
+        Team newTeam = new Team(new Manager("ikervillena","ville","Iker","Villena"));
         league.addTeam(newTeam);
         Assert.assertEquals(2,league.getTeamsList().size());
     }

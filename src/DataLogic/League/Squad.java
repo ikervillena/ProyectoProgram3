@@ -52,6 +52,30 @@ public class Squad {
         }
     }
 
+    public static Squad createSquad(ArrayList<Player> playersList){
+        Player goalkeeper = null;
+        ArrayList<Player> defenders = new ArrayList<>();
+        ArrayList<Player> midfielders = new ArrayList<>();
+        ArrayList<Player> forwards = new ArrayList<>();
+        for(Player p : playersList){
+            switch (p.getPosition().getName()){
+                case "Goalkeeper":
+                    goalkeeper = p;
+                    break;
+                case "Defense":
+                    defenders.add(p);
+                    break;
+                case "Midfielder":
+                    midfielders.add(p);
+                    break;
+                case "Forward":
+                    forwards.add(p);
+                    break;
+            }
+        }
+        return (new Squad(goalkeeper,defenders,midfielders,forwards));
+    }
+
     public Player getGoalkeeper() {
         return goalkeeper;
     }

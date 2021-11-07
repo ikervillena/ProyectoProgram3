@@ -1,5 +1,6 @@
 package DBManagement;
 
+import DataLogic.League.Team;
 import DataLogic.People.Attributes.Position;
 import DataLogic.People.Player;
 import org.junit.Assert;
@@ -24,6 +25,7 @@ public class DataExtractorTest {
         Assert.assertEquals(4,positionsList.size());
     }
 
+
     @Test
     public void getAllPlayers(){
         ArrayList<Player> playersList = DataExtractor.getAllPlayers();
@@ -32,4 +34,21 @@ public class DataExtractorTest {
         }
     }
 
+    @Test
+    public void getValueHistory(){
+        float[] valueHistory = DataExtractor.getValueHistory(3);
+        for(float f : valueHistory){
+            System.out.println(f);
+        }
+    }
+
+    @Test
+    public void getNextRound(){
+        System.out.println(DataExtractor.getNextRound());
+    }
+
+    @Test
+    public void prueba(){
+        ArrayList<Team> teamsList = DataExtractor.getTeams(2);
+    }
 }

@@ -2,6 +2,8 @@ package DataLogic.People;
 
 import DataLogic.People.Attributes.Position;
 
+import java.util.ArrayList;
+
 /** Represents a football player.
  * @author Iker Villena Ona.
  */
@@ -13,18 +15,18 @@ public class Player {
     String shirtName;
     int shirtNumber;
     Position position;
-    float value;
+    float[] valueHistory;
 
     //Falta documentar el constructor
 
 
-    public Player(String name, String surname, String shirtName, int shirtNumber, Position position, float value) {
+    public Player(String name, String surname, String shirtName, int shirtNumber, Position position, float[] valueHistory) {
         this.name = name;
         this.surname = surname;
         this.shirtName = shirtName;
         this.shirtNumber = shirtNumber;
         this.position = position;
-        this.value = value;
+        this.valueHistory = valueHistory;
     }
 
     /** Constructor used for testing the class "Squad.java".
@@ -41,12 +43,16 @@ public class Player {
                 ", shirtName='" + shirtName + '\'' +
                 ", shirtNumber=" + shirtNumber +
                 ", position=" + position +
-                ", value=" + value +
+                ", valueHistory=" + valueHistory +
                 '}';
     }
 
     public Position getPosition() {
         return position;
+    }
+
+    public float[] getValueHistory() {
+        return valueHistory;
     }
 }
 
