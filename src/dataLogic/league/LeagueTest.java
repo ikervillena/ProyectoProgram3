@@ -1,6 +1,9 @@
-package DataLogic.League;
+package dataLogic.league;
 
-import DataLogic.People.Manager;
+import dataLogic.people.Manager;
+import dataLogic.people.Player;
+import dbManagement.DBUtils;
+import dbManagement.DataExtraction;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -51,4 +54,30 @@ public class LeagueTest {
         league.removeTeam(team);
         Assert.assertEquals(0,league.getTeamsList().size());
     }
+
+    @Test
+    public void getID(){
+        ArrayList<League> leaguesList = DataExtraction.getAllLeagues();
+        for(League l : leaguesList){
+            int id = l.getID();
+        }
+    }
+
+    @Test
+    public void generateID(){
+        System.out.println(Team.generateID());
+        System.out.println(League.generateID());
+        System.out.println(DBUtils.generateID("league","league_id"));
+    }
+
+    @Test
+    public void getFreePlayers(){
+        for(League l : DataExtraction.getAllLeagues()){
+            System.out.println("LIGA: "+l.getName());
+            for(Player p : l.getFreePlayers()){
+                System.out.println(p);
+            }
+        }
+    }
+
 }

@@ -1,10 +1,11 @@
-package DBManagement;
+package dbManagement;
 
-import DataLogic.League.Squad;
-import DataLogic.League.Team;
-import DataLogic.People.Attributes.Position;
-import DataLogic.People.Manager;
-import DataLogic.People.Player;
+import dataLogic.league.League;
+import dataLogic.league.Squad;
+import dataLogic.league.Team;
+import dataLogic.people.Attributes.Position;
+import dataLogic.people.Manager;
+import dataLogic.people.Player;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
  * @author Iker Villena Ona.
  */
 
-public class DataExtractor {
+public class DataExtraction {
 
     /**This method gets the value record of a specific player (whose id is provided as a parameter).
      * @param playerID
@@ -130,7 +131,7 @@ public class DataExtractor {
      * @return an Arraylist with all the managers.
      */
 
-    public static ArrayList<Manager> getManagers(){
+    public static ArrayList<Manager> getAllManagers(){
         String sql = "select username,password,name,surname from manager";
         ArrayList<Manager> managersList = new ArrayList<>();
         try (Connection conn = DBManager.connect(); Statement stmt = conn.createStatement();
@@ -153,7 +154,7 @@ public class DataExtractor {
      * @return a Manager whose username is the same as the one provided as a parameter.
      */
 
-    private static Manager getManager(String username){
+    public static Manager getManager(String username){
         String sql = "select username,password,name,surname from manager where username='"+username+"'";
         Manager manager = null;
         try (Connection conn = DBManager.connect(); Statement stmt = conn.createStatement();
@@ -186,6 +187,24 @@ public class DataExtractor {
             System.out.println(e.getMessage());
         }
         return nextRound;
+    }
+
+    /**This method gets which is the current season.
+     * @return an integer with the number of season.
+     */
+
+    public static int getCurrentSeason(){
+        String sql = "select MAX(season_num) as currentSeason from season";
+        int currentSeason = 0;
+        try (Connection conn = DBManager.connect(); Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                currentSeason = rs.getInt("currentSeason");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return currentSeason;
     }
 
     /**This method provides the squad referenced with the squad_id provided as a parameter.
@@ -238,7 +257,7 @@ public class DataExtractor {
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 int team_id = rs.getInt("team_id");
-                teamsList.add(new Team(getManager("username"),getTeamPlayers(team_id),getSquadRecord(team_id)));
+                teamsList.add(new Team(getManager(rs.getString("username")),getTeamPlayers(team_id),getSquadRecord(team_id)));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -263,6 +282,62 @@ public class DataExtractor {
             System.out.println(e.getMessage());
         }
         return leagueID;
+    }
+
+    public static int getID(String table, String idColumn, String valueColumn, String value){
+        int leagueID = 0;
+        String sql = "select "+idColumn+" from "+table+" where "+valueColumn+" = '"+value+"'";
+        try (Connection conn = DBManager.connect(); Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                leagueID = rs.getInt(idColumn);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return leagueID;
+    }
+
+    public static ArrayList<League> getAllLeagues(){
+        ArrayList<League> leaguesList = new ArrayList<>();
+        String sql = "select distinct name, entrycode, league_id from league";
+        try (Connection conn = DBManager.connect(); Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                leaguesList.add(new League(rs.getString("name"),rs.getString("entrycode"),getTeams(rs.getInt("league_id"))));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return leaguesList;
+    }
+
+    public static ArrayList<League> getManagerLeagues(String username){
+        ArrayList<League> allLeagues = getAllLeagues();
+        ArrayList<League> managerLeagues = new ArrayList<>();
+        for(League l : allLeagues){
+            for(Team t : l.getTeamsList()){
+                if(t.getManager().getUsername().equals(username)){
+                    managerLeagues.add(l);
+                }
+            }
+        }
+        return managerLeagues;
+    }
+
+    /**
+     *
+     * @param entryCode
+     * @return
+     */
+    public static League getLeague(String entryCode){
+        League league = null;
+        for(League l : getAllLeagues()){
+            if(l.getEntryCode().equals(entryCode)){
+                league = l;
+            }
+        }
+        return league;
     }
 
 }

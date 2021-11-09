@@ -1,4 +1,4 @@
-package DataLogic.People;
+package dataLogic.people;
 
 /**Abstract class that represents a person.
  * @author Iker Villena Ona.

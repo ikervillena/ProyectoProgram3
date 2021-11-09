@@ -1,6 +1,6 @@
-package DataLogic.People.Attributes;
+package dataLogic.people.Attributes;
 
-import DBManagement.DataExtractor;
+import dbManagement.DataExtraction;
 
 import java.util.ArrayList;
 
@@ -26,7 +26,7 @@ public class Position {
     }
 
     public static Position getPosition(String positionName){
-        ArrayList<Position> positionsList = DataExtractor.getPositions();
+        ArrayList<Position> positionsList = DataExtraction.getPositions();
         Position position = null;
         for (Position p : positionsList){
             if(p.getName().equals(positionName)){

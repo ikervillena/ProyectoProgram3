@@ -1,4 +1,4 @@
-package DataLogic.People.Attributes;
+package dataLogic.people.Attributes;
 
 import org.junit.Assert;
 import org.junit.Test;

@@ -1,6 +1,6 @@
-package DataLogic.League;
+package dataLogic.league;
 
-import DataLogic.People.Player;
+import dataLogic.people.Player;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

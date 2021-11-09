@@ -1,6 +1,6 @@
-package DataLogic.League;
+package dataLogic.league;
 
-import DataLogic.People.Player;
+import dataLogic.people.Player;
 
 import java.util.ArrayList;
 

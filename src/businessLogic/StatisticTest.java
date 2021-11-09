@@ -1,7 +1,6 @@
-package BusinessLogic;
+package businessLogic;
 
-import DataLogic.People.Attributes.Position;
-import org.junit.Assert;
+import dataLogic.people.Attributes.Position;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

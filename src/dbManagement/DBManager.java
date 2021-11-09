@@ -1,4 +1,4 @@
-package DBManagement;
+package dbManagement;
 
 import java.sql.*;
 
@@ -43,27 +43,5 @@ public class DBManager {
             System.out.println(e.getMessage());
         }
     }
-
-    /*
-    public void insert(String name, double capacity)
-    {
-        String sql = "INSERT INTO warehouses(name,capacity) VALUES(?,?)";
-
-        try
-                (
-                        Connection conn = this.connect();
-                        PreparedStatement pstmt = conn.prepareStatement(sql)
-                )
-        {
-            pstmt.setString(1, name);
-            pstmt.setDouble(2, capacity);
-            pstmt.executeUpdate();
-        }
-        catch (SQLException e)
-        {
-            System.out.println(e.getMessage());
-        }
-    }
-     */
 
 }

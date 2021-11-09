@@ -1,14 +1,15 @@
-package DataLogic.People;
+package dataLogic.people;
 
-import DataLogic.People.Attributes.Position;
-
-import java.util.ArrayList;
+import com.sun.xml.internal.ws.spi.db.DatabindingException;
+import dataLogic.interfaces.IDBConnection;
+import dataLogic.people.Attributes.Position;
+import dbManagement.DataExtraction;
 
 /** Represents a football player.
  * @author Iker Villena Ona.
  */
 
-public class Player {
+public class Player implements IDBConnection {
 
     String name;
     String surname;
@@ -53,6 +54,11 @@ public class Player {
 
     public float[] getValueHistory() {
         return valueHistory;
+    }
+
+    @Override
+    public int getID() {
+        return DataExtraction.getID("player","player_id","shirtname",shirtName);
     }
 }
 

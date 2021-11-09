@@ -1,6 +1,6 @@
-package BusinessLogic;
+package businessLogic;
 
-import DataLogic.People.Attributes.Position;
+import dataLogic.people.Attributes.Position;
 
 /** Represents the statistics for a player in a concrete match: if he has played, scored goals, assists...
  * @author Iker Villena Ona
