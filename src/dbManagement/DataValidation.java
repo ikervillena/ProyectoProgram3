@@ -1,9 +1,15 @@
 package dbManagement;
 
+import dataLogic.people.Manager;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+/** This class contains methods needed to validate data that is saved in the Database.
+ * @author Iker Villena Ona
+ */
 
 public class DataValidation {
 
@@ -37,7 +43,24 @@ public class DataValidation {
      */
 
     public static boolean checkEntryCode(String entryCode){
-        return check("league","entrycode","'"+entryCode+"'");
+        return (!check("league","entrycode","'"+entryCode+"'"));
+    }
+
+    /**This method checks whether the username and password provided belong to any of the managers
+     * @param username
+     * @param password
+     * @return a boolean which is true if the username and the password are correct, and false if they are not.
+     */
+
+    public static boolean checkPassword(String username, String password){
+        boolean correctPassword = false;
+        for(Manager m : DataExtraction.getAllManagers()){
+            if(m.getUsername().equals(username) && m.getPassword().equals(password)){
+                correctPassword = true;
+                break;
+            }
+        }
+        return correctPassword;
     }
 
 }

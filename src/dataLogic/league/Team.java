@@ -25,8 +25,8 @@ public class Team implements IDBConnection {
     }
 
     /**Team constructor that has an empty squadRecord.
-     * @param manager
-     * @param playersList
+     * @param manager An object of the class Manager.
+     * @param playersList An Arraylist with the list of players that form the team.
      */
 
     public Team(Manager manager, ArrayList<Player> playersList) {
@@ -35,13 +35,17 @@ public class Team implements IDBConnection {
     }
 
     /**Team constructor that has an empty squadRecord and that makes a playersList out of all the players of the league.
-     * @param manager
+     * @param manager An object of the class Manager.
      */
 
     public Team(Manager manager) {
         this.manager = manager;
     }
 
+    /**Provides a random list of players, with a minimum number of players that play in each position.
+     * @param allPlayers An ArrayList with the list of players from which the players are chosen.
+     * @return An ArrayList of players with a minimum number of players that play in each position.
+     */
     //THE NUMBER OF PLAYERS PER POSITION MUST BE CHANGED
     public static ArrayList<Player> generatePlayersList(ArrayList<Player> allPlayers){
         ArrayList<Player> playersList = new ArrayList<>();
@@ -49,29 +53,31 @@ public class Team implements IDBConnection {
         int defenders = 0;
         int midfielders = 0;
         int forwards = 0;
-        while(!goalkeeper || (defenders+midfielders+forwards) < 11){
-            Player player = allPlayers.get((int) (Math.random()*allPlayers.size()));
-            String positionName = player.getPosition().getName();
-            if(positionName.equals("Goalkeeper") && !goalkeeper){
-                playersList.add(player);
-                goalkeeper = true;
-            } else{
-                if(positionName.equals("Defense") && defenders < 3){
+        if(allPlayers.size() > 11){
+            while(!goalkeeper || (defenders+midfielders+forwards) < 10){
+                Player player = allPlayers.get((int) (Math.random()*allPlayers.size()));
+                String positionName = player.getPosition().getName();
+                if(positionName.equals("Goalkeeper") && !goalkeeper){
                     playersList.add(player);
-                    defenders++;
+                    goalkeeper = true;
                 } else{
-                    if(positionName.equals("Midfielder") && midfielders < 3){
+                    if(positionName.equals("Defense") && defenders < 3){
                         playersList.add(player);
-                        midfielders++;
+                        defenders++;
                     } else{
-                        if(positionName.equals("Forward") && forwards < 5){
+                        if(positionName.equals("Midfielder") && midfielders < 3){
                             playersList.add(player);
-                            forwards++;
+                            midfielders++;
+                        } else{
+                            if(positionName.equals("Forward") && forwards < 4){
+                                playersList.add(player);
+                                forwards++;
+                            }
                         }
                     }
                 }
+                allPlayers.remove(player);
             }
-            allPlayers.remove(player);
         }
         return playersList;
     }
@@ -88,14 +94,26 @@ public class Team implements IDBConnection {
         return squadRecord;
     }
 
+    /**Provides the ID number with which the Team is registered in the Database.
+     * @return An integer with the ID number.
+     */
+
     @Override
     public int getID() {
         return DataExtraction.getID("team","team_id","username",manager.getUsername());
     }
 
+    /**Provides an ID number that is not registered yet in the table "team" of the Database.
+     * @return An integer with the ID number.
+     */
+
     public static int generateID(){
         return DBUtils.generateID("team","team_id");
     }
+
+    /**This method transforms the object Team into a String.
+     * @return a String with the team's manager, its list of players and its squad record.
+     */
 
     @Override
     public String toString() {

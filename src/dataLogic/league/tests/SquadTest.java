@@ -1,5 +1,6 @@
-package dataLogic.league;
+package dataLogic.league.tests;
 
+import dataLogic.league.Squad;
 import dataLogic.people.Player;
 import org.junit.Assert;
 import org.junit.Before;

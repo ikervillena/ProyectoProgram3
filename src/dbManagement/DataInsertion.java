@@ -10,6 +10,10 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/** This class contains methods needed to insert data into the Database.
+ * @author Iker Villena Ona
+ */
+
 public class DataInsertion {
 
     /**Inserts all tha data of a league in their corresponding Database tables.

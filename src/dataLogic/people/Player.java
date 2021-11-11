@@ -1,6 +1,5 @@
 package dataLogic.people;
 
-import com.sun.xml.internal.ws.spi.db.DatabindingException;
 import dataLogic.interfaces.IDBConnection;
 import dataLogic.people.Attributes.Position;
 import dbManagement.DataExtraction;
@@ -18,8 +17,14 @@ public class Player implements IDBConnection {
     Position position;
     float[] valueHistory;
 
-    //Falta documentar el constructor
-
+    /**Constructor of a Player.
+     * @param name A String with the player's name.
+     * @param surname A String with the player's surname.
+     * @param shirtName A String with the player's shirt name.
+     * @param shirtNumber An integer with the player's shirt number.
+     * @param position A Position in which the player usually plays.
+     * @param valueHistory A float[] containing the player's valuer history.
+     */
 
     public Player(String name, String surname, String shirtName, int shirtNumber, Position position, float[] valueHistory) {
         this.name = name;
@@ -35,6 +40,10 @@ public class Player implements IDBConnection {
 
     public Player() {
     }
+
+    /**This method transforms the object Player into a String.
+     * @return a String with the player's name, surname, shirt name, shirt number, position and valuer history.
+     */
 
     @Override
     public String toString() {
@@ -56,10 +65,15 @@ public class Player implements IDBConnection {
         return valueHistory;
     }
 
+    /**Provides the ID number with which the Player is registered in the Database.
+     * @return An integer with the ID number.
+     */
+
     @Override
     public int getID() {
         return DataExtraction.getID("player","player_id","shirtname",shirtName);
     }
-}
 
-// getClub();
+    // getClub();
+
+}

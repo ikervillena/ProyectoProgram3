@@ -1,5 +1,7 @@
-package dataLogic.league;
+package dataLogic.league.tests;
 
+import dataLogic.league.League;
+import dataLogic.league.Team;
 import dataLogic.people.Manager;
 import dataLogic.people.Player;
 import dbManagement.DBUtils;
@@ -77,6 +79,21 @@ public class LeagueTest {
             for(Player p : l.getFreePlayers()){
                 System.out.println(p);
             }
+        }
+    }
+
+    @Test
+    public void canAccess(){
+        League league = DataExtraction.getLeague("new League");
+        Manager manager = DataExtraction.getManager("ikervillena");
+        System.out.println(league.canAccess(manager));
+    }
+
+    @Test
+    public void generatePlayersList(){
+        League league = DataExtraction.getLeague("new League");
+        for(Player p : league.getFreePlayers()){
+            System.out.println(p);
         }
     }
 

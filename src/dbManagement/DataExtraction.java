@@ -10,9 +10,8 @@ import dataLogic.people.Player;
 import java.sql.*;
 import java.util.ArrayList;
 
-/** This class has the aim of extracting data from de DataBase.
- * It provides the methods needed for that purpose.
- * @author Iker Villena Ona.
+/** This class contains methods needed to extract data from the Database.
+ * @author Iker Villena Ona
  */
 
 public class DataExtraction {

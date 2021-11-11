@@ -20,11 +20,21 @@ public class League implements IDBConnection {
     String entryCode;
     ArrayList<Team> teamsList;
 
+    /**This method is a constructor of a League.
+     * @param name A String with the name of the league.
+     * @param entryCode A String with the code needed to join the league.
+     * @param teamsList An ArrayList containing the list of teams participating in the league.
+     */
+
     public League(String name, String entryCode, ArrayList<Team> teamsList) {
         this.name = name;
         this.entryCode = entryCode;
         this.teamsList = teamsList;
     }
+
+    /**A constructor for testing the class in "LeagueTest.java".
+     * @param teamsList
+     */
 
     public League(ArrayList<Team> teamsList) {
         this.teamsList = teamsList;
@@ -51,14 +61,14 @@ public class League implements IDBConnection {
 
     /**This method checks whether a specific manager has access to the league or not.
      * For that: it looks for the manager in each of the teams that form the league.
-     * @param manager
+     * @param manager An object of the class Manager.
      * @return a boolean which has the value true if the manager has access and false if he does not.
      */
 
     public boolean canAccess(Manager manager){
         boolean canAccess = false;
         for(Team t : teamsList){
-            if(t.getManager() == manager){
+            if(t.getManager().getUsername().equals(manager.getUsername())){
                 canAccess = true;
             }
         }
@@ -85,7 +95,7 @@ public class League implements IDBConnection {
     }
 
     /**Adds a team to a league, including it in the list of teams.
-     * @param newTeam
+     * @param newTeam A Team that is being added to the league's list of teams.
      */
 
     public void addTeam(Team newTeam){
@@ -95,7 +105,7 @@ public class League implements IDBConnection {
     }
 
     /**Removes a team from a league, taking it off the list.
-     * @param removedTeam
+     * @param removedTeam A Team that is being removed from the league's list of teams.
      */
 
     public void removeTeam(Team removedTeam){
@@ -113,7 +123,7 @@ public class League implements IDBConnection {
     }
 
     /**Sets a new code for joining the league.
-     * @param entryCode
+     * @param entryCode A String with the code needed to join the league.
      */
 
     public void setEntryCode(String entryCode) {
@@ -129,7 +139,7 @@ public class League implements IDBConnection {
     }
 
     /**Sets the list of teams participating in the league.
-     * @param teamsList
+     * @param teamsList An Arraylist with the Teams that form the league.
      */
 
     private void setTeamsList(ArrayList<Team> teamsList) {
@@ -144,13 +154,12 @@ public class League implements IDBConnection {
         this.name = name;
     }
 
+    /**This method transforms the object League into a String.
+     * @return a String with the league's name.
+     */
+
     @Override
     public String toString() {
-        return "League{" +
-                "name='" + name + '\'' +
-                ", entryCode='" + entryCode + '\'' +
-                ", teamsList=" + teamsList +
-                '}';
+        return name;
     }
-
 }

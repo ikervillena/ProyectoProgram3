@@ -17,10 +17,10 @@ public class Squad {
 
     /**
      * Constructor of a Squad.
-     * @param goalkeeper
-     * @param defenders
-     * @param midfielders
-     * @param forwards
+     * @param goalkeeper A Player that plays in the position called "Goalkeeper".
+     * @param defenders An ArrayList with the players that play in the position called "Defense".
+     * @param midfielders An ArrayList with the players that play in the position called "Midfielder".
+     * @param forwards An ArrayList with the players that play in the position called "Forward".
      */
 
     public Squad(Player goalkeeper, ArrayList<Player> defenders, ArrayList<Player> midfielders, ArrayList<Player> forwards) {
@@ -51,6 +51,12 @@ public class Squad {
             return false;
         }
     }
+
+    /**Provides a Squad out of a list of Players.
+     * For that: it classifies players according to their position an uses the Squad constructor.
+     * @param playersList An Arraylist with all the players that form the Squad.
+     * @return A Squad in which all the players of the list participate.
+     */
 
     public static Squad createSquad(ArrayList<Player> playersList){
         Player goalkeeper = null;
