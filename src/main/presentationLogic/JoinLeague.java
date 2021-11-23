@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import main.dataLogic.league.Team;
 import main.dataLogic.people.Manager;
 import main.dbManagement.DataExtraction;
 import main.dbManagement.DataValidation;
@@ -85,10 +86,14 @@ public class JoinLeague extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if(DataValidation.checkEntryCode(txtEntryCode.getText())){
                     if(!manager.alreadyInLeague(txtEntryCode.getText())){
-                        manager.joinLeague(txtEntryCode.getText());
-                        JFrame nextView = new Menu(manager);
-                        nextView.setVisible(true);
-                        JoinLeague.this.dispose();
+                        if(Team.canGenerateTeam(DataExtraction.getLeague(txtEntryCode.getText()).getFreePlayers())){
+                            manager.joinLeague(txtEntryCode.getText());
+                            JFrame nextView = new Menu(manager);
+                            nextView.setVisible(true);
+                            JoinLeague.this.dispose();
+                        } else{
+                            JOptionPane.showMessageDialog(null,"No es posible, la liga ha alcanzado el número máximo de participantes.");
+                        }
                     } else{
                         JOptionPane.showMessageDialog(null, "No es posible unirse, ya estás participando en esta liga.");
                     }

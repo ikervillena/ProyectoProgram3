@@ -1,5 +1,6 @@
 package main.dbManagement;
 
+import main.businessLogic.Statistic;
 import main.dataLogic.league.League;
 import main.dataLogic.league.Team;
 import main.dataLogic.people.Player;
@@ -83,7 +84,30 @@ public class DataInsertion {
                 System.out.println(e.getMessage());
             }
         }
+    }
 
+    /**Saves the statistics of a player in the Database.
+     * @param statistic A Statistic of a player in a specific match.
+     * @param playerID Integer with the player's ID number.
+     */
+
+    public static void insertStatistic(Statistic statistic, int playerID) {
+        String sql = "INSERT INTO statistic(round_num, player_id, played, goals, assits, goalsagainst, yellowcards, redcard) " +
+                "VALUES(?,?,?,?,?,?,?,?)";
+        try (Connection conn = DBManager.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)){
+            pstmt.setInt(1,1);
+            pstmt.setInt(2, playerID);
+            pstmt.setBoolean(3,statistic.isPlayed());
+            pstmt.setInt(4,statistic.getNumGoals());
+            pstmt.setInt(5,statistic.getNumAssists());
+            pstmt.setInt(6,statistic.getReceivedGoals());
+            pstmt.setInt(7,statistic.getYellowCards());
+            pstmt.setBoolean(8,statistic.isRedCard());
+            pstmt.executeUpdate();
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
 }

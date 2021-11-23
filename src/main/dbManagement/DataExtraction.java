@@ -1,5 +1,6 @@
 package main.dbManagement;
 
+import main.dataLogic.league.Club;
 import main.dataLogic.league.League;
 import main.dataLogic.league.Squad;
 import main.dataLogic.league.Team;
@@ -112,7 +113,7 @@ public class DataExtraction {
      * @return an ArrayList with the list of players that form the team whose id is the same as the one provided as a parameter.
      */
 
-    private static ArrayList<Player> getTeamPlayers(int team_id){
+    public static ArrayList<Player> getTeamPlayers(int team_id){
         String sql = "select player_id from playfor where team_id="+team_id;
         ArrayList<Player> playersList = new ArrayList<>();
         try (Connection conn = DBManager.connect(); Statement stmt = conn.createStatement();
@@ -171,21 +172,61 @@ public class DataExtraction {
     }
 
     /**This method gets which is the next round of the league.
+     * For that: it checks that previous rounds have the statistics of all the players saved.
      * @return an integer with the number of the next round of the league.
      */
 
     public static int getNextRound(){
-        String sql = "select MAX(round_num) as lastRound from round";
-        int nextRound = 0;
+        int roundNum = 1;
+        while(statsSaved(roundNum)){
+            roundNum++;
+        }
+        return roundNum;
+    }
+
+    /**Checks if all the players have their statistics saved for a specific round number.
+     * @param roundNum Integer with the round number that needs to be checked.
+     * @return A boolean with the value "true" if the statistics of all the players are saved and "false" if they are not.
+     */
+
+    public static boolean statsSaved(int roundNum){
+        String sql = "select count(stats_id) as numStats from statistic where round_num = "+roundNum;
+        int numStats = 0;
         try (Connection conn = DBManager.connect(); Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
-                nextRound = rs.getInt("lastRound") + 1;
+                numStats = rs.getInt("numStats");
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return nextRound;
+        if(numStats == getAllPlayers().size()){
+            return true;
+        } else{
+            return false;
+        }
+    }
+
+    /**Checks whether a player has his statistics for a specific round number saved or not.
+     * @param roundNum Integer with the round number.
+     * @param playerID Integer with the player's ID number.
+     * @return A boolean with the value "true" if the statistics for that round are saved and "false" if they are not.
+     */
+
+    public static boolean playerStatsSaved(int roundNum,int playerID){
+        String sql = "select count(stats_id) as numStats from statistic where round_num = "+roundNum+" and player_id = "+playerID;
+        boolean statsSaved = false;
+        try (Connection conn = DBManager.connect(); Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                if(rs.getInt("numStats")>0){
+                    statsSaved = true;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return statsSaved;
     }
 
     /**This method gets which is the current season.
@@ -211,7 +252,7 @@ public class DataExtraction {
      * @return a Squad registered in the Database with the squad_id provided.
      */
 
-    private static Squad getSquad(int squad_id){
+    public static Squad getSquad(int squad_id){
         String sql = "select player_id from alignment where squad_id = "+squad_id;
         ArrayList<Player> playersList = new ArrayList<>();
         try (Connection conn = DBManager.connect(); Statement stmt = conn.createStatement();
@@ -230,7 +271,7 @@ public class DataExtraction {
      * @return an ArrayList with the list of Squads that form the squad record of the team.
      */
 
-    private static ArrayList<Squad> getSquadRecord(int team_id){
+    public static ArrayList<Squad> getSquadRecord(int team_id){
         String sql = "select round_num, squad_id from squad where team_id ="+team_id+" order by round_num asc";
         ArrayList<Squad> squadRecord = new ArrayList<>();
         try (Connection conn = DBManager.connect(); Statement stmt = conn.createStatement();
@@ -353,6 +394,85 @@ public class DataExtraction {
             }
         }
         return league;
+    }
+
+    /**Provides the list of players that play for a specific club.
+     * @param clubName String that contains the club's name.
+     * @return an ArrayList with the list of players that play for the club.
+     */
+
+    public static ArrayList<Player> getClubPlayers(String clubName){
+        String sql = "select player_id from player where club_name = '"+clubName+"'";
+        ArrayList<Player> playersList = new ArrayList<>();
+        try (Connection conn = DBManager.connect(); Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                playersList.add(getPlayer(rs.getInt("player_id")));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return playersList;
+    }
+
+    /**Provides a list with all the clubs registered in the Database.
+     * @return an ArrayList with all the clubs.
+     */
+
+    public static ArrayList<Club> getAllClubs(){
+        ArrayList<Club> clubsList = new ArrayList<>();
+        String sql = "select distinct club_name from club";
+        try (Connection conn = DBManager.connect(); Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                String clubName = rs.getString("club_name");
+                //System.out.println(clubName);
+                clubsList.add(new Club(clubName,getClubPlayers(clubName)));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return clubsList;
+    }
+
+    public static int numUnsavedMatches(int roundNum){
+        String sql = "select homeclub,awayclub from match where round_num = "+roundNum;
+        int unsavedMatches = 0;
+        try (Connection conn = DBManager.connect(); Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                if(!playerStatsSaved(roundNum,getClubPlayers(rs.getString("homeclub")).get(0).getID())) {
+                    unsavedMatches++;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return unsavedMatches;
+    }
+
+    /**Provides an array with the matches that correspond to a specific round of the league.
+     * @param roundNum Integer with the round number.
+     * @return a String[4][2] with the names of the clubs that play in each of the four matches (two clubs for each match).
+     */
+
+    public static String[][] getMatches(int roundNum){
+        String[][] matchesList = new String[numUnsavedMatches(roundNum)][2];
+        String sql = "select homeclub,awayclub from match where round_num = "+roundNum;
+        int i = 0;
+        try (Connection conn = DBManager.connect(); Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                if(!playerStatsSaved(roundNum,getClubPlayers(rs.getString("homeclub")).get(0).getID())) {
+                    matchesList[i][0] = rs.getString("homeclub");
+                    matchesList[i][1] = rs.getString("awayclub");
+                    i++;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return matchesList;
     }
 
 }

@@ -17,7 +17,7 @@ import java.awt.event.ActionEvent;
  * @author Iker Villena Ona
  */
 
-public class Menu extends JFrame {
+public class Menu extends ManagerView {
 
     private JPanel contentPane;
     private JComboBox cmbxLeagues;

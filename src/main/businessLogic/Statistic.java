@@ -47,4 +47,39 @@ public class Statistic {
         return points;
     }
 
+    public boolean isPlayed() {
+        return played;
+    }
+
+    public int getNumGoals() {
+        return numGoals;
+    }
+
+    public int getNumAssists() {
+        return numAssists;
+    }
+
+    public int getReceivedGoals() {
+        return receivedGoals;
+    }
+
+    public int getYellowCards() {
+        return yellowCards;
+    }
+
+    public boolean isRedCard() {
+        return redCard;
+    }
+
+    @Override
+    public String toString() {
+        return "Statistic{" +
+                "played=" + played +
+                ", numGoals=" + numGoals +
+                ", numAssists=" + numAssists +
+                ", receivedGoals=" + receivedGoals +
+                ", yellowCards=" + yellowCards +
+                ", redCard=" + redCard +
+                '}';
+    }
 }

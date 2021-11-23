@@ -1,11 +1,13 @@
 package main.dataLogic.league;
 
-import main.dataLogic.interfaces.IDBConnection;
+import main.businessLogic.interfaces.IDBConnection;
 import main.dataLogic.people.Player;
 import main.dbManagement.DBUtils;
+import main.dbManagement.DataDestruction;
 import main.dbManagement.DataExtraction;
 import main.dataLogic.people.Manager;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /** Represents a league where teams compete.
@@ -100,6 +102,15 @@ public class League implements IDBConnection {
         ArrayList<Team> list = teamsList;
         list.add(newTeam);
         setTeamsList(list);
+    }
+
+    /**Removes the information regarding de league from the Database (Stored in the tables League and Team).
+     * @throws SQLException Database connection exception.
+     */
+
+    public void delete() throws SQLException {
+        DataDestruction.delete("league","league_id",getID());
+        DataDestruction.delete("team","league_id",getID());
     }
 
     /**Removes a team from a league, taking it off the list.

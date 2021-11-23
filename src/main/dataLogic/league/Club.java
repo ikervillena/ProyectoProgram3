@@ -11,5 +11,17 @@ import java.util.ArrayList;
 public class Club {
     String name;
     ArrayList<Player> playersList;
-    // Imagen de escudo
+
+    public Club(String name, ArrayList<Player> playersList) {
+        this.name = name;
+        this.playersList = playersList;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public ArrayList<Player> getPlayersList() {
+        return playersList;
+    }
 }

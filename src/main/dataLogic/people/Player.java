@@ -1,6 +1,7 @@
 package main.dataLogic.people;
 
-import main.dataLogic.interfaces.IDBConnection;
+import main.businessLogic.interfaces.IDBConnection;
+import main.dataLogic.league.Club;
 import main.dataLogic.people.attributes.Position;
 import main.dbManagement.DataExtraction;
 
@@ -90,6 +91,21 @@ public class Player implements IDBConnection {
         return DataExtraction.getID("player","player_id","shirtname",shirtName);
     }
 
-    // getClub();
+    /**provides the club for which the player plays.
+     * @return The club where the player plays.
+     */
+
+    public Club getClub(){
+        Club club = null;
+        for(Club c : DataExtraction.getAllClubs()){
+            for(Player p : c.getPlayersList()){
+                if(p.getShirtName().equals(shirtName)){
+                    club = c;
+                    break;
+                }
+            }
+        }
+        return club;
+    }
 
 }

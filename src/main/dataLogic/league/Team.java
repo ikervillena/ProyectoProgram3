@@ -1,6 +1,6 @@
 package main.dataLogic.league;
 
-import main.dataLogic.interfaces.IDBConnection;
+import main.businessLogic.interfaces.IDBConnection;
 import main.dbManagement.DBUtils;
 import main.dbManagement.DataExtraction;
 import main.dataLogic.people.Manager;
@@ -53,19 +53,19 @@ public class Team implements IDBConnection {
         int defenders = 0;
         int midfielders = 0;
         int forwards = 0;
-        if(allPlayers.size() > 11){
-            while(!goalkeeper || (defenders+midfielders+forwards) < 10){
+        if(canGenerateTeam(playersList)){
+            while(!goalkeeper || (defenders+midfielders+forwards) < 12){
                 Player player = allPlayers.get((int) (Math.random()*allPlayers.size()));
                 String positionName = player.getPosition().getName();
                 if(positionName.equals("Goalkeeper") && !goalkeeper){
                     playersList.add(player);
                     goalkeeper = true;
                 } else{
-                    if(positionName.equals("Defense") && defenders < 3){
+                    if(positionName.equals("Defense") && defenders < 4){
                         playersList.add(player);
                         defenders++;
                     } else{
-                        if(positionName.equals("Midfielder") && midfielders < 3){
+                        if(positionName.equals("Midfielder") && midfielders < 4){
                             playersList.add(player);
                             midfielders++;
                         } else{
@@ -80,6 +80,31 @@ public class Team implements IDBConnection {
             }
         }
         return playersList;
+    }
+
+    /**Checks if it is possible to generate a new team out of a list of players.
+     * For that: it checks that there are at least 1 goalkeeper, 4 defenses, 4 midfielders and 4 forwards.
+     * @param playersList
+     * @return
+     */
+
+    public static boolean canGenerateTeam(ArrayList<Player> playersList){
+        if(numPlayers("Goalkeeper",playersList)>=1&&numPlayers("Defense",playersList)>=4&&
+        numPlayers("Midfielder",playersList)>=4&&numPlayers("Forward",playersList)>=4){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    private static int numPlayers(String positionName, ArrayList<Player> playersList){
+        int numPlayers = 0;
+        for(Player p : playersList){
+            if(p.getPosition().getName().equals(positionName)){
+                numPlayers++;
+            }
+        }
+        return numPlayers;
     }
 
     public ArrayList<Player> getPlayersList() {
