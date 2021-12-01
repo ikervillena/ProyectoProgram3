@@ -1,6 +1,7 @@
 package main.dataLogic.league;
 
 import main.businessLogic.interfaces.IDBConnection;
+import main.businessLogic.interfaces.IPositionClassification;
 import main.dbManagement.DBUtils;
 import main.dbManagement.DataExtraction;
 import main.dataLogic.people.Manager;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
  * @author Iker Villena Ona.
  */
 
-public class Team implements IDBConnection {
+public class Team implements IDBConnection, IPositionClassification {
 
     Manager manager;
     ArrayList<Player> playersList = generatePlayersList(DataExtraction.getAllPlayers());
@@ -147,5 +148,30 @@ public class Team implements IDBConnection {
                 ", playersList=" + playersList +
                 ", squadRecord=" + squadRecord +
                 '}';
+    }
+
+    private ArrayList<Player> getPlayers(String positionName){
+        ArrayList<Player> players = new ArrayList<>();
+        for(Player p : playersList){
+            if(p.getPosition().getName().equals(positionName)){
+                players.add(p);
+            }
+        }
+        return players;
+    }
+
+    @Override
+    public ArrayList<Player> getDefenders() {
+        return getPlayers("Defense");
+    }
+
+    @Override
+    public ArrayList<Player> getMidfielders() {
+        return getPlayers("Midfielder");
+    }
+
+    @Override
+    public ArrayList<Player> getForwards() {
+        return getPlayers("Forward");
     }
 }

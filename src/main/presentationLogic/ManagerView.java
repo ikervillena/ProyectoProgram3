@@ -45,7 +45,8 @@ public class ManagerView extends JFrame {
      */
     public ManagerView() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 800, 500);
+        setBounds(100, 100, 850, 600);
+        setLocationRelativeTo(null);
 
         menuBar = new JMenuBar();
         menuBar.setBackground(UIManager.getColor("MenuBar.background"));

@@ -1,11 +1,17 @@
 package main;
 
 import main.dbManagement.DBManager;
+import main.dbManagement.DataDestruction;
+
+import java.sql.SQLException;
 
 public class Main {
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws SQLException {
 
+        DataDestruction.deleteTeam(5);
+
+        /*
         DBManager.createNewDatabase("ProjectDB.db");
         DBManager.createNewTable("CREATE TABLE IF NOT EXISTS SEASON(SEASON_NUM INTEGER NOT NULL PRIMARY KEY);");
         DBManager.createNewTable("CREATE TABLE IF NOT EXISTS ROUND(ROUND_NUM INTEGER NOT NULL PRIMARY KEY);");
@@ -65,6 +71,7 @@ public class Main {
                 + "FEE INTEGER NOT NULL,"
                 + "DATE DATE NOT NULL);");
 
+         */
     }
 
 }

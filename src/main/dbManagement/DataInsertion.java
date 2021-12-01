@@ -2,12 +2,15 @@ package main.dbManagement;
 
 import main.businessLogic.Statistic;
 import main.dataLogic.league.League;
+import main.dataLogic.league.Squad;
 import main.dataLogic.league.Team;
 import main.dataLogic.people.Player;
 
+import javax.xml.crypto.Data;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /** This class contains methods needed to insert data into the Database.
  * @author Iker Villena Ona
@@ -92,7 +95,7 @@ public class DataInsertion {
      */
 
     public static void insertStatistic(Statistic statistic, int playerID) {
-        String sql = "INSERT INTO statistic(round_num, player_id, played, goals, assits, goalsagainst, yellowcards, redcard) " +
+        String sql = "INSERT INTO statistic(round_num, player_id, played, goals, assists, goalsagainst, yellowcards, redcard) " +
                 "VALUES(?,?,?,?,?,?,?,?)";
         try (Connection conn = DBManager.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)){
             pstmt.setInt(1,1);
@@ -108,6 +111,44 @@ public class DataInsertion {
         catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    /**Saves the alignments of players in a Squad to the Dataabase.
+     * @param team Team in which players are aligned.
+     * @param playersList ArrayList with the list of players aligned.
+     */
+    private static void insertAlignment(Team team, ArrayList<Player> playersList){
+        for (Player p : playersList){
+            String sql = "INSERT INTO alignment(player_id, team_id, round_num) VALUES(?,?,?)";
+            try (Connection conn = DBManager.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)){
+                pstmt.setInt(1,p.getID());
+                pstmt.setInt(2,team.getID());
+                pstmt.setInt(3,DataExtraction.getNextRound());
+                pstmt.executeUpdate();
+            }
+            catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    /**Saves a team's Squad to the Database (tables "squad" and "alignment").
+     * @param team Team in which players are aligned.
+     * @param squad Squad that is saved to the Database.
+     */
+
+    public static void insertSquad(Team team, Squad squad){
+        String sql = "INSERT INTO squad(team_id,round_num,formation_id) VALUES(?,?,?)";
+        try (Connection conn = DBManager.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)){
+            pstmt.setInt(1,team.getID());
+            pstmt.setInt(2,DataExtraction.getNextRound());
+            pstmt.setInt(3,squad.getFormation().getID());
+            pstmt.executeUpdate();
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        insertAlignment(team, squad.getPlayersList());
     }
 
 }

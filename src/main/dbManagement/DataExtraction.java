@@ -1,5 +1,7 @@
 package main.dbManagement;
 
+import main.businessLogic.Statistic;
+import main.businessLogic.TacticalFormation;
 import main.dataLogic.league.Club;
 import main.dataLogic.league.League;
 import main.dataLogic.league.Squad;
@@ -38,6 +40,49 @@ public class DataExtraction {
         return valueHistory;
     }
 
+    /**Provides a list with all the tactical formations registered in the Database.
+     * @return An ArrayList<TacticalFormation> with all the formations.
+     */
+
+    public static ArrayList<TacticalFormation> getAllFormations(){
+        ArrayList<TacticalFormation> formationsList = new ArrayList<>();
+        String sql = "select numDefenders, numMidfielders, numForwards from tacticalformation";
+        try (Connection conn = DBManager.connect(); Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                int numDefenders = rs.getInt("numDefenders");
+                int numMidfielders = rs.getInt("numMidfielders");
+                int numForwards = rs.getInt("numForwards");
+                formationsList.add(new TacticalFormation(numDefenders, numMidfielders, numForwards));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return formationsList;
+    }
+
+    /**Provides a tactical formation referenced by its formationID.
+     * @param formationID Integer with the formation's ID number.
+     * @return The TacticalFormation registered in the Database with the ID number provided as a parameter.
+     */
+
+    public static TacticalFormation getFormation(int formationID){
+        TacticalFormation formation = null;
+        String sql = "select numDefenders, numMidfielders, numForwards from tacticalformation where formation_id = " + formationID;
+        try (Connection conn = DBManager.connect(); Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                int numDefenders = rs.getInt("numDefenders");
+                int numMidfielders = rs.getInt("numMidfielders");
+                int numForwards = rs.getInt("numForwards");
+                formation = new TacticalFormation(numDefenders, numMidfielders, numForwards);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return formation;
+    }
+
     /**This method gets from the Database the list of positions.
      * @return an ArrayList which contains the positions.
      */
@@ -64,18 +109,12 @@ public class DataExtraction {
      */
 
     public static ArrayList<Player> getAllPlayers(){
-        String sql = "select name,surname,shirtname,number,position_name,player_id from player";
+        String sql = "select player_id from player";
         ArrayList<Player> playersList = new ArrayList<>();
         try (Connection conn = DBManager.connect(); Statement stmt = conn.createStatement();
                  ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
-                String name = rs.getString("name");
-                String surname = rs.getString("surname");
-                String shirtName = rs.getString("shirtname");
-                int shirtNumber = rs.getInt("number");
-                Position position = Position.getPosition(rs.getString("position_name"));
-                float [] valueHistory = getValueHistory(rs.getInt("player_id"));
-                playersList.add(new Player(name,surname,shirtName,shirtNumber,position,valueHistory));
+                playersList.add(getPlayer(rs.getInt("player_id")));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -100,7 +139,8 @@ public class DataExtraction {
                 int shirtNumber = rs.getInt("number");
                 Position position = Position.getPosition(rs.getString("position_name"));
                 float [] valueHistory = getValueHistory(rs.getInt("player_id"));
-                player = new Player(name,surname,shirtName,shirtNumber,position,valueHistory);
+                ArrayList<Statistic> statsRecord = getStatistics(player_id);
+                player = new Player(name,surname,shirtName,shirtNumber,position,valueHistory,statsRecord);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -247,13 +287,15 @@ public class DataExtraction {
         return currentSeason;
     }
 
-    /**This method provides the squad referenced with the squad_id provided as a parameter.
-     * @param squad_id the ID number of a squad.
-     * @return a Squad registered in the Database with the squad_id provided.
+
+    /**This method provides the list of players that are aligned in a squad referenced with the squad_id provided as a parameter.
+     * @param teamID Integer with a team's ID number.
+     * @param roundNum Integer with the round number.
+     * @return An ArrayList<Player> with the list of player aligned in the Squad registered in the Database with the squad_id provided.
      */
 
-    public static Squad getSquad(int squad_id){
-        String sql = "select player_id from alignment where squad_id = "+squad_id;
+    public static ArrayList<Player> getSquadPlayers(int teamID, int roundNum){
+        String sql = "select player_id from alignment where team_id = "+teamID+" and round_num = "+roundNum;
         ArrayList<Player> playersList = new ArrayList<>();
         try (Connection conn = DBManager.connect(); Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
@@ -263,21 +305,21 @@ public class DataExtraction {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return Squad.createSquad(playersList);
+        return playersList;
     }
 
     /**This method provides the squad record of a specific team.
-     * @param team_id the ID number of a team
+     * @param teamID the ID number of a team
      * @return an ArrayList with the list of Squads that form the squad record of the team.
      */
 
-    public static ArrayList<Squad> getSquadRecord(int team_id){
-        String sql = "select round_num, squad_id from squad where team_id ="+team_id+" order by round_num asc";
+    public static ArrayList<Squad> getSquadRecord(int teamID){
+        String sql = "select round_num, formation_id from squad where team_id ="+teamID+" order by round_num asc";
         ArrayList<Squad> squadRecord = new ArrayList<>();
         try (Connection conn = DBManager.connect(); Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
-                squadRecord.add(getSquad(rs.getInt("squad_id")));
+                squadRecord.add(new Squad(rs.getInt("round_num"),getFormation(rs.getInt("formation_id")),getSquadPlayers(teamID, rs.getInt("round_num"))));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -333,17 +375,39 @@ public class DataExtraction {
      */
 
     public static int getID(String table, String idColumn, String valueColumn, String value){
-        int leagueID = 0;
+        int id = 0;
         String sql = "select "+idColumn+" from "+table+" where "+valueColumn+" = '"+value+"'";
         try (Connection conn = DBManager.connect(); Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
-                leagueID = rs.getInt(idColumn);
+                id = rs.getInt(idColumn);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return leagueID;
+        return id;
+    }
+
+    /**Provides the ID number of a TacticalFormation that is registered in the DataBase.
+     * @param numDefenders Integer with the number of defenders of the formation.
+     * @param numMidfielders Integer with the number of midfielders of the formation.
+     * @param numForwards Integer with the number of forwards of the formation.
+     * @return Integer with the ID number of the formation.
+     */
+
+    public static int getFormationID(int numDefenders, int numMidfielders, int numForwards){
+        int formationID = 0;
+        String sql = "select formation_id from tacticalformation where numdefenders = "+numDefenders+" and nummidfielders = "+
+                numMidfielders+" and numforwards = "+numForwards;
+        try (Connection conn = DBManager.connect(); Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                formationID = rs.getInt("formation_id");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return formationID;
     }
 
     /**Provides all the leagues that are registered in the Database.
@@ -473,6 +537,26 @@ public class DataExtraction {
             System.out.println(e.getMessage());
         }
         return matchesList;
+    }
+
+    public static ArrayList<Statistic> getStatistics(int playerID){
+        ArrayList<Statistic> statisticsList = new ArrayList<>();
+        String sql = "select played,goals,assists,goalsagainst,yellowcards,redcard from statistic where player_id = "+playerID;
+        try (Connection conn = DBManager.connect(); Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                boolean played = rs.getBoolean("played");
+                int numGoals = rs.getInt("goals");
+                int numAssists = rs.getInt("assists");
+                int receivedGoals = rs.getInt("goalsagainst");
+                int yellowCards = rs.getInt("yellowcards");
+                boolean redCard = rs.getBoolean("redcard");
+                statisticsList.add(new Statistic(played,numGoals,numAssists,receivedGoals,yellowCards,redCard));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return statisticsList;
     }
 
 }

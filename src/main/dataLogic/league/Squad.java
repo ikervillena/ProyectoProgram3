@@ -1,117 +1,119 @@
 package main.dataLogic.league;
 
+import main.businessLogic.TacticalFormation;
+import main.businessLogic.interfaces.IPositionClassification;
 import main.dataLogic.people.Player;
-
 import java.util.ArrayList;
 
 /** Represents a squad formed by players of different positions.
  * @author Iker Villena Ona.
  */
 
-public class Squad {
+public class Squad implements IPositionClassification {
 
-    Player goalkeeper;
-    ArrayList<Player> defenders;
-    ArrayList<Player> midfielders;
-    ArrayList<Player> forwards;
+    int roundNum;
+    TacticalFormation formation;
+    ArrayList<Player> playersList;
 
-    /**
-     * Constructor of a Squad.
-     * @param goalkeeper A Player that plays in the position called "Goalkeeper".
-     * @param defenders An ArrayList with the players that play in the position called "Defense".
-     * @param midfielders An ArrayList with the players that play in the position called "Midfielder".
-     * @param forwards An ArrayList with the players that play in the position called "Forward".
+    /**Constructor of Squad.
+     * @param formation TacticalFormation in which players are aligned.
+     * @param playersList An ArrayList<Player> with the list of players aligned.
      */
 
-    public Squad(Player goalkeeper, ArrayList<Player> defenders, ArrayList<Player> midfielders, ArrayList<Player> forwards) {
-        this.goalkeeper = goalkeeper;
-        this.defenders = defenders;
-        this.midfielders = midfielders;
-        this.forwards = forwards;
+    /**Constructor of Squad.
+     * @param roundNum Integer with the squad's round number.
+     * @param formation TacticalFormation in which players are aligned.
+     * @param playersList An ArrayList<Player> with the list of players aligned.
+     */
+
+    public Squad(int roundNum, TacticalFormation formation, ArrayList<Player> playersList) {
+        this.roundNum = roundNum;
+        this.formation = formation;
+        this.playersList = playersList;
     }
 
     /**
-     * Indicates if an allignment is proper or not.
-     * To be proper, the formation must coincide with one of the preestablished ones and there must be a goalkeeper.
-     * @return a boolean showing if the allignment is correct (true) or not (false).
+     * Indicates if an alignment is proper or not.
+     * To be proper, the tactical formation selected must coincide with the number of players that play in each position.
+     * @return a boolean showing if the alignment is correct (true) or not (false).
      */
 
     public boolean properAlignment() {
-        boolean correctFormation = false;
-        int[][] acceptedFormations = {{3,4,3},{3,5,2},{4,3,3},{4,4,2},{4,5,1},{5,4,1},{5,3,2}};
-        for(int[] f : acceptedFormations){
-            if(f[0] == defenders.size() && f[1] == midfielders.size() && f[2] == forwards.size()){
-                correctFormation = true;
-                break;
-            }
-        }
-        if(goalkeeper != null && correctFormation){
+        if(getDefenders().size() == formation.getNumDefenders() || getMidfielders().size() == formation.getNumMidfielders()
+        || getForwards().size() == formation.getNumForwards() || getGoalkeeper() != null){
             return true;
-        }else{
+        } else{
             return false;
         }
     }
 
-    /**Provides a Squad out of a list of Players.
-     * For that: it classifies players according to their position an uses the Squad constructor.
-     * @param playersList An Arraylist with all the players that form the Squad.
-     * @return A Squad in which all the players of the list participate.
+    /**This method is used for getting a list of players that play in a specific position out of the Squad.
+     * @param positionName String with the position's name.
+     * @return ArrayList<Player> with the list of players that play in the provided position.
      */
 
-    public static Squad createSquad(ArrayList<Player> playersList){
-        Player goalkeeper = null;
-        ArrayList<Player> defenders = new ArrayList<>();
-        ArrayList<Player> midfielders = new ArrayList<>();
-        ArrayList<Player> forwards = new ArrayList<>();
+    private ArrayList<Player> getPlayers(String positionName){
+        ArrayList<Player> list = new ArrayList<>();
         for(Player p : playersList){
-            switch (p.getPosition().getName()){
-                case "Goalkeeper":
-                    goalkeeper = p;
-                    break;
-                case "Defense":
-                    defenders.add(p);
-                    break;
-                case "Midfielder":
-                    midfielders.add(p);
-                    break;
-                case "Forward":
-                    forwards.add(p);
-                    break;
+            if(p.getPosition().getName().equals(positionName)){
+                list.add(p);
             }
         }
-        return (new Squad(goalkeeper,defenders,midfielders,forwards));
+        return list;
     }
 
-    public Player getGoalkeeper() {
+    /**
+     * @return Player aligned in the Squad who plays in the "Goalkeeper" position.
+     */
+
+    public Player getGoalkeeper(){
+        Player goalkeeper = null;
+        for(Player p : playersList){
+            if(p.getPosition().getName().equals("Goalkeeper")){
+                goalkeeper = p;
+                break;
+            }
+        }
         return goalkeeper;
     }
 
-    public void setGoalkeeper(Player goalkeeper) {
-        this.goalkeeper = goalkeeper;
+    /**
+     * @return ArrayList<Player> with the list of players from the Squad that play in the "Defense" position.
+     */
+
+    @Override
+    public ArrayList<Player> getDefenders(){
+        return getPlayers("Defense");
     }
 
-    public ArrayList<Player> getDefenders() {
-        return defenders;
+    /**
+     * @return ArrayList<Player> with the list of players from the Squad that play in the "Midfielder" position.
+     */
+
+    @Override
+    public ArrayList<Player> getMidfielders(){
+        return getPlayers("Midfielder");
     }
 
-    public void setDefenders(ArrayList<Player> defenders) {
-        this.defenders = defenders;
+    /**
+     * @return ArrayList<Player> with the list of players from the Squad that play in the "Forward" position.
+     */
+
+    @Override
+    public ArrayList<Player> getForwards(){
+        return getPlayers("Forwards");
     }
 
-    public ArrayList<Player> getMidfielders() {
-        return midfielders;
+    public int getRoundNum() {
+        return roundNum;
     }
 
-    public void setMidfielders(ArrayList<Player> midfielders) {
-        this.midfielders = midfielders;
+    public TacticalFormation getFormation() {
+        return formation;
     }
 
-    public ArrayList<Player> getForwards() {
-        return forwards;
-    }
-
-    public void setForwards(ArrayList<Player> forwards) {
-        this.forwards = forwards;
+    public ArrayList<Player> getPlayersList() {
+        return playersList;
     }
 }
 

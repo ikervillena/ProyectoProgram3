@@ -1,9 +1,12 @@
 package main.dataLogic.people;
 
+import main.businessLogic.Statistic;
 import main.businessLogic.interfaces.IDBConnection;
 import main.dataLogic.league.Club;
 import main.dataLogic.people.attributes.Position;
 import main.dbManagement.DataExtraction;
+
+import java.util.ArrayList;
 
 /** Represents a football player.
  * @author Iker Villena Ona.
@@ -17,6 +20,27 @@ public class Player implements IDBConnection {
     int shirtNumber;
     Position position;
     float[] valueHistory;
+    ArrayList<Statistic> statsRecord;
+
+    /**Constructor of a Player.
+     * @param name A String with the player's name.
+     * @param surname A String with the player's surname.
+     * @param shirtName A String with the player's shirt name.
+     * @param shirtNumber An integer with the player's shirt number.
+     * @param position A Position in which the player usually plays.
+     * @param valueHistory A float[] containing the player's valuer history.
+     * @param statsRecord An ArrayList<Statistic> that contains all the statistics of the player.
+     */
+
+    public Player(String name, String surname, String shirtName, int shirtNumber, Position position, float[] valueHistory, ArrayList<Statistic> statsRecord) {
+        this.name = name;
+        this.surname = surname;
+        this.shirtName = shirtName;
+        this.shirtNumber = shirtNumber;
+        this.position = position;
+        this.valueHistory = valueHistory;
+        this.statsRecord = statsRecord;
+    }
 
     /**Constructor of a Player.
      * @param name A String with the player's name.
@@ -26,15 +50,6 @@ public class Player implements IDBConnection {
      * @param position A Position in which the player usually plays.
      * @param valueHistory A float[] containing the player's valuer history.
      */
-
-    public Player(String name, String surname, String shirtName, int shirtNumber, Position position, float[] valueHistory) {
-        this.name = name;
-        this.surname = surname;
-        this.shirtName = shirtName;
-        this.shirtNumber = shirtNumber;
-        this.position = position;
-        this.valueHistory = valueHistory;
-    }
 
     /** Constructor used for testing the class "Squad.java".
      */
@@ -48,14 +63,7 @@ public class Player implements IDBConnection {
 
     @Override
     public String toString() {
-        return "Player{" +
-                "name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", shirtName='" + shirtName + '\'' +
-                ", shirtNumber=" + shirtNumber +
-                ", position=" + position +
-                ", valueHistory=" + valueHistory +
-                '}';
+        return shirtName+" ["+shirtNumber+"]";
     }
 
     public Position getPosition() {
@@ -82,6 +90,10 @@ public class Player implements IDBConnection {
         return shirtNumber;
     }
 
+    public ArrayList<Statistic> getStatsRecord() {
+        return statsRecord;
+    }
+
     /**Provides the ID number with which the Player is registered in the Database.
      * @return An integer with the ID number.
      */
@@ -106,6 +118,18 @@ public class Player implements IDBConnection {
             }
         }
         return club;
+    }
+
+    /**Provides a list with the points obtained by the player for each of the rounds of the league.
+     * @return An ArrayList<Integer> with the list of points.
+     */
+
+    public ArrayList<Integer> getPointsRecord(){
+        ArrayList<Integer> pointsRecord = new ArrayList<>();
+        for(Statistic s : statsRecord){
+            pointsRecord.add(s.getPoints(position));
+        }
+        return pointsRecord;
     }
 
 }
