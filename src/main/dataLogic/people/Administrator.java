@@ -4,29 +4,29 @@ package main.dataLogic.people;
  * @author Iker Villena Ona.
  */
 
-public class Administrator {
+public class Administrator extends User{
 
-    String username;
-    String password;
+    boolean fullAccess;
 
-    public Administrator(String username, String password) {
-        this.username = username;
-        this.password = password;
+    public Administrator(String username, String password, boolean fullAccess) {
+        super(username, password);
+        this.fullAccess = fullAccess;
     }
 
-    public String getUsername() {
-        return username;
+    /**Provides the text that needs to be shown to the Administrator when he has correctly logged in.
+     * @return String with the log in text.
+     */
+
+    @Override
+    public String getLoginText() {
+        if(fullAccess){
+            return "Contraseña correcta. Bienvenido, tienes acceso completo.";
+        } else{
+            return "Contraseña correcta. Bienvenido, tienes acceso limitado.";
+        }
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public boolean isFullAccess() {
+        return fullAccess;
     }
 }

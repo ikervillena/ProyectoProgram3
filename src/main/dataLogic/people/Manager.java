@@ -12,10 +12,8 @@ import java.util.ArrayList;
  * @author Iker Villena Ona.
  */
 
-public class Manager {
+public class Manager extends User{
 
-    String username;
-    String password;
     String name;
     String surname;
 
@@ -27,8 +25,7 @@ public class Manager {
      */
 
     public Manager(String username, String password, String name, String surname) {
-        this.username = username;
-        this.password = password;
+        super(username, password);
         this.name = name;
         this.surname = surname;
     }
@@ -86,52 +83,21 @@ public class Manager {
         return leaguesList;
     }
 
-    /**Gets the username of the manager.
-     * @return String with the username.
-     */
-
-    public String getUsername() {
-        return username;
-    }
-
-    /**Sets a new username for the manager.
-     * @param username the username for the manager.
-     */
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    /**Gets the password of the manager.
-     * @return String with the password.
-     */
-
-    public String getPassword() {
-        return password;
-    }
-
-    /**Sets a new password for the manager.
-     * @param password the password for the manager.
-     */
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getSurname() {
         return surname;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    /**Provides the text that needs to be shown to the Manager when he has correctly logged in.
+     * @return String with the log in text.
+     */
+
+    @Override
+    public String getLoginText() {
+        return "Contraseña correcta, ¡Bienvenido "+name+"!";
     }
 
     /**This method transforms the object Manager into a String.

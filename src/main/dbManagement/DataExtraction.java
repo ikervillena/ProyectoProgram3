@@ -6,6 +6,7 @@ import main.dataLogic.league.Club;
 import main.dataLogic.league.League;
 import main.dataLogic.league.Squad;
 import main.dataLogic.league.Team;
+import main.dataLogic.people.Administrator;
 import main.dataLogic.people.attributes.Position;
 import main.dataLogic.people.Manager;
 import main.dataLogic.people.Player;
@@ -557,6 +558,22 @@ public class DataExtraction {
             System.out.println(e.getMessage());
         }
         return statisticsList;
+    }
+
+    public static ArrayList<Administrator> getAllAdministrators(){
+        ArrayList<Administrator> listAdmins = new ArrayList<>();
+        String sql = "select username, password, fullaccess from administrator";
+        try (Connection conn = DBManager.connect(); Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            listAdmins.add(new Administrator(rs.getString("username"),rs.getString("password"),
+                    rs.getBoolean("fullaccess")));
+            while (rs.next()) {
+
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return listAdmins;
     }
 
 }
