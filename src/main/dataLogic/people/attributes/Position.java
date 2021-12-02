@@ -4,7 +4,7 @@ import main.dbManagement.DataExtraction;
 
 import java.util.ArrayList;
 
-/**Represents a position in which a player usuarlly plays: goalkeeper/defender/midfielder/forward.
+/**Represents a position in which a player usually plays: goalkeeper/defender/midfielder/forward.
  * @author Iker Villena Ona.
  */
 
@@ -39,6 +39,25 @@ public class Position {
             }
         }
         return position;
+    }
+
+    /**Provides the position's index for ordering a positions list.
+     * @return Integer with the index of a position in a position's list.
+     */
+
+    public int getIndex(){
+        switch(name){
+            case "Goalkeeper":
+                return 1;
+            case "Defense":
+                return 2;
+            case "Midfielder":
+                return 3;
+            case "Forward":
+                return 4;
+            default:
+                return 5;
+        }
     }
 
     @Override
