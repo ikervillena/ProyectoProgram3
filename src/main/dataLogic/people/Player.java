@@ -42,19 +42,61 @@ public class Player implements IDBConnection {
         this.statsRecord = statsRecord;
     }
 
-    /**Constructor of a Player.
-     * @param name A String with the player's name.
-     * @param surname A String with the player's surname.
-     * @param shirtName A String with the player's shirt name.
-     * @param shirtNumber An integer with the player's shirt number.
-     * @param position A Position in which the player usually plays.
-     * @param valueHistory A float[] containing the player's valuer history.
-     */
-
     /** Constructor used for testing the class "Squad.java".
      */
 
     public Player() {
+    }
+
+    /**provides the club for which the player plays.
+     * @return The club where the player plays.
+     */
+
+    public Club getClub(){
+        Club club = null;
+        for(Club c : DataExtraction.getAllClubs()){
+            for(Player p : c.getPlayersList()){
+                if(p.getShirtName().equals(shirtName)){
+                    club = c;
+                    break;
+                }
+            }
+        }
+        return club;
+    }
+
+    /**Provides a list with the points obtained by the player for each of the rounds of the league.
+     * @return An ArrayList<Integer> with the list of points.
+     */
+
+    public ArrayList<Integer> getPointsRecord(){
+        ArrayList<Integer> pointsRecord = new ArrayList<>();
+        for(Statistic s : statsRecord){
+            pointsRecord.add(s.getPoints(position));
+        }
+        return pointsRecord;
+    }
+
+    /**Provides the total points obtained by a player in a specific round of the league.
+     * @param roundNum Integer with the round number.
+     * @return Integer with the number of points of player obtained by the player.
+     */
+
+    public int getPoints(int roundNum){
+        if(roundNum > 0 && roundNum <= getPointsRecord().size()){
+            return getPointsRecord().get(roundNum-1);
+        } else{
+            return 0;
+        }
+    }
+
+    /**Provides the ID number with which the Player is registered in the Database.
+     * @return An integer with the ID number.
+     */
+
+    @Override
+    public int getID() {
+        return DataExtraction.getID("player","player_id","shirtname",shirtName);
     }
 
     /**This method transforms the object Player into a String.
@@ -92,44 +134,6 @@ public class Player implements IDBConnection {
 
     public ArrayList<Statistic> getStatsRecord() {
         return statsRecord;
-    }
-
-    /**Provides the ID number with which the Player is registered in the Database.
-     * @return An integer with the ID number.
-     */
-
-    @Override
-    public int getID() {
-        return DataExtraction.getID("player","player_id","shirtname",shirtName);
-    }
-
-    /**provides the club for which the player plays.
-     * @return The club where the player plays.
-     */
-
-    public Club getClub(){
-        Club club = null;
-        for(Club c : DataExtraction.getAllClubs()){
-            for(Player p : c.getPlayersList()){
-                if(p.getShirtName().equals(shirtName)){
-                    club = c;
-                    break;
-                }
-            }
-        }
-        return club;
-    }
-
-    /**Provides a list with the points obtained by the player for each of the rounds of the league.
-     * @return An ArrayList<Integer> with the list of points.
-     */
-
-    public ArrayList<Integer> getPointsRecord(){
-        ArrayList<Integer> pointsRecord = new ArrayList<>();
-        for(Statistic s : statsRecord){
-            pointsRecord.add(s.getPoints(position));
-        }
-        return pointsRecord;
     }
 
 }

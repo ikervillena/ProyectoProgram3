@@ -150,6 +150,11 @@ public class Team implements IDBConnection, IPositionClassification {
                 '}';
     }
 
+    /**Provides the list of players of the Team that play in a specific Position.
+     * @param positionName Position in which players of the list play.
+     * @return ArrayList<Player> with the list of players of the team that play in the Position provided as a parameter.
+     */
+
     private ArrayList<Player> getPlayers(String positionName){
         ArrayList<Player> players = new ArrayList<>();
         for(Player p : playersList){
@@ -158,6 +163,33 @@ public class Team implements IDBConnection, IPositionClassification {
             }
         }
         return players;
+    }
+
+    /**This method provides the total points obtained by the Team in a specific round of the league.
+     * @param roundNumber Integer with the round number.
+     * @return Integer with the total points obtained by the Team in the round provided as a parameter.
+     */
+
+    public int getPoints(int roundNumber){
+        int totalPoints = 0;
+        if(roundNumber>0 && roundNumber <= squadRecord.size()){
+            for(Player p : squadRecord.get(roundNumber-1).getPlayersList()){
+                totalPoints += p.getPoints(roundNumber);
+            }
+        }
+        return totalPoints;
+    }
+
+    /**Provides the total points obtained by a Team in the League.
+     * @return Integer with the total points obtained.
+     */
+
+    public int getTotalPoints(){
+        int totalPoints = 0;
+        for(int i = 0; i < squadRecord.size(); i++){
+            totalPoints+= getPoints(i+1);
+        }
+        return totalPoints;
     }
 
     @Override
