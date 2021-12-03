@@ -1,5 +1,6 @@
 package main.businessLogic;
 
+import main.businessLogic.interfaces.IComparable;
 import main.businessLogic.interfaces.IDBConnection;
 import main.dbManagement.DataExtraction;
 
@@ -7,7 +8,7 @@ import main.dbManagement.DataExtraction;
  * @author Iker Villena Ona.
  */
 
-public class TacticalFormation implements IDBConnection {
+public class TacticalFormation implements IDBConnection, IComparable<TacticalFormation> {
 
     int numDefenders;
     int numMidfielders;
@@ -51,5 +52,32 @@ public class TacticalFormation implements IDBConnection {
     @Override
     public int getID() {
         return DataExtraction.getFormationID(numDefenders, numMidfielders, numForwards);
+    }
+
+    /**Compares two tactical formations, taking into account the number of players in each position (defenders-midfielders-forwards, in that order)
+     * @param object TacticalFormation to compare with.
+     * @return Integer with the value 1 if this object is bigger(more defenders or, if same number of defenders, more midfielders), -1 if it is smaller
+     * or 0 if they are equal.
+     */
+
+    @Override
+    public int compareTo(TacticalFormation object) {
+        if(this.numDefenders == object.getNumDefenders()){
+            if(this.numMidfielders == object.getNumMidfielders()){
+                return 0;
+            }else{
+                if(this.numMidfielders > object.getNumMidfielders()){
+                    return 1;
+                } else{
+                    return -1;
+                }
+            }
+        } else{
+            if(this.numDefenders > object.getNumDefenders()){
+                return 1;
+            } else{
+                return -1;
+            }
+        }
     }
 }
