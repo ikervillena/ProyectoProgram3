@@ -108,6 +108,20 @@ public class Player implements IDBConnection {
         return shirtName+" ["+shirtNumber+"]";
     }
 
+
+    @Override
+    public boolean equals(Object obj) {
+        boolean isEqual = false;
+        if(obj instanceof Player){
+            Player p = (Player) obj;
+            if(p.getName().equals(this.name)&&p.getSurname().equals(this.surname)&&p.getShirtName().equals(this.shirtName)
+            && p.getShirtNumber()==this.shirtNumber){
+                isEqual = true;
+            }
+        }
+        return isEqual;
+    }
+
     public Position getPosition() {
         return position;
     }

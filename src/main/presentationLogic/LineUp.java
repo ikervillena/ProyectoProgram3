@@ -1,35 +1,25 @@
 package main.presentationLogic;
 
-import java.awt.EventQueue;
+import java.awt.*;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import java.awt.CardLayout;
-import java.awt.GridLayout;
-import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
-import javax.swing.JLabel;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
-import javax.swing.border.LineBorder;
 
+import main.businessLogic.Algorithm;
 import main.businessLogic.TacticalFormation;
 import main.dataLogic.league.Squad;
 import main.dataLogic.league.Team;
 import main.dataLogic.people.Player;
+import main.dbManagement.DataDeletion;
 import main.dbManagement.DataExtraction;
 import main.dbManagement.DataInsertion;
 
-import java.awt.SystemColor;
-import javax.swing.JComboBox;
-import java.awt.Font;
-import javax.swing.JList;
-import javax.swing.SwingConstants;
-import javax.swing.JScrollPane;
+/**This frame allows the user to select a squad for the next round of the league.
+ * @author Iker Villena Ona.
+ */
 
 public class LineUp extends ManagerView {
 
@@ -65,7 +55,7 @@ public class LineUp extends ManagerView {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    LineUp frame = new LineUp(DataExtraction.getTeams(0).get(0));
+                    LineUp frame = new LineUp(DataExtraction.getTeams(0).get(1));
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -81,7 +71,6 @@ public class LineUp extends ManagerView {
         this.team = team;
         availablePlayers = team.getPlayersList();
         alignedPlayers = new ArrayList<>();
-        System.out.println(team.getSquadRecord().size());
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         contentPane = new JPanel();
@@ -132,8 +121,10 @@ public class LineUp extends ManagerView {
         pnlGoalkeeper.add(btnGoalkeeper);
 
         lblSoccerPitch = new JLabel("");
-        lblSoccerPitch.setIcon(new ImageIcon("C:\\Users\\Alumno\\Downloads\\soccerpich.jpg"));
         lblSoccerPitch.setBounds(15, 16, 445, 479);
+        ImageIcon image = new ImageIcon("images/SoccerPitch.jpg");
+        lblSoccerPitch.setIcon(new ImageIcon(image.getImage().getScaledInstance(lblSoccerPitch.getWidth(),lblSoccerPitch.getHeight(),
+                Image.SCALE_DEFAULT)));
         contentPane.add(lblSoccerPitch);
 
         cmbxFormations = new JComboBox();
@@ -173,7 +164,6 @@ public class LineUp extends ManagerView {
                 }
                 Player alignedPlayer = (Player) cmbxPlayers.getSelectedItem();
                 alignedPlayers.add(alignedPlayer);
-                availablePlayers.remove(alignedPlayer);
                 fulFillPanels();
                 btnAddPlayer.setEnabled(false);
                 panel.setVisible(false);
@@ -212,25 +202,31 @@ public class LineUp extends ManagerView {
         btnSavesquad = new JButton("Guardar alineaci\u00F3n");
         btnSavesquad.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // INSERT SQUAD
+                // Insert Squad:
+                DataDeletion.delete("squad","team_id",team.getID(),"round_num",DataExtraction.getNextRound());
                 DataInsertion.insertSquad(team, new Squad(DataExtraction.getNextRound(),chosenFormation, alignedPlayers));
+                JOptionPane.showMessageDialog(null,"La alineación ha sido guardada correctamente.");
             }
         });
         btnSavesquad.setBounds(475, 466, 338, 29);
         contentPane.add(btnSavesquad);
+        setUp();
     }
 
     private void setUp(){
-        alignedPlayers = new ArrayList<>();
         availablePlayers = team.getPlayersList();
-        chosenFormation = DataExtraction.getAllFormations().get(0);
+        //Formation by default:
+        chosenFormation = DataExtraction.getAllFormations().get(1);
+        alignedPlayers = new ArrayList<>();
         for(Squad s : team.getSquadRecord()){
             if(s.getRoundNum() == DataExtraction.getNextRound()){
                 alignedPlayers = s.getPlayersList();
                 chosenFormation = s.getFormation();
             }
         }
+        cmbxFormations.setSelectedItem(chosenFormation);
         fulFillPanels();
+        setLists();
     }
 
     private void fulFillPanels(){
@@ -322,15 +318,15 @@ public class LineUp extends ManagerView {
     private void setCmbxPlayers(JButton button){
         panel.setVisible(true);
         if(pnlGoalkeeper.isAncestorOf(button)){
-            setPlayersModel(getPositionPlayers("Goalkeeper", availablePlayers));
+            setPlayersModel(getPositionPlayers("Goalkeeper", getSubstitutes()));
         } else{
             if(pnlDefenders.isAncestorOf(button)){
-                setPlayersModel(getPositionPlayers("Defense", availablePlayers));
+                setPlayersModel(getPositionPlayers("Defense", getSubstitutes()));
             } else{
                 if(pnlMidfielders.isAncestorOf(button)){
-                    setPlayersModel(getPositionPlayers("Midfielder", availablePlayers));
+                    setPlayersModel(getPositionPlayers("Midfielder", getSubstitutes()));
                 }else{
-                    setPlayersModel(getPositionPlayers("Forward", availablePlayers));
+                    setPlayersModel(getPositionPlayers("Forward", getSubstitutes()));
                 }
             }
         }
@@ -351,17 +347,28 @@ public class LineUp extends ManagerView {
         return player;
     }
 
+    /**Provides a list of players that are available for the match but they are not chosen for the line-up (they are substitutes).
+     * @return ArrayList<Player> with the list of substitutes.
+     */
+
     private ArrayList<Player> getSubstitutes(){
-        ArrayList<Player> unalignedPlayers = availablePlayers;
+        ArrayList<Player> unalignedPlayers = new ArrayList<>();
+        for(Player p : availablePlayers){
+            unalignedPlayers.add(p);
+        }
         for(Player p : alignedPlayers){
             unalignedPlayers.remove(p);
         }
         return unalignedPlayers;
     }
 
+    /**Fulfills "listStarters" with the players aligned and "listSubstitutes" with the substitutes (available players that
+     * are not aligned).
+     */
 
     private void setLists(){
         DefaultListModel<Player> model1 = new DefaultListModel<>();
+        Algorithm.quickSortPlayers(alignedPlayers,0,alignedPlayers.size()-1);
         for (Player p : alignedPlayers){
             model1.addElement(p);
         }

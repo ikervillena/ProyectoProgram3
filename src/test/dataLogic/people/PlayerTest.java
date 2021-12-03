@@ -28,6 +28,9 @@ public class PlayerTest {
         player2 = new Player("b","a","ba",2,DataExtraction.getPositions().get(1), null, statsRecord);
     }
 
+    /**Tests the getID() method.
+     */
+
     @Test
     public void getID(){
         for(Player p : DataExtraction.getAllPlayers()){
@@ -64,6 +67,21 @@ public class PlayerTest {
         assertTrue(player1.getPoints(2) == 6);
         assertTrue(player2.getPoints(1) == 6);
         assertTrue(player2.getPoints(2) == 4);
+    }
+
+    /**Tests the equals() method.
+     */
+
+    @Test
+    public void equals(){
+        ArrayList<Player> p1 = DataExtraction.getAllPlayers();
+        ArrayList<Player> p2 = DataExtraction.getAllPlayers();
+        for(int i = 0 ; i < p1.size(); i++){
+            assertEquals(p1.get(i),p2.get(i));
+            if(i<p1.size()-1){
+                assertNotEquals(p1.get(i),p2.get(i+1));
+            }
+        }
     }
 
 }

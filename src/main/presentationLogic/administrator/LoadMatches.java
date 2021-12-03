@@ -21,6 +21,10 @@ import java.awt.event.ActionEvent;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+/**This frame allows the administrators to save player's statistics to the DataBase.
+ * @author Iker Villena Ona.
+ */
+
 public class LoadMatches extends ManagerView implements INewData {
 
     private JPanel contentPane;
@@ -223,6 +227,7 @@ public class LoadMatches extends ManagerView implements INewData {
      * @return A boolean with the value "true" if the information is correct and with the value "false" if it is not.
      */
 
+    //checkFields() method is still unresolved.
     @Override
     public boolean checkFields() {
         return true;
@@ -295,7 +300,5 @@ public class LoadMatches extends ManagerView implements INewData {
         setTableHeightAndCentreText(tblHomePlayers);
         setTableHeightAndCentreText(tblAwayPlayers);
     }
-
-    // public boolean checkFields();
 
 }

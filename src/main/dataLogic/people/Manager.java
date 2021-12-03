@@ -83,14 +83,6 @@ public class Manager extends User{
         return leaguesList;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
     /**Provides the text that needs to be shown to the Manager when he has correctly logged in.
      * @return String with the log in text.
      */
@@ -98,6 +90,18 @@ public class Manager extends User{
     @Override
     public String getLoginText() {
         return "Contraseña correcta, ¡Bienvenido "+name+"!";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        boolean isEqual = false;
+        if(obj instanceof Manager){
+            Manager m = (Manager) obj;
+            if(m.getUsername().equals(username)&&m.getPassword().equals(password)&&m.getName().equals(name)&&m.getSurname().equals(surname)){
+                isEqual = true;
+            }
+        }
+        return isEqual;
     }
 
     /**This method transforms the object Manager into a String.
@@ -113,4 +117,13 @@ public class Manager extends User{
                 ", surname='" + surname + '\'' +
                 '}';
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
 }

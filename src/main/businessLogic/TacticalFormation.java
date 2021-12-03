@@ -80,4 +80,17 @@ public class TacticalFormation implements IDBConnection, IComparable<TacticalFor
             }
         }
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        boolean isEqual = false;
+        if(obj instanceof TacticalFormation){
+            TacticalFormation formation = (TacticalFormation) obj;
+            if(formation.getNumDefenders()==this.numDefenders && formation.getNumMidfielders() == this.numMidfielders &&
+            formation.getNumForwards() == this.numForwards){
+                isEqual = true;
+            }
+        }
+        return isEqual;
+    }
 }

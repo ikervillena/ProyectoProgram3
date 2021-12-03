@@ -1,8 +1,13 @@
 package test.dataLogic.people.attributes;
 
+import main.businessLogic.Algorithm;
+import main.dataLogic.people.Player;
 import main.dataLogic.people.attributes.Position;
+import main.dbManagement.DataExtraction;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.ArrayList;
 
 /** This class has the aim of testing the methods implemented in the class "Position.java".
  * @author Iker Villena Ona.

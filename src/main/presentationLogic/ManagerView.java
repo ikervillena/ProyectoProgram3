@@ -1,7 +1,5 @@
 package main.presentationLogic;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -14,7 +12,12 @@ import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class ManagerView extends JFrame {
+/**This class sets the template of all the frames that are aimed at managers (not administrators).
+ * It sets the size, characteristics and the menu that is going to be needed in other frames.
+ * @author Iker Villena Ona.
+ */
+
+public abstract class ManagerView extends JFrame {
 
     private JPanel contentPane;
     private JMenuBar menuBar;
@@ -23,26 +26,6 @@ public class ManagerView extends JFrame {
     private JMenuItem mntmExit;
     private JMenuItem mntmMainMenu;
 
-
-    /**
-     * Launch the application.
-     */
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    ManagerView frame = new ManagerView();
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    /**
-     * Create the frame.
-     */
     public ManagerView() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 850, 600);
@@ -88,6 +71,10 @@ public class ManagerView extends JFrame {
         setContentPane(contentPane);
         contentPane.setLayout(null);
     }
+
+    /**This method disposes this frame and sets visible the one provided as a parameter.
+     * @param newView JFrame that needs to be set visible.
+     */
 
     public void goToView(JFrame newView){
         newView.setVisible(true);
