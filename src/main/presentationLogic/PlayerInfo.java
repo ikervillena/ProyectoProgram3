@@ -41,7 +41,7 @@ public class PlayerInfo extends ManagerView {
     private JLabel lblSurname;
     private JLabel lblPosition;
     private JLabel lblShirtnumber;
-
+    private JButton btnSeevalue;
 
 
     /**
@@ -99,6 +99,7 @@ public class PlayerInfo extends ManagerView {
         listPlayers.addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
                 showPlayer();
+                btnSeevalue.setEnabled(true);
             }
         });
         scrollPane.setViewportView(listPlayers);
@@ -142,6 +143,17 @@ public class PlayerInfo extends ManagerView {
         lblShirtnumber = new JLabel("");
         lblShirtnumber.setBounds(573, 145, 171, 20);
         pnlResults.add(lblShirtnumber);
+
+        btnSeevalue = new JButton("Evoluci\u00F3n de valor");
+        btnSeevalue.setEnabled(false);
+        btnSeevalue.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new PlayerValue((Player) listPlayers.getSelectedValue()).setVisible(true);
+                btnSeevalue.setEnabled(false);
+            }
+        });
+        btnSeevalue.setBounds(427, 219, 356, 61);
+        pnlResults.add(btnSeevalue);
     }
 
     /**Fills the list with the players that match with the search.
@@ -155,7 +167,7 @@ public class PlayerInfo extends ManagerView {
         listPlayers.setModel(model);
     }
 
-    /**Show the selected player's attributes, setting the needed text in the proper labels.
+    /**Shows the selected player's attributes, setting the needed text in the proper labels.
      */
 
     private void showPlayer(){
@@ -167,5 +179,4 @@ public class PlayerInfo extends ManagerView {
             lblShirtnumber.setText(String.valueOf(selectedPlayer.getShirtNumber()));
         }
     }
-
 }
