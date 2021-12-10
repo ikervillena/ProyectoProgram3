@@ -576,4 +576,19 @@ public class DataExtraction {
         return listAdmins;
     }
 
+    public static ArrayList<Player> searchPlayer(String clue){
+        ArrayList<Player> playersList = new ArrayList<>();
+        String sql = "select player_id from player where name like '%"+clue+"%' OR surname like '%"+clue+"%' OR " +
+                "shirtname like '%"+clue+"%'";
+        try (Connection conn = DBManager.connect(); Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                playersList.add(getPlayer(rs.getInt("player_id")));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return playersList;
+    }
+
 }
