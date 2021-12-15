@@ -4,6 +4,8 @@ import java.awt.EventQueue;
 
 import javax.swing.JPanel;
 
+import main.dataLogic.league.League;
+import main.dataLogic.league.Team;
 import main.dataLogic.people.Player;
 import main.dbManagement.DataExtraction;
 
@@ -25,6 +27,7 @@ import javax.swing.event.ListSelectionEvent;
 
 public class PlayerInfo extends ManagerView {
 
+    private League league;
     private JPanel contentPane;
     private JPanel pnlSearch;
     private JButton btnBtnsearch;
@@ -32,16 +35,18 @@ public class PlayerInfo extends ManagerView {
     private JPanel pnlResults;
     private JScrollPane scrollPane;
     private JList listPlayers;
-    private JButton btnShowplayer;
+    private JButton btnSign;
     private JLabel lblName1;
     private JLabel lblSurname1;
     private JLabel lblPosition1;
     private JLabel lblShirtNumber1;
+    private JLabel lblTeam1;
     private JLabel lblName;
     private JLabel lblSurname;
     private JLabel lblPosition;
     private JLabel lblShirtnumber;
     private JButton btnSeevalue;
+    private JLabel lblTeam;
 
 
     /**
@@ -51,7 +56,7 @@ public class PlayerInfo extends ManagerView {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    PlayerInfo frame = new PlayerInfo();
+                    PlayerInfo frame = new PlayerInfo(DataExtraction.getAllLeagues().get(0));
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -63,8 +68,9 @@ public class PlayerInfo extends ManagerView {
     /**
      * Create the frame.
      */
-    public PlayerInfo() {
+    public PlayerInfo(League league) {
 
+        this.league = league;
         pnlSearch = new JPanel();
         pnlSearch.setBounds(15, 16, 798, 120);
         getContentPane().add(pnlSearch);
@@ -100,13 +106,20 @@ public class PlayerInfo extends ManagerView {
             public void valueChanged(ListSelectionEvent e) {
                 showPlayer();
                 btnSeevalue.setEnabled(true);
+                btnSign.setEnabled(true);
             }
         });
         scrollPane.setViewportView(listPlayers);
 
-        btnShowplayer = new JButton("Ver ficha");
-        btnShowplayer.setBounds(233, 298, 115, 29);
-        pnlResults.add(btnShowplayer);
+        btnSign = new JButton("Fichar");
+        btnSign.setEnabled(false);
+        btnSign.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new BidMaker((Player) listPlayers.getSelectedValue(), league, DataExtraction.getManager("ikervillena")).setVisible(true);;
+            }
+        });
+        btnSign.setBounds(427, 284, 356, 43);
+        pnlResults.add(btnSign);
 
         lblName1 = new JLabel("Nombre:");
         lblName1.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -150,10 +163,20 @@ public class PlayerInfo extends ManagerView {
             public void actionPerformed(ActionEvent e) {
                 new PlayerValue((Player) listPlayers.getSelectedValue()).setVisible(true);
                 btnSeevalue.setEnabled(false);
+                btnSign.setEnabled(false);
             }
         });
-        btnSeevalue.setBounds(427, 219, 356, 61);
+        btnSeevalue.setBounds(427, 228, 356, 43);
         pnlResults.add(btnSeevalue);
+
+        lblTeam1 = new JLabel("Equipo:");
+        lblTeam1.setFont(new Font("Tahoma", Font.BOLD, 16));
+        lblTeam1.setBounds(427, 181, 117, 20);
+        pnlResults.add(lblTeam1);
+
+        lblTeam = new JLabel("");
+        lblTeam.setBounds(573, 181, 171, 20);
+        pnlResults.add(lblTeam);
     }
 
     /**Fills the list with the players that match with the search.
@@ -177,6 +200,12 @@ public class PlayerInfo extends ManagerView {
             lblSurname.setText(selectedPlayer.getSurname());
             lblPosition.setText(selectedPlayer.getPosition().getName());
             lblShirtnumber.setText(String.valueOf(selectedPlayer.getShirtNumber()));
+            Team team = selectedPlayer.getTeam(league);
+            if(team == null){
+                lblTeam.setText("Sin equipo");
+            } else{
+                lblTeam.setText(team.getManager().getUsername());
+            }
         }
     }
 }

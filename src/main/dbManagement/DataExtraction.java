@@ -1,5 +1,6 @@
 package main.dbManagement;
 
+import main.businessLogic.Bid;
 import main.businessLogic.Statistic;
 import main.businessLogic.TacticalFormation;
 import main.dataLogic.league.Club;
@@ -340,7 +341,7 @@ public class DataExtraction {
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 int team_id = rs.getInt("team_id");
-                teamsList.add(new Team(getManager(rs.getString("username")),getTeamPlayers(team_id),getSquadRecord(team_id)));
+                teamsList.add(new Team(team_id,getManager(rs.getString("username")),getTeamPlayers(team_id),getSquadRecord(team_id)));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -590,5 +591,37 @@ public class DataExtraction {
         }
         return playersList;
     }
+
+    public static Team getTeam(int teamID){
+        Team team = null;
+        String sql = "select username, team_id from team where team_id = "+teamID;
+        try (Connection conn = DBManager.connect(); Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                int team_id = rs.getInt("team_id");
+                team = new Team(team_id,getManager(rs.getString("username")),getTeamPlayers(team_id),getSquadRecord(team_id));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return team;
+    }
+
+    public static ArrayList<Bid> getTeamBids(Team team){
+        ArrayList<Bid> bidsList = new ArrayList<>();
+        String sql = "SELECT from_team, to_team, player_id, fee FROM bid WHERE from_team = "+team.getID()+" OR to_team = "
+                + team.getID();
+        try (Connection conn = DBManager.connect(); Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                bidsList.add(new Bid(getTeam(rs.getInt("from_team")),getTeam(rs.getInt("to_team")),
+                        getPlayer(rs.getInt("player_id")),rs.getFloat("fee")));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return bidsList;
+    }
+
 
 }

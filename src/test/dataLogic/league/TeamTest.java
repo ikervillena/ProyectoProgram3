@@ -52,8 +52,11 @@ public class TeamTest {
         ArrayList<Squad> squadsList = new ArrayList<>();
         squadsList.add(new Squad(1, DataExtraction.getAllFormations().get(0),playersList));
         squadsList.add(new Squad(2,DataExtraction.getAllFormations().get(1),playersList));
-        team = new Team(null,null,squadsList);
+        team = new Team(0,null,null,squadsList);
     }
+
+    /**Tests the getPoints(int) method.
+     */
 
     @Test
     public void getPoints(){
@@ -62,9 +65,10 @@ public class TeamTest {
         assertEquals(pointsRound1,team.getPoints(1));
         int pointsRound2 = player1.getPoints(2)+ player2.getPoints(2);
         assertEquals(pointsRound2,team.getPoints(2));
-        System.out.println("Player 1: "+player1.getPoints(1)+" - "+player1.getPoints(2));
-        System.out.println("Player 2: "+player2.getPoints(1)+" - "+player2.getPoints(2));
     }
+
+    /**Tests the getTotalPoints() method.
+     */
 
     @Test
     public void getTotalPoints(){

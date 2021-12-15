@@ -44,7 +44,7 @@ public class PlayerValue extends JFrame {
      * Create the frame.
      */
     public PlayerValue(Player player) {
-        this.valueEvolution =Arrays.copyOfRange(player.getValueHistory(),0,DataExtraction.getNextRound());
+        this.valueEvolution =Arrays.copyOfRange(player.getValueHistory(),0,player.getStatsRecord().size()+1);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 500, 500);
         setLocationRelativeTo(null);

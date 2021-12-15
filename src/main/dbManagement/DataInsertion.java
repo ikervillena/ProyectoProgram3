@@ -1,5 +1,6 @@
 package main.dbManagement;
 
+import main.businessLogic.Bid;
 import main.businessLogic.Statistic;
 import main.dataLogic.league.League;
 import main.dataLogic.league.Squad;
@@ -91,15 +92,15 @@ public class DataInsertion {
 
     /**Saves the statistics of a player in the Database.
      * @param statistic A Statistic of a player in a specific match.
-     * @param playerID Integer with the player's ID number.
+     * @param player A Player whose statistics must be saved to the DataBase.
      */
 
-    public static void insertStatistic(Statistic statistic, int playerID) {
+    public static void insertStatistic(int roundNum, Player player, Statistic statistic) {
         String sql = "INSERT INTO statistic(round_num, player_id, played, goals, assists, goalsagainst, yellowcards, redcard) " +
                 "VALUES(?,?,?,?,?,?,?,?)";
         try (Connection conn = DBManager.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)){
-            pstmt.setInt(1,1);
-            pstmt.setInt(2, playerID);
+            pstmt.setInt(1,roundNum);
+            pstmt.setInt(2, player.getID());
             pstmt.setBoolean(3,statistic.isPlayed());
             pstmt.setInt(4,statistic.getNumGoals());
             pstmt.setInt(5,statistic.getNumAssists());
@@ -149,6 +150,43 @@ public class DataInsertion {
             System.out.println(e.getMessage());
         }
         insertAlignment(team, squad.getPlayersList());
+    }
+
+    /**Saves the new value of a player after a specific round of the league.
+     * @param player Player whose value must be saved.
+     * @param roundNum Integer with the round number.
+     * @param value Float with the new value of the player.
+     */
+
+    public static void insertValue(Player player, int roundNum, float value){
+        String sql = "INSERT INTO value(player_id,round_num,value) VALUES(?,?,?)";
+        try (Connection conn = DBManager.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)){
+            pstmt.setInt(1,player.getID());
+            pstmt.setInt(2,roundNum);
+            pstmt.setFloat(3,value);
+            pstmt.executeUpdate();
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    /**Inserts a bid into the DataBase.
+     * @param bid Bid that needs to be saved
+     */
+
+    public static void insertBid(Bid bid){
+        String sql = "INSERT INTO bid(from_team,to_team,player_id,fee) VALUES(?,?,?,?)";
+        try (Connection conn = DBManager.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)){
+            pstmt.setInt(1,bid.getInterestedTeam().getID());
+            pstmt.setInt(2,bid.getCurrentTeam().getID());
+            pstmt.setInt(3,bid.getPlayer().getID());
+            pstmt.setFloat(4,bid.getFee());
+            pstmt.executeUpdate();
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
 }

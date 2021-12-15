@@ -1,11 +1,15 @@
 package test.dataLogic.people;
 
 import main.businessLogic.Statistic;
+import main.dataLogic.league.League;
+import main.dataLogic.league.Team;
+import main.dataLogic.people.Manager;
 import main.dataLogic.people.Player;
 import main.dbManagement.DataExtraction;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
@@ -24,7 +28,8 @@ public class PlayerTest {
         statsRecord.add(new Statistic(true,0,2,3,1,false));
         statsRecord.add(new Statistic(true,0,0,0,0,true));
         ArrayList<Player> playersList = new ArrayList<>();
-        player1 = new Player("a","b","ab",10, DataExtraction.getPositions().get(0),null, statsRecord);
+        float[] valueRecord = {10};
+        player1 = new Player("a","b","ab",10, DataExtraction.getPositions().get(0), valueRecord, statsRecord);
         player2 = new Player("b","a","ba",2,DataExtraction.getPositions().get(1), null, statsRecord);
     }
 
@@ -82,6 +87,38 @@ public class PlayerTest {
                 assertNotEquals(p1.get(i),p2.get(i+1));
             }
         }
+    }
+
+    /**Tests the getNewValue(int) method.
+     */
+
+    @Test
+    public void getNewValue(){
+        setUp();
+        for(int i = -20; i<20; i++){
+            assertTrue(player1.getNewValue(i)>0);
+            System.out.println(i+": "+player1.getNewValue(i));
+        }
+    }
+
+    /**Tests the getTeam(League) method.
+     */
+
+    @Test
+    public void getTeam(){
+        setUp();
+        ArrayList<Player> playersList1 = new ArrayList<>();
+        playersList1.add(player1);
+        ArrayList<Player> playersList2 = new ArrayList<>();
+        playersList2.add(player2);
+        Team team1 = new Team(0,null,playersList1,null);
+        Team team2= new Team(0,null,playersList2,null);
+        ArrayList<Team> teamsList = new ArrayList<>();
+        teamsList.add(team1);
+        teamsList.add(team2);
+        League league = new League(null,null,teamsList);
+        assertEquals(team1,player1.getTeam(league));
+        assertEquals(team2,player2.getTeam(league));
     }
 
 }

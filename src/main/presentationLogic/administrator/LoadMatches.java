@@ -233,7 +233,7 @@ public class LoadMatches extends ManagerView implements INewData {
         return true;
     }
 
-    /**Extracts information from the table and saves the statistics of a club's players to the Database.
+    /**Extracts information from the table and saves the statistics of a club's players and its value evolution to the Database.
      * @param model DefaultTableModel containing the statistics for each player.
      * @param club Club where the players of the table play.
      * @param receivedGoals Integer with the goals received by the club.
@@ -241,14 +241,16 @@ public class LoadMatches extends ManagerView implements INewData {
 
     public void saveStatistics(DefaultTableModel model,Club club, int receivedGoals){
         for(int i = 0; i < model.getRowCount(); i++){
-            int playerID = club.getPlayersList().get(i).getID();
+            int roundNum = DataExtraction.getNextRound();
+            Player player = club.getPlayersList().get(i);
             boolean played = (boolean) model.getValueAt(i,1);
             int numGoals = (int) model.getValueAt(i,2);
             int numAssists = (int) model.getValueAt(i,3);
             int yellowCards = (int) model.getValueAt(i,4);
             boolean redCard = (boolean) model.getValueAt(i,5);
             Statistic statistic = new Statistic(played,numGoals,numAssists,receivedGoals,yellowCards,redCard);
-            DataInsertion.insertStatistic(statistic,playerID);
+            DataInsertion.insertStatistic(roundNum, player, statistic);
+            DataInsertion.insertValue(player, roundNum,player.getNewValue(statistic.getPoints(player.getPosition())));
         }
     }
 

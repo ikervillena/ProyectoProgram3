@@ -8,6 +8,7 @@ import main.dataLogic.people.Manager;
 import main.dataLogic.people.Player;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 /** Represents a virtual team that users of the game (managers) can manage.
  * @author Iker Villena Ona.
@@ -15,11 +16,13 @@ import java.util.ArrayList;
 
 public class Team implements IDBConnection, IPositionClassification {
 
+    int id;
     Manager manager;
-    ArrayList<Player> playersList = generatePlayersList(DataExtraction.getAllPlayers());
+    ArrayList<Player> playersList;
     ArrayList<Squad> squadRecord = new ArrayList<>();
 
-    public Team(Manager manager, ArrayList<Player> playersList, ArrayList<Squad> squadRecord) {
+    public Team(int id, Manager manager, ArrayList<Player> playersList, ArrayList<Squad> squadRecord) {
+        this.id = id;
         this.manager = manager;
         this.playersList = playersList;
         this.squadRecord = squadRecord;
@@ -126,7 +129,7 @@ public class Team implements IDBConnection, IPositionClassification {
 
     @Override
     public int getID() {
-        return DataExtraction.getID("team","team_id","username",manager.getUsername());
+        return this.id;
     }
 
     /**Provides an ID number that is not registered yet in the table "team" of the Database.
@@ -156,9 +159,9 @@ public class Team implements IDBConnection, IPositionClassification {
      */
 
     private ArrayList<Player> getPlayers(String positionName){
-        ArrayList<Player> players = new ArrayList<>();
-        for(Player p : playersList){
-            if(p.getPosition().getName().equals(positionName)){
+        ArrayList<Player> players = this.playersList;
+        for(Player p : playersList) {
+            if (p.getPosition().getName().equals(positionName)) {
                 players.add(p);
             }
         }

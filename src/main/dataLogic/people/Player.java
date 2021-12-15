@@ -3,6 +3,8 @@ package main.dataLogic.people;
 import main.businessLogic.Statistic;
 import main.businessLogic.interfaces.IDBConnection;
 import main.dataLogic.league.Club;
+import main.dataLogic.league.League;
+import main.dataLogic.league.Team;
 import main.dataLogic.people.attributes.Position;
 import main.dbManagement.DataExtraction;
 
@@ -108,18 +110,73 @@ public class Player implements IDBConnection {
         return shirtName+" ["+shirtNumber+"]";
     }
 
-
     @Override
     public boolean equals(Object obj) {
         boolean isEqual = false;
-        if(obj instanceof Player){
+        if (obj instanceof Player) {
             Player p = (Player) obj;
-            if(p.getName().equals(this.name)&&p.getSurname().equals(this.surname)&&p.getShirtName().equals(this.shirtName)
-            && p.getShirtNumber()==this.shirtNumber){
+            if (p.getName().equals(this.name) && p.getSurname().equals(this.surname) && p.getShirtName().equals(this.shirtName)
+                    && p.getShirtNumber() == this.shirtNumber) {
                 isEqual = true;
             }
         }
         return isEqual;
+    }
+
+    /**Provides the player's last value saved
+     * @return Float with the last value saved to the DataBase.
+     */
+
+    public float getLastValue(){
+        float lastValue = 0;
+        for(int i = 0; i<this.valueHistory.length; i++){
+            if(valueHistory[i] > 0){
+                lastValue = valueHistory[i];
+            }
+        }
+        return lastValue;
+    }
+
+    /**Provides the new value of a player after playing a new round of the league, based on his statistics.
+     * @param points Integer with the number of points obtained in the round.
+     * @return float with the player's new value.
+     */
+
+    public float getNewValue(int points){
+        float lastValue = getLastValue();
+        if(points<0){
+            lastValue*=0.6;
+        } else{
+            if(points<4){
+                lastValue*=0.75;
+            } else{
+                if(points>11){
+                    lastValue*=1.35;
+                } else{
+                    if(points>5){
+                        lastValue*=1.2;
+                    }
+                }
+            }
+        }
+        return lastValue;
+    }
+
+    /**Provides the team for which the player plays in a specific league.
+     * @param league League in which the player must be searched.
+     * @return Team in which the player plays, it has the value null if the player is free.
+     */
+
+    public Team getTeam(League league){
+        Team team = null;
+        for(Team t : league.getTeamsList()){
+            for(Player p : t.getPlayersList()){
+                if(p.equals(this)){
+                    team = t;
+                }
+            }
+        }
+        return team;
     }
 
     public Position getPosition() {
