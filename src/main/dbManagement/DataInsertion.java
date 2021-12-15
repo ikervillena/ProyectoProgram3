@@ -7,7 +7,6 @@ import main.dataLogic.league.Squad;
 import main.dataLogic.league.Team;
 import main.dataLogic.people.Player;
 
-import javax.xml.crypto.Data;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -24,10 +23,17 @@ public class DataInsertion {
      */
 
     public static void newLeague(League league){
+
         insertLeague(league.getName(),league.getEntryCode());
+        /*
         for(Team t : league.getTeamsList()){
             insertTeam(t, league);
         }
+        */
+        //Using Lambda expressions:
+        league.getTeamsList()
+                .stream()
+                .forEach(team -> insertTeam(team, league));
     }
 
     /**Inserts a league in the Database.

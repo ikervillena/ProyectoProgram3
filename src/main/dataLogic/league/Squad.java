@@ -4,6 +4,7 @@ import main.businessLogic.TacticalFormation;
 import main.businessLogic.interfaces.IPositionClassification;
 import main.dataLogic.people.Player;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 /** Represents a squad formed by players of different positions.
  * @author Iker Villena Ona.
@@ -53,13 +54,19 @@ public class Squad implements IPositionClassification {
      */
 
     private ArrayList<Player> getPlayers(String positionName){
+        /*
         ArrayList<Player> list = new ArrayList<>();
-        for(Player p : playersList){
+        for(Player p : this.playersList){
             if(p.getPosition().getName().equals(positionName)){
                 list.add(p);
             }
         }
         return list;
+         */
+        //Using Lambdas expressions:
+        return (ArrayList<Player>) playersList.stream()
+                .filter(player -> player.getPosition().getName().equals(positionName))
+                .collect(Collectors.toList());
     }
 
     /**

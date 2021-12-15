@@ -120,5 +120,4 @@ public class PlayerTest {
         assertEquals(team1,player1.getTeam(league));
         assertEquals(team2,player2.getTeam(league));
     }
-
 }

@@ -9,6 +9,7 @@ import main.dataLogic.people.Manager;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 /** Represents a league where teams compete.
  * @author Iker Villena Ona.
@@ -66,6 +67,7 @@ public class League implements IDBConnection {
      */
 
     public boolean canAccess(Manager manager){
+        /*
         boolean canAccess = false;
         for(Team t : teamsList){
             if(t.getManager().getUsername().equals(manager.getUsername())){
@@ -73,6 +75,10 @@ public class League implements IDBConnection {
             }
         }
         return canAccess;
+         */
+        //Using Lambdas expressions:
+        return teamsList.stream()
+                .anyMatch(team -> team.getManager().equals(manager));
     }
 
     /**This method provides the players of the league that do not belong to any team yet.

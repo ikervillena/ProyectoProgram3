@@ -27,7 +27,8 @@ public class LeagueTest {
 
     @Before
     public void setUp(){
-        team = new Team(new Manager("ikervillena","ville","Iker","Villena"));
+        manager = new Manager("ikervillena","ville","Iker","Villena");
+        team = new Team(manager);
         ArrayList<Team> teamsList = new ArrayList<Team>();
         teamsList.add(team);
         league = new League(teamsList);
@@ -70,12 +71,8 @@ public class LeagueTest {
     @Test
     public void canAccess(){
         Manager newManager = new Manager("mikelperez","123","Mikel","Pérez");
-        for(League l : DataExtraction.getAllLeagues()){
-            for(Team t : l.getTeamsList()){
-                assertTrue("A manager of the league does not have access to it.",l.canAccess(t.getManager()));
-                assertFalse("A manager who does not participate in the league has access to it",l.canAccess(newManager));
-            }
-        }
+        assertTrue("A manager of the league does not have access to it.",league.canAccess(manager));
+        assertFalse("A manager who does not participate in the league has access to it",league.canAccess(newManager));
     }
 
     /**Tests the getFreePlayers() method.

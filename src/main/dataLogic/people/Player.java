@@ -9,6 +9,7 @@ import main.dataLogic.people.attributes.Position;
 import main.dbManagement.DataExtraction;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 /** Represents a football player.
  * @author Iker Villena Ona.
@@ -72,11 +73,18 @@ public class Player implements IDBConnection {
      */
 
     public ArrayList<Integer> getPointsRecord(){
+        /*
         ArrayList<Integer> pointsRecord = new ArrayList<>();
         for(Statistic s : statsRecord){
             pointsRecord.add(s.getPoints(position));
         }
         return pointsRecord;
+         */
+        //Using Lambda expressions:
+        return (ArrayList<Integer>) statsRecord
+                .stream()
+                .map(w -> w.getPoints(this.position))
+                .collect(Collectors.toList());
     }
 
     /**Provides the total points obtained by a player in a specific round of the league.

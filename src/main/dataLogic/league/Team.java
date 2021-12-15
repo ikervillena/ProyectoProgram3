@@ -160,11 +160,18 @@ public class Team implements IDBConnection, IPositionClassification {
 
     private ArrayList<Player> getPlayers(String positionName){
         ArrayList<Player> players = this.playersList;
-        for(Player p : playersList) {
+        //Using Lambdas expressions:
+        players = (ArrayList<Player>) players
+                .stream()
+                .filter(player -> player.getPosition().getName().equals(positionName))
+                .collect(Collectors.toList());
+        /*
+        for(Player p : this.playersList) {
             if (p.getPosition().getName().equals(positionName)) {
                 players.add(p);
             }
         }
+         */
         return players;
     }
 
@@ -193,6 +200,10 @@ public class Team implements IDBConnection, IPositionClassification {
             totalPoints+= getPoints(i+1);
         }
         return totalPoints;
+    }
+
+    public ArrayList<Player> getGoalkeepers() {
+        return getPlayers("Goalkeeper");
     }
 
     @Override

@@ -53,6 +53,7 @@ public class DataValidation {
      */
 
     public static boolean checkPassword(String username, String password){
+        /*
         boolean correctPassword = false;
         for(Manager m : DataExtraction.getAllManagers()){
             if(m.getUsername().equals(username) && m.getPassword().equals(password)){
@@ -61,6 +62,11 @@ public class DataValidation {
             }
         }
         return correctPassword;
+         */
+        //Using Lambda expressions:
+        return DataExtraction.getAllManagers()
+                .stream()
+                .anyMatch(manager -> manager.checkPassword(username, password));
     }
 
 }

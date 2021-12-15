@@ -7,6 +7,7 @@ import main.dbManagement.DataInsertion;
 import main.dbManagement.DataValidation;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 /** Represents a user of the game, a manager.
  * @author Iker Villena Ona.
@@ -74,6 +75,7 @@ public class Manager extends User{
      */
 
     public ArrayList<League> getLeagues(){
+        /*
         ArrayList<League> leaguesList = new ArrayList<>();
         for(League l : DataExtraction.getAllLeagues()){
             if(l.canAccess(this)){
@@ -81,6 +83,12 @@ public class Manager extends User{
             }
         }
         return leaguesList;
+         */
+        //Using Lambda expressions:
+        return (ArrayList<League>) DataExtraction.getAllLeagues()
+                .stream()
+                .filter(w -> w.canAccess(this))
+                .collect(Collectors.toList());
     }
 
     /**Provides the text that needs to be shown to the Manager when he has correctly logged in.
