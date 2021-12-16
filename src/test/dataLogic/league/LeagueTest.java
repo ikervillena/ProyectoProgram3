@@ -119,4 +119,16 @@ public class LeagueTest {
         league.removeTeam(team);
         assertEquals(0,league.getTeamsList().size());
     }
+
+    /**Tests the getTeam(Manager) method.
+     */
+
+    @Test
+    public void getTeam(){
+        setUp();
+        Manager newManager = new Manager("username","password","name","surname");
+        assertEquals(team,league.getTeam(manager));
+        assertTrue(league.getTeam(newManager) == null);
+    }
+
 }

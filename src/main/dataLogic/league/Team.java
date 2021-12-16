@@ -1,11 +1,13 @@
 package main.dataLogic.league;
 
+import main.businessLogic.Bid;
 import main.businessLogic.interfaces.IDBConnection;
 import main.businessLogic.interfaces.IPositionClassification;
 import main.dbManagement.DBUtils;
 import main.dbManagement.DataExtraction;
 import main.dataLogic.people.Manager;
 import main.dataLogic.people.Player;
+import main.dbManagement.DataUpdate;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -17,12 +19,14 @@ import java.util.stream.Collectors;
 public class Team implements IDBConnection, IPositionClassification {
 
     int id;
+    float budget;
     Manager manager;
     ArrayList<Player> playersList;
     ArrayList<Squad> squadRecord = new ArrayList<>();
 
-    public Team(int id, Manager manager, ArrayList<Player> playersList, ArrayList<Squad> squadRecord) {
+    public Team(int id, float budget, Manager manager, ArrayList<Player> playersList, ArrayList<Squad> squadRecord) {
         this.id = id;
+        this.budget = budget;
         this.manager = manager;
         this.playersList = playersList;
         this.squadRecord = squadRecord;
@@ -57,19 +61,19 @@ public class Team implements IDBConnection, IPositionClassification {
         int defenders = 0;
         int midfielders = 0;
         int forwards = 0;
-        if(canGenerateTeam(playersList)){
-            while(!goalkeeper || (defenders+midfielders+forwards) < 12){
+        if(canGenerateTeam(allPlayers)){
+            while(!goalkeeper || (defenders+midfielders+forwards) < 14){
                 Player player = allPlayers.get((int) (Math.random()*allPlayers.size()));
                 String positionName = player.getPosition().getName();
                 if(positionName.equals("Goalkeeper") && !goalkeeper){
                     playersList.add(player);
                     goalkeeper = true;
                 } else{
-                    if(positionName.equals("Defense") && defenders < 4){
+                    if(positionName.equals("Defense") && defenders < 5){
                         playersList.add(player);
                         defenders++;
                     } else{
-                        if(positionName.equals("Midfielder") && midfielders < 4){
+                        if(positionName.equals("Midfielder") && midfielders < 5){
                             playersList.add(player);
                             midfielders++;
                         } else{
@@ -113,6 +117,10 @@ public class Team implements IDBConnection, IPositionClassification {
 
     public ArrayList<Player> getPlayersList() {
         return playersList;
+    }
+
+    public float getBudget() {
+        return budget;
     }
 
     public Manager getManager() {
@@ -200,6 +208,79 @@ public class Team implements IDBConnection, IPositionClassification {
             totalPoints+= getPoints(i+1);
         }
         return totalPoints;
+    }
+
+    /**Provides a list with the bids related to the team that are saved to the DataBase.
+     * @return ArrayList<Bid> with all the bids related to the team
+     */
+
+    private ArrayList<Bid> getBids(){
+        return DataExtraction.getTeamBids(this);
+    }
+
+    /**Provides the bids made by the team that are saved to the DataBase.
+     * @return ArrayList<Bid> with all the bids made by the team.
+     */
+
+    public ArrayList<Bid> getBidsMade(){
+        return (ArrayList<Bid>) getBids()
+                .stream()
+                .filter(bid -> bid.getInterestedTeam().equals(this))
+                .collect(Collectors.toList());
+    }
+
+    /**Provides the bids received by the team that are saved to the DataBase.
+     * @return ArrayList<Bid> with all the bids made by the team.
+     */
+
+    public ArrayList<Bid> getReceivedBids(){
+        return (ArrayList<Bid>) getBids()
+                .stream()
+                .filter(bid -> bid.getCurrentTeam().equals(this))
+                .collect(Collectors.toList());
+    }
+
+    /**Provides the available money of a team:  the part of the budget that is free to use (not already invested).
+     * @return float with the total available money.
+     */
+
+    public float getAvailableMoney(){
+        float availableMoney = this.budget;
+        for(Bid b : getBidsMade()){
+            availableMoney = availableMoney-b.getFee();
+        }
+        return availableMoney;
+    }
+
+    /**Checks whether the team has already made an offer for a player or not.
+     * @param player Player that needs to be checked.
+     * @return boolean with the value true if there is a previous offer and false if there is not.
+     */
+
+    public boolean madeOffer(Player player){
+        boolean madeOffer = false;
+        for(Bid bid : getBidsMade()){
+            if(bid.getPlayer().equals(player)){
+                madeOffer = true;
+            }
+        }
+        return madeOffer;
+    }
+
+    /**Adds money to the Team's budget.
+     * @param money float with the amount of money.
+     */
+
+    public void increaseMoney(float money){
+        DataUpdate.setBudget(this,(this.budget + money));
+    }
+
+    /**Extracts money from the Team's budget.
+     * @param money float with the amount of money.
+     */
+
+    public void reduceMoney(float money){
+        DataUpdate.setBudget(this,(this.budget - money));
     }
 
     public ArrayList<Player> getGoalkeepers() {

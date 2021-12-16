@@ -55,7 +55,7 @@ public class LineUp extends ManagerView {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    LineUp frame = new LineUp(DataExtraction.getTeams(0).get(1));
+                    LineUp frame = new LineUp(DataExtraction.getTeams(0).get(0));
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();

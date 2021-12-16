@@ -89,15 +89,23 @@ public class League implements IDBConnection {
         ArrayList<Player> freePlayers = DataExtraction.getAllPlayers();
         for (Team t : teamsList){
             for (Player p : t.getPlayersList()){
-                for (Player player : freePlayers){
-                    if(player.getID() == p.getID()){
-                        freePlayers.remove(player);
-                        break;
-                    }
-                }
+                freePlayers.remove(p);
             }
         }
         return freePlayers;
+    }
+
+    /**Looks for the Team that a specific Manager manages in the League.
+     * @param manager Manager who manages a Team.
+     * @return Team that is managed by the Manager provided as a parameter or null if there is no result.
+     */
+
+    public Team getTeam(Manager manager){
+        return teamsList
+                .stream()
+                .filter(team -> team.getManager().equals(manager))
+                .findFirst()
+                .orElse(null);
     }
 
     /**Adds a team to a league, including it in the list of teams.

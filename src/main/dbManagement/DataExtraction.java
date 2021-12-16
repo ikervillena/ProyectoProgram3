@@ -335,13 +335,14 @@ public class DataExtraction {
      */
 
     public static ArrayList<Team> getTeams(int league_id){
-        String sql = "select username, team_id from team where league_id = "+league_id;
+        String sql = "select team_id, budget, username from team where league_id = "+league_id;
         ArrayList<Team> teamsList = new ArrayList<>();
         try (Connection conn = DBManager.connect(); Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 int team_id = rs.getInt("team_id");
-                teamsList.add(new Team(team_id,getManager(rs.getString("username")),getTeamPlayers(team_id),getSquadRecord(team_id)));
+                teamsList.add(new Team(team_id,rs.getFloat("budget"),
+                        getManager(rs.getString("username")),getTeamPlayers(team_id),getSquadRecord(team_id)));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -594,12 +595,13 @@ public class DataExtraction {
 
     public static Team getTeam(int teamID){
         Team team = null;
-        String sql = "select username, team_id from team where team_id = "+teamID;
+        String sql = "select team_id, budget, username from team where team_id = "+teamID;
         try (Connection conn = DBManager.connect(); Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 int team_id = rs.getInt("team_id");
-                team = new Team(team_id,getManager(rs.getString("username")),getTeamPlayers(team_id),getSquadRecord(team_id));
+                team = new Team(team_id,rs.getFloat("budget"),
+                        getManager(rs.getString("username")),getTeamPlayers(team_id),getSquadRecord(team_id));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());

@@ -64,11 +64,12 @@ public class DataInsertion {
     public static void insertTeam(Team team, League league){
         String username = team.getManager().getUsername();
         int leagueID = league.getID();
-        String sql = "INSERT INTO team(team_id,league_id,username) VALUES(?,?,?)";
+        String sql = "INSERT INTO team(team_id,league_id,username,budget) VALUES(?,?,?,?)";
         try (Connection conn = DBManager.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)){
-            pstmt.setInt(1, Team.generateID());
-            pstmt.setInt(2,leagueID);
-            pstmt.setString(3,username);
+            pstmt.setInt(1, team.getID());
+            pstmt.setInt(2, leagueID);
+            pstmt.setString(3, username);
+            pstmt.setFloat(4, team.getBudget());
             pstmt.executeUpdate();
         }
         catch (SQLException e) {
@@ -185,7 +186,9 @@ public class DataInsertion {
         String sql = "INSERT INTO bid(from_team,to_team,player_id,fee) VALUES(?,?,?,?)";
         try (Connection conn = DBManager.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)){
             pstmt.setInt(1,bid.getInterestedTeam().getID());
-            pstmt.setInt(2,bid.getCurrentTeam().getID());
+            if(bid.getCurrentTeam() != null){
+                pstmt.setInt(2,bid.getCurrentTeam().getID());
+            }
             pstmt.setInt(3,bid.getPlayer().getID());
             pstmt.setFloat(4,bid.getFee());
             pstmt.executeUpdate();

@@ -1,11 +1,13 @@
 package main.dataLogic.people;
 
+import main.dataLogic.league.Squad;
 import main.dataLogic.league.Team;
 import main.dbManagement.DataExtraction;
 import main.dataLogic.league.League;
 import main.dbManagement.DataInsertion;
 import main.dbManagement.DataValidation;
 
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -38,7 +40,7 @@ public class Manager extends User{
 
     public void createLeague(String leagueName, String entryCode){
         ArrayList<Team> teamsList = new ArrayList<>();
-        teamsList.add(new Team(this));
+        teamsList.add(new Team(Team.generateID(),100,this,Team.generatePlayersList(DataExtraction.getAllPlayers()),new ArrayList<Squad>()));
         League league = new League(leagueName,entryCode,teamsList);
         DataInsertion.newLeague(league);
     }
@@ -50,7 +52,7 @@ public class Manager extends User{
     public void joinLeague(String entryCode){
         if(!alreadyInLeague(entryCode) && DataValidation.checkEntryCode(entryCode)){
             League league = DataExtraction.getLeague(entryCode);
-            Team team = new Team(this,Team.generatePlayersList(league.getFreePlayers()));
+            Team team = new Team(Team.generateID(),100,this,Team.generatePlayersList(league.getFreePlayers()),new ArrayList<Squad>());
             DataInsertion.insertTeam(team,league);
         }
     }
@@ -83,7 +85,7 @@ public class Manager extends User{
             }
         }
         return leaguesList;
-         */
+        */
         //Using Lambda expressions:
         return (ArrayList<League>) DataExtraction.getAllLeagues()
                 .stream()

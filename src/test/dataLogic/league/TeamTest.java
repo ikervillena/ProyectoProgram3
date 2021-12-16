@@ -32,7 +32,7 @@ public class TeamTest {
         ArrayList<Squad> squadsList = new ArrayList<>();
         squadsList.add(new Squad(1, DataExtraction.getAllFormations().get(0),playersList));
         squadsList.add(new Squad(2,DataExtraction.getAllFormations().get(1),playersList));
-        team = new Team(0,null,playersList,squadsList);
+        team = new Team(0,100,null,playersList,squadsList);
     }
 
     /**Tests the generateID() method.
@@ -83,6 +83,29 @@ public class TeamTest {
         assertEquals(player2, team.getDefenders().get(0));
         assertEquals(0, team.getMidfielders().size());
         assertEquals(0, team.getForwards().size());
+    }
+
+    @Test
+    public void generatePlayersList(){
+        ArrayList<Player> playersList = Team.generatePlayersList(DataExtraction.getAllPlayers());
+        assertEquals(15,playersList.size());
+        assertTrue(1 == playersList
+                .stream()
+                .filter(player -> player.getPosition().getName().equals("Goalkeeper"))
+                .count());
+        assertTrue(5 == playersList
+                .stream()
+                .filter(player -> player.getPosition().getName().equals("Defense"))
+                .count());
+        assertTrue(5 == playersList
+                .stream()
+                .filter(player -> player.getPosition().getName().equals("Midfielder"))
+                .count());
+        assertTrue(4 == playersList
+                .stream()
+                .filter(player -> player.getPosition().getName().equals("Forward"))
+                .count());
+
     }
 
 }

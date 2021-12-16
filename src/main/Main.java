@@ -9,7 +9,7 @@ public class Main {
 
     public static void main(String[] args) throws SQLException {
 
-        DataDestruction.deleteTeam(5);
+        DBManager.createNewDatabase("ProjectDB.db");
 
         /*
         DBManager.createNewDatabase("ProjectDB.db");

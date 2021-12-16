@@ -2,21 +2,16 @@ package main.presentationLogic;
 
 import java.awt.EventQueue;
 
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import main.dataLogic.league.League;
 import main.dataLogic.league.Team;
+import main.dataLogic.people.Manager;
 import main.dataLogic.people.Player;
 import main.dbManagement.DataExtraction;
 
-import javax.swing.JTextField;
-import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JList;
-import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
@@ -56,7 +51,8 @@ public class PlayerInfo extends ManagerView {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    PlayerInfo frame = new PlayerInfo(DataExtraction.getAllLeagues().get(0));
+                    PlayerInfo frame = new PlayerInfo(DataExtraction.getAllLeagues().get(0),
+                            DataExtraction.getAllLeagues().get(0).getTeamsList().get(0).getManager());
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -68,7 +64,7 @@ public class PlayerInfo extends ManagerView {
     /**
      * Create the frame.
      */
-    public PlayerInfo(League league) {
+    public PlayerInfo(League league, Manager manager) {
 
         this.league = league;
         pnlSearch = new JPanel();
@@ -115,7 +111,16 @@ public class PlayerInfo extends ManagerView {
         btnSign.setEnabled(false);
         btnSign.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new BidMaker((Player) listPlayers.getSelectedValue(), league, DataExtraction.getManager("ikervillena")).setVisible(true);;
+                if(((Player) listPlayers.getSelectedValue()).getTeam(league) != null){
+                    if(!((Player) listPlayers.getSelectedValue()).getTeam(league).equals(league.getTeam(manager))){
+                        new BidMaker((Player) listPlayers.getSelectedValue(), league, DataExtraction.getManager("ikervillena")).setVisible(true);
+                    } else{
+                        JOptionPane.showMessageDialog(null,"Este jugador te pertenece.");
+                    }
+                } else{
+                    new BidMaker((Player) listPlayers.getSelectedValue(), league, DataExtraction.getManager("ikervillena")).setVisible(true);
+                }
+
             }
         });
         btnSign.setBounds(427, 284, 356, 43);

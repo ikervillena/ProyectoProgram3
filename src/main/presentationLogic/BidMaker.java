@@ -107,7 +107,7 @@ public class BidMaker extends JFrame implements INewData {
             public void actionPerformed(ActionEvent e) {
                 if(checkFields()){
                     Bid bid = new Bid(fromTeam(),player.getTeam(league), player,(float) spnFee.getValue());
-                    DataInsertion.insertBid(bid);
+                    bid.save();
                     JOptionPane.showMessageDialog(null,"La oferta ha sido guardada con éxito.");
                     BidMaker.this.dispose();
                 }
@@ -132,24 +132,34 @@ public class BidMaker extends JFrame implements INewData {
         spnFee.setValue(player.getLastValue());
     }
 
+    /**Provides tha manager's team, which is the one making the bid.
+     * @return Team that is managed by the Manager.
+     */
+
     private Team fromTeam(){
-        Team fromTeam = null;
-        for(Team t : league.getTeamsList()){
-            if(t.getManager().equals(manager)){
-                fromTeam = t;
-            }
-        }
-        return fromTeam;
+        return league.getTeam(manager);
     }
+
 
 
     @Override
     public boolean checkFields() {
         boolean correct = true;
-        if(player.getLastValue() > (float) spnFee.getValue()){
-            JOptionPane.showMessageDialog(null,"La oferta debe ser igual o superior al valor del jugador.");
+        if (player.getLastValue() > (float) spnFee.getValue()) {
+            JOptionPane.showMessageDialog(null, "La oferta debe ser igual o superior al valor del jugador.");
             correct = false;
+        } else {
+            if ((float) spnFee.getValue() > league.getTeam(manager).getAvailableMoney()) {
+                JOptionPane.showMessageDialog(null, "No dispones del dinero necesario para realizar esa oferta.");
+                correct = false;
+            } else {
+                if(league.getTeam(manager).madeOffer(player)){
+                    JOptionPane.showMessageDialog(null, "Ya has pujado por este jugador.");
+                    correct = false;
+                }
+            }
         }
-        return false;
+        return correct;
     }
+
 }

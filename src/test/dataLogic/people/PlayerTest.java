@@ -6,6 +6,7 @@ import main.dataLogic.league.Team;
 import main.dataLogic.people.Manager;
 import main.dataLogic.people.Player;
 import main.dbManagement.DataExtraction;
+import main.dbManagement.DataUpdate;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -111,8 +112,8 @@ public class PlayerTest {
         playersList1.add(player1);
         ArrayList<Player> playersList2 = new ArrayList<>();
         playersList2.add(player2);
-        Team team1 = new Team(0,null,playersList1,null);
-        Team team2= new Team(0,null,playersList2,null);
+        Team team1 = new Team(0,100,null,playersList1,null);
+        Team team2= new Team(0,100,null,playersList2,null);
         ArrayList<Team> teamsList = new ArrayList<>();
         teamsList.add(team1);
         teamsList.add(team2);
@@ -120,4 +121,5 @@ public class PlayerTest {
         assertEquals(team1,player1.getTeam(league));
         assertEquals(team2,player2.getTeam(league));
     }
+
 }
