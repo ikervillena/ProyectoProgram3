@@ -1,14 +1,8 @@
 package main.presentationLogic;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import java.awt.Font;
-import javax.swing.UIManager;
-import javax.swing.SwingConstants;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -80,5 +74,21 @@ public abstract class ManagerView extends JFrame {
         newView.setVisible(true);
         ManagerView.this.dispose();
     }
+
+    private void setFormat(JComponent component){
+
+    }
+
+    public void setAllFormats(JComponent component){
+        if(component.getComponents().length == 0){
+            setFormat(component);
+        } else{
+            for(Component c : component.getComponents()){
+
+            }
+        }
+    }
+
+
 
 }

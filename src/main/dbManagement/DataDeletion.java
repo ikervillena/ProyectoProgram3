@@ -26,7 +26,7 @@ public class DataDeletion {
      */
 
     public static void deleteBid(Bid bid){
-        String sql = "delete from bid where from_team = ? AND to_team = ? AND player_id = ?";
+        String sql = "delete from bid where from_team = ? AND (to_team = ? OR to_team IS NULL) AND player_id = ?";
         try(Connection conn = DBManager.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)){
             pstmt.setInt(1,bid.getInterestedTeam().getID());
             if(bid.getCurrentTeam() != null){

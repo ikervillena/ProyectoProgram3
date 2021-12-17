@@ -611,12 +611,16 @@ public class DataExtraction {
 
     public static ArrayList<Bid> getTeamBids(Team team){
         ArrayList<Bid> bidsList = new ArrayList<>();
-        String sql = "SELECT from_team, to_team, player_id, fee FROM bid WHERE from_team = "+team.getID()+" OR to_team = "
+        String sql = "SELECT from_team, IFNULL(to_team,-1) AS to_team, player_id, fee FROM bid WHERE from_team = "+team.getID()+" OR to_team = "
                 + team.getID();
         try (Connection conn = DBManager.connect(); Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
-                bidsList.add(new Bid(getTeam(rs.getInt("from_team")),getTeam(rs.getInt("to_team")),
+                Team toTeam = null;
+                if(rs.getInt("to_team")>=0){
+                    toTeam = getTeam(rs.getInt("to_team"));
+                }
+                bidsList.add(new Bid(getTeam(rs.getInt("from_team")),toTeam,
                         getPlayer(rs.getInt("player_id")),rs.getFloat("fee")));
             }
         } catch (SQLException e) {

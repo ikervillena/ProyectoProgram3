@@ -52,7 +52,7 @@ public class PlayerInfo extends ManagerView {
             public void run() {
                 try {
                     PlayerInfo frame = new PlayerInfo(DataExtraction.getAllLeagues().get(0),
-                            DataExtraction.getAllLeagues().get(0).getTeamsList().get(0).getManager());
+                            DataExtraction.getAllLeagues().get(0).getTeamsList().get(1).getManager());
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -113,7 +113,7 @@ public class PlayerInfo extends ManagerView {
             public void actionPerformed(ActionEvent e) {
                 if(((Player) listPlayers.getSelectedValue()).getTeam(league) != null){
                     if(!((Player) listPlayers.getSelectedValue()).getTeam(league).equals(league.getTeam(manager))){
-                        new BidMaker((Player) listPlayers.getSelectedValue(), league, DataExtraction.getManager("ikervillena")).setVisible(true);
+                        new BidMaker((Player) listPlayers.getSelectedValue(), league, manager).setVisible(true);
                     } else{
                         JOptionPane.showMessageDialog(null,"Este jugador te pertenece.");
                     }

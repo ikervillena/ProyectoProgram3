@@ -214,7 +214,7 @@ public class Team implements IDBConnection, IPositionClassification {
      * @return ArrayList<Bid> with all the bids related to the team
      */
 
-    private ArrayList<Bid> getBids(){
+    public ArrayList<Bid> getBids(){
         return DataExtraction.getTeamBids(this);
     }
 
@@ -236,6 +236,7 @@ public class Team implements IDBConnection, IPositionClassification {
     public ArrayList<Bid> getReceivedBids(){
         return (ArrayList<Bid>) getBids()
                 .stream()
+                .filter(bid -> bid.getCurrentTeam() != null)
                 .filter(bid -> bid.getCurrentTeam().equals(this))
                 .collect(Collectors.toList());
     }
@@ -300,5 +301,16 @@ public class Team implements IDBConnection, IPositionClassification {
     @Override
     public ArrayList<Player> getForwards() {
         return getPlayers("Forward");
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        boolean isEqual = false;
+        if(obj instanceof Team){
+            if(((Team) obj).getID() == this.id){
+                isEqual = true;
+            }
+        }
+        return isEqual;
     }
 }

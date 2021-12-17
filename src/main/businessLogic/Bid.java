@@ -43,16 +43,16 @@ public class Bid {
         DataDeletion.deleteBid(this);
     }
 
-    /**Rejects the bid, deleting it from the DataBase.
+    /**Deletes the bid from the DataBase.
      */
 
-    public void reject(){
+    public void delete(){
         DataDeletion.deleteBid(this);
     }
 
     @Override
     public String toString() {
-        return fee+"millions offered for "+player.getShirtName()+" by "+interestedTeam.getManager().getUsername();
+        return fee+" millones ofrecidos por "+player.getShirtName()+" por "+interestedTeam.getManager().getUsername();
     }
 
     public Team getInterestedTeam() {

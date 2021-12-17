@@ -140,8 +140,6 @@ public class BidMaker extends JFrame implements INewData {
         return league.getTeam(manager);
     }
 
-
-
     @Override
     public boolean checkFields() {
         boolean correct = true;
