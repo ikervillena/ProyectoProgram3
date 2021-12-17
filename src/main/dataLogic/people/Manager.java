@@ -33,6 +33,13 @@ public class Manager extends User{
         this.surname = surname;
     }
 
+    /**Inserts the Manager into the DataBase.
+     */
+
+    public void save(){
+        DataInsertion.insertManager(this);
+    }
+
     /**This method creates a new league and saves the data in the Database.
      * @param leagueName A String with the new league's name.
      * @param entryCode A String with the new league's entry code.
@@ -99,7 +106,7 @@ public class Manager extends User{
 
     @Override
     public String getLoginText() {
-        return "Contraseña correcta, ¡Bienvenido "+name+"!";
+        return "Clave de acceso correcta, ¡Bienvenido "+name+"!";
     }
 
     @Override

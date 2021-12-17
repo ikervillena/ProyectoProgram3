@@ -5,6 +5,7 @@ import main.businessLogic.Statistic;
 import main.dataLogic.league.League;
 import main.dataLogic.league.Squad;
 import main.dataLogic.league.Team;
+import main.dataLogic.people.Manager;
 import main.dataLogic.people.Player;
 
 import java.sql.Connection;
@@ -191,6 +192,24 @@ public class DataInsertion {
             }
             pstmt.setInt(3,bid.getPlayer().getID());
             pstmt.setFloat(4,bid.getFee());
+            pstmt.executeUpdate();
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    /**Inserts a Manager into the DataBase.
+     * @param manager Manager whose information needs to be saved in the DataBase.
+     */
+
+    public static void insertManager(Manager manager){
+        String sql = "INSERT INTO manager(username,password,name,surname) VALUES(?,?,?,?)";
+        try (Connection conn = DBManager.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)){
+            pstmt.setString(1, manager.getUsername());
+            pstmt.setString(2, manager.getPassword());
+            pstmt.setString(3, manager.getName());
+            pstmt.setString(4, manager.getSurname());
             pstmt.executeUpdate();
         }
         catch (SQLException e) {

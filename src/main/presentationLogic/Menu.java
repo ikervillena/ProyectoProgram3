@@ -19,6 +19,7 @@ import java.awt.event.ActionEvent;
 
 public class Menu extends ManagerView {
 
+    private Manager manager;
     private JPanel contentPane;
     private JComboBox cmbxLeagues;
     private JLabel lblLeagues;
@@ -45,7 +46,9 @@ public class Menu extends ManagerView {
      * Create the frame.
      */
     public Menu(Manager manager) {
+        this.manager = manager;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
         setBounds(100, 100, 800, 500);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -56,7 +59,7 @@ public class Menu extends ManagerView {
         cmbxLeagues.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 League chosenLeague = (League) cmbxLeagues.getModel().getSelectedItem();
-                JOptionPane.showMessageDialog(null, "Has elegido la liga: "+chosenLeague.getName()+".");
+                goToView(new LeagueMenu(chosenLeague, manager));
             }
         });
         cmbxLeagues.setBounds(203, 217, 372, 52);

@@ -567,10 +567,9 @@ public class DataExtraction {
         String sql = "select username, password, fullaccess from administrator";
         try (Connection conn = DBManager.connect(); Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
-            listAdmins.add(new Administrator(rs.getString("username"),rs.getString("password"),
-                    rs.getBoolean("fullaccess")));
             while (rs.next()) {
-
+                listAdmins.add(new Administrator(rs.getString("username"),rs.getString("password"),
+                        rs.getBoolean("fullaccess")));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());

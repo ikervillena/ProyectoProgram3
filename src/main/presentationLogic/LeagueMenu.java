@@ -156,7 +156,7 @@ public class LeagueMenu extends ManagerView {
         MergeSort myMergeSort = new MergeSort();
         myMergeSort.mergeSort(teamsList);
         for(int i = 0; i < league.getTeamsList().size(); i++){
-            Team team = league.getTeamsList().get(0);
+            Team team = league.getTeamsList().get(i);
             model.addRow(new Object[]{i+1,team.getManager().getUsername(),team.getTotalPoints()});
         }
         setTableHeightAndCentreText(tblClassification);

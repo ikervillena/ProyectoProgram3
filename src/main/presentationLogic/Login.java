@@ -1,5 +1,6 @@
 package main.presentationLogic;
 
+import main.businessLogic.interfaces.INewData;
 import main.dataLogic.people.Administrator;
 import main.dataLogic.people.Manager;
 import main.dataLogic.people.User;
@@ -17,14 +18,23 @@ import java.util.ArrayList;
  * @author Iker Villena Ona
  */
 
-public class Login extends JFrame {
+public class Login extends JFrame implements INewData {
 
     private ArrayList<User> usersList;
     private JPanel contentPane;
-    private JTextField txtUsername;
     private JPasswordField pswPassword;
-    private JButton btnLogIn;
+    private JButton btnAccept;
     private JLabel lblLogIn;
+    private JToggleButton tglbtnMode;
+    private JLabel lblPassword;
+    private JPanel pnlLogin;
+    private JPasswordField pswPassword1;
+    private JTextField txtUsername1;
+    private JTextField txtSurname;
+    private JTextField txtName;
+    private JPanel pnlSignUp;
+    private JTextField txtUsername;
+    private JLayeredPane layeredPane;
 
     /**
      * Launch the application.
@@ -55,46 +65,144 @@ public class Login extends JFrame {
         setContentPane(contentPane);
         contentPane.setLayout(null);
 
-        txtUsername = new JTextField();
-        txtUsername.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        txtUsername.setHorizontalAlignment(SwingConstants.CENTER);
-        txtUsername.setToolTipText("Nombre de usuario");
-        txtUsername.setBounds(259, 173, 259, 49);
-        contentPane.add(txtUsername);
-        txtUsername.setColumns(10);
-
-        pswPassword = new JPasswordField();
-        pswPassword.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        pswPassword.setHorizontalAlignment(SwingConstants.CENTER);
-        pswPassword.setBounds(259, 260, 259, 49);
-        contentPane.add(pswPassword);
-
-        btnLogIn = new JButton("Iniciar sesión");
-        btnLogIn.addActionListener(new ActionListener() {
+        btnAccept = new JButton("Iniciar sesión");
+        btnAccept.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                User user = getUser(txtUsername.getText(),pswPassword.getText());
-                if(user != null){
-                    JOptionPane.showMessageDialog(null, user.getLoginText());
-                    if(user instanceof Manager){
-                        goToView(new Menu((Manager) user));
-                    }else{
-                        goToView(new LoadMatches());
+                if(tglbtnMode.isSelected()){
+                    if(checkFields()){
+                        Manager newManager = new Manager(txtUsername1.getText(),pswPassword1.getText(),
+                                txtName.getText(),txtSurname.getText());
+                        newManager.save();
+                        JOptionPane.showMessageDialog(null, "La cuenta ha sido creada con éxito.");
+                        goToView(new Menu(newManager));
                     }
                 } else{
-                    JOptionPane.showMessageDialog(null,"Contraseña incorrecta.");
+                    User user = getUser(txtUsername.getText(),pswPassword.getText());
+                    if(user != null){
+                        JOptionPane.showMessageDialog(null, user.getLoginText());
+                        if(user instanceof Manager){
+                            goToView(new Menu((Manager) user));
+                        }else{
+                            goToView(new LoadMatches());
+                        }
+                    } else{
+                        JOptionPane.showMessageDialog(null,"Contraseña incorrecta.");
+                    }
+                }
+
+            }
+        });
+        btnAccept.setBackground(SystemColor.activeCaptionBorder);
+        btnAccept.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        btnAccept.setBounds(310, 372, 157, 39);
+        contentPane.add(btnAccept);
+
+        lblLogIn = new JLabel("Iniciar sesi\u00F3n");
+        lblLogIn.setFont(new Font("Tahoma", Font.BOLD, 40));
+        lblLogIn.setHorizontalAlignment(SwingConstants.CENTER);
+        lblLogIn.setBounds(10, 71, 748, 49);
+        contentPane.add(lblLogIn);
+
+        tglbtnMode = new JToggleButton("Crear cuenta");
+        tglbtnMode.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if(tglbtnMode.isSelected()){
+                    tglbtnMode.setText("Iniciar sesión");
+                    lblLogIn.setText("Crear cuenta");
+                    btnAccept.setText("Crear cuenta");
+                    setPanel(pnlSignUp);
+
+                } else{
+                    tglbtnMode.setText("Crear cuenta");
+                    lblLogIn.setText("Iniciar sesión");
+                    btnAccept.setText("Iniciar sesión");
+                    setPanel(pnlLogin);
                 }
             }
         });
-        btnLogIn.setBackground(SystemColor.activeCaptionBorder);
-        btnLogIn.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        btnLogIn.setBounds(310, 361, 157, 39);
-        contentPane.add(btnLogIn);
+        tglbtnMode.setBounds(600, 16, 157, 39);
+        contentPane.add(tglbtnMode);
 
-        lblLogIn = new JLabel("Log in");
-        lblLogIn.setFont(new Font("Tahoma", Font.BOLD, 40));
-        lblLogIn.setHorizontalAlignment(SwingConstants.CENTER);
-        lblLogIn.setBounds(259, 74, 259, 49);
-        contentPane.add(lblLogIn);
+        layeredPane = new JLayeredPane();
+        layeredPane.setBounds(197, 147, 384, 198);
+        contentPane.add(layeredPane);
+        layeredPane.setLayout(new CardLayout(0, 0));
+
+        pnlSignUp = new JPanel();
+        layeredPane.add(pnlSignUp);
+        pnlSignUp.setVisible(false);
+        pnlSignUp.setLayout(null);
+
+        pswPassword1 = new JPasswordField();
+        pswPassword1.setBounds(125, 159, 259, 39);
+        pnlSignUp.add(pswPassword1);
+        pswPassword1.setHorizontalAlignment(SwingConstants.CENTER);
+        pswPassword1.setFont(new Font("Tahoma", Font.PLAIN, 18));
+
+        JLabel lblPassword1 = new JLabel("Contrase\u00F1a");
+        lblPassword1.setBounds(0, 159, 110, 39);
+        pnlSignUp.add(lblPassword1);
+        lblPassword1.setFont(new Font("Tahoma", Font.BOLD, 16));
+
+        JLabel lblUser1 = new JLabel("Usuario");
+        lblUser1.setBounds(0, 104, 110, 39);
+        pnlSignUp.add(lblUser1);
+        lblUser1.setFont(new Font("Tahoma", Font.BOLD, 16));
+
+        txtUsername1 = new JTextField();
+        txtUsername1.setHorizontalAlignment(SwingConstants.CENTER);
+        txtUsername1.setBounds(125, 104, 259, 39);
+        pnlSignUp.add(txtUsername1);
+        txtUsername1.setColumns(10);
+
+        JLabel lblSurname = new JLabel("Apellido");
+        lblSurname.setBounds(0, 49, 110, 39);
+        pnlSignUp.add(lblSurname);
+        lblSurname.setFont(new Font("Tahoma", Font.BOLD, 16));
+
+        txtSurname = new JTextField();
+        txtSurname.setHorizontalAlignment(SwingConstants.CENTER);
+        txtSurname.setBounds(125, 49, 259, 39);
+        pnlSignUp.add(txtSurname);
+        txtSurname.setColumns(10);
+
+        JLabel lblName = new JLabel("Nombre");
+        lblName.setBounds(0, 0, 110, 39);
+        pnlSignUp.add(lblName);
+        lblName.setFont(new Font("Tahoma", Font.BOLD, 16));
+
+        txtName = new JTextField();
+        txtName.setHorizontalAlignment(SwingConstants.CENTER);
+        txtName.setBounds(125, 0, 259, 39);
+        pnlSignUp.add(txtName);
+        txtName.setColumns(10);
+
+        pnlLogin = new JPanel();
+        layeredPane.add(pnlLogin, "name_16335078502100");
+        pnlLogin.setLayout(null);
+
+        pswPassword = new JPasswordField();
+        pswPassword.setBounds(125, 117, 259, 39);
+        pnlLogin.add(pswPassword);
+        pswPassword.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        pswPassword.setHorizontalAlignment(SwingConstants.CENTER);
+
+        lblPassword = new JLabel("Contrase\u00F1a");
+        lblPassword.setBounds(0, 118, 110, 39);
+        pnlLogin.add(lblPassword);
+        lblPassword.setFont(new Font("Tahoma", Font.BOLD, 16));
+
+        JLabel lblUser = new JLabel("Usuario");
+        lblUser.setFont(new Font("Tahoma", Font.BOLD, 16));
+        lblUser.setBounds(0, 40, 110, 39);
+        pnlLogin.add(lblUser);
+
+        txtUsername = new JTextField();
+        txtUsername.setHorizontalAlignment(SwingConstants.CENTER);
+        txtUsername.setColumns(10);
+        txtUsername.setBounds(125, 40, 259, 39);
+        pnlLogin.add(txtUsername);
+        setPanel(pnlLogin);
     }
 
     /**Provides a list with all the users registered in the Database (including managers and administrators).
@@ -139,4 +247,34 @@ public class Login extends JFrame {
         Login.this.dispose();
     }
 
+    /**
+     * @param panel
+     */
+
+    private void setPanel(JPanel panel){
+        if(panel == pnlLogin || panel == pnlSignUp){
+            layeredPane.removeAll();
+            layeredPane.add(panel);
+            layeredPane.repaint();
+            layeredPane.revalidate();
+        }
+    }
+
+    @Override
+    public boolean checkFields() {
+        boolean correctFields = true;
+        if(usersList
+                .stream()
+                .anyMatch(user -> user.getUsername().equals(txtUsername1.getText()))){
+            JOptionPane.showMessageDialog(null, "El nombre de usuario ya está registrado.");
+            correctFields = false;
+        }else{
+            if(txtName.getText().equals("") || txtSurname.getText().equals("") ||
+                    txtUsername1.getText().equals("") || pswPassword1.getText().equals("") ){
+                JOptionPane.showMessageDialog(null, "Tienes que rellenar todos los campos.");
+                correctFields = false;
+            }
+        }
+        return correctFields;
+    }
 }

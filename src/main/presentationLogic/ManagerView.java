@@ -56,6 +56,11 @@ public abstract class ManagerView extends JFrame {
         mnOptions.add(mntmExit);
 
         mntmMainMenu = new JMenuItem("Men\u00FA principal");
+        mntmMainMenu.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                //goToView(new LeagueMenu(manager);
+            }
+        });
         mntmMainMenu.setHorizontalAlignment(SwingConstants.CENTER);
         mntmMainMenu.setBackground(UIManager.getColor("MenuItem.background"));
         mntmMainMenu.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
