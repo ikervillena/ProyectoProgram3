@@ -10,8 +10,10 @@ import java.awt.event.ActionEvent;
 
 import main.businessLogic.Algorithm;
 import main.businessLogic.TacticalFormation;
+import main.dataLogic.league.League;
 import main.dataLogic.league.Squad;
 import main.dataLogic.league.Team;
+import main.dataLogic.people.Manager;
 import main.dataLogic.people.Player;
 import main.dbManagement.DataDeletion;
 import main.dbManagement.DataExtraction;
@@ -55,7 +57,9 @@ public class LineUp extends ManagerView {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    LineUp frame = new LineUp(DataExtraction.getTeams(0).get(0));
+                    League league = DataExtraction.getAllLeagues().get(0);
+                    Manager manager = league.getTeamsList().get(0).getManager();
+                    LineUp frame = new LineUp(league,manager);
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -67,8 +71,8 @@ public class LineUp extends ManagerView {
     /**
      * Create the frame.
      */
-    public LineUp(Team team) {
-        this.team = team;
+    public LineUp(League league, Manager manager) {
+        this.team = league.getTeam(manager);
         availablePlayers = team.getPlayersList();
         alignedPlayers = new ArrayList<>();
 

@@ -1,5 +1,6 @@
 package test.dataLogic.league;
 
+import main.businessLogic.Bid;
 import main.businessLogic.Statistic;
 import main.dataLogic.league.League;
 import main.dataLogic.league.Squad;
@@ -74,6 +75,9 @@ public class TeamTest {
         assertEquals(totalPoints,team.getTotalPoints());
     }
 
+    /**Tests the methods aimed at getting a list of players that play in a certain position.
+     */
+
     @Test
     public void getPlayers(){
         setUp();
@@ -84,6 +88,9 @@ public class TeamTest {
         assertEquals(0, team.getMidfielders().size());
         assertEquals(0, team.getForwards().size());
     }
+
+    /**Tests the generatePlayersList(ArrayList<Player>) method.
+     */
 
     @Test
     public void generatePlayersList(){

@@ -1,6 +1,7 @@
 package main.dataLogic.league;
 
 import main.businessLogic.Bid;
+import main.businessLogic.interfaces.IComparable;
 import main.businessLogic.interfaces.IDBConnection;
 import main.businessLogic.interfaces.IPositionClassification;
 import main.dbManagement.DBUtils;
@@ -16,7 +17,7 @@ import java.util.stream.Collectors;
  * @author Iker Villena Ona.
  */
 
-public class Team implements IDBConnection, IPositionClassification {
+public class Team implements IDBConnection, IPositionClassification, IComparable<Team>{
 
     int id;
     float budget;
@@ -312,5 +313,24 @@ public class Team implements IDBConnection, IPositionClassification {
             }
         }
         return isEqual;
+    }
+
+    /**Compares two Teams, taking into account the number of points obtained by each team in the competition.
+     * @param object Team to compare with.
+     * @return Integer with the value 1 if this object has achieved more points, -1 if it has fewer points
+     * or 0 if they have the same number of points.
+     */
+
+    @Override
+    public int compareTo(Team object) {
+        if(this.getTotalPoints()>object.getTotalPoints()){
+            return 1;
+        } else{
+            if(this.getTotalPoints()==object.getTotalPoints()){
+                return 0;
+            } else{
+                return -1;
+            }
+        }
     }
 }
