@@ -1,7 +1,11 @@
 package main.presentationLogic;
 
+import org.jetbrains.annotations.NotNull;
+
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -80,20 +84,84 @@ public abstract class ManagerView extends JFrame {
         ManagerView.this.dispose();
     }
 
-    private void setFormat(JComponent component){
+    /**Applies a specific format for a component provided.
+     */
+
+    private void setComponentFormat(Component component){
+        if(component instanceof JTable){
+            setFormat((JTable) component);
+        } else{
+            if(component instanceof JTextField){
+                setFormat((JTextField) component);
+            } else{
+                if(component instanceof JButton){
+                    setFormat((JButton) component);
+                } else{
+                    if(component instanceof JList){
+                        setFormat((JList) component);
+                    }
+                }
+            }
+        }
 
     }
 
-    public void setAllFormats(JComponent component){
-        if(component.getComponents().length == 0){
-            setFormat(component);
-        } else{
-            for(Component c : component.getComponents()){
+    /**Establishes a format for each of the components of the Container using Recursion.
+     * @param container Container whose Components need to be formatted.
+     */
 
+    public void setAllFormats(Container container){
+        if(container.getComponents().length>0){
+            for(Component c : container.getComponents()){
+                if(c instanceof Container){
+                    setAllFormats((Container) c);
+                }
+                setComponentFormat(c);
             }
         }
     }
 
+    /**This method sets a table's row's height and centres the text.
+     * @param table A JTable whose format needs to be changed.
+     */
 
+    private void setFormat(JTable table){
+        for(int i = 0; i < table.getModel().getRowCount(); i ++){
+            table.setRowHeight(i , 30);
+        }
+        DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
+        tcr.setHorizontalAlignment(SwingConstants.CENTER);
+        for(int i = 0; i < table.getModel().getColumnCount(); i++){
+            table.getColumnModel().getColumn(i).setCellRenderer(tcr);
+        }
+    }
+
+    /**Sets the format to a JTextField.
+     * @param textField JTextField that needs to be formatted.
+     */
+
+    private void setFormat(@NotNull JTextField textField){
+        textField.setFont(new Font("Trebuchet MS", Font.PLAIN,18));
+    }
+
+    /**Sets the format to a JButton.
+     * @param button JButton that needs to be formatted.
+     */
+
+    private void setFormat(@NotNull JButton button){
+        button.setBorder(new BevelBorder(BevelBorder.RAISED, SystemColor.infoText, SystemColor.controlShadow, null, null));
+        button.setBackground(SystemColor.scrollbar);
+        button.setFont(new Font("Tahoma", Font.PLAIN, 18));
+    }
+
+    /**Sets the format to a JList.
+     * @param list JList that needs to be formatted.
+     */
+
+    private void setFormat(@NotNull JList list){
+        DefaultListCellRenderer cellRenderer = (DefaultListCellRenderer) list.getCellRenderer();
+        cellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        list.setFont(new Font("Tahoma", Font.PLAIN, 14));
+    }
 
 }

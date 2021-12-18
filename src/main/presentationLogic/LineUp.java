@@ -214,6 +214,7 @@ public class LineUp extends ManagerView {
         });
         btnSavesquad.setBounds(475, 466, 338, 29);
         contentPane.add(btnSavesquad);
+        setAllFormats(contentPane);
         setUp();
     }
 

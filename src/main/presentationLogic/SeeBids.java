@@ -241,6 +241,7 @@ public class SeeBids extends ManagerView {
         lblAvailablemoney.setBounds(196, 455, 162, 40);
         contentPane.add(lblAvailablemoney);
         setUp();
+        setAllFormats(contentPane);
     }
 
     /**Fills the list of received bids.
@@ -251,23 +252,6 @@ public class SeeBids extends ManagerView {
         team.getReceivedBids()
                 .stream()
                 .forEach(bid -> model.addElement(bid));
-    }
-
-    /**This method sets a table's row's height and centres the text.
-     * @param table A JTable whose format needs to be changed.
-     */
-
-    private void setTableHeightAndCentreText(JTable table){
-        for(int i = 0; i < table.getModel().getRowCount(); i ++){
-            table.setRowHeight(i , 30);
-        }
-        DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
-        tcr.setHorizontalAlignment(SwingConstants.CENTER);
-        for(int i = 0; i < table.getModel().getColumnCount(); i++){
-            if(i != 1 && i != 5){
-                table.getColumnModel().getColumn(i).setCellRenderer(tcr);
-            }
-        }
     }
 
     /**Fills the tables with the bids made and received and shows the available money that the team has.
@@ -284,7 +268,6 @@ public class SeeBids extends ManagerView {
             model.addRow(new Object[]{teamName,b.getPlayer().getShirtName(),
                     b.getPlayer().getLastValue(),b.getFee()});
         }
-        setTableHeightAndCentreText(tblBidsMade);
 
         ((DefaultTableModel) tblReceivedBids.getModel()).setRowCount(0);
         DefaultTableModel model1 = (DefaultTableModel) tblReceivedBids.getModel();
@@ -296,7 +279,6 @@ public class SeeBids extends ManagerView {
             model1.addRow(new Object[]{teamName,b.getPlayer().getShirtName(),
                     b.getPlayer().getLastValue(),b.getFee()});
         }
-        setTableHeightAndCentreText(tblReceivedBids);
         lblAvailablemoney.setText(Float.toString(team.getAvailableMoney()));
     }
 }

@@ -144,6 +144,7 @@ public class LeagueMenu extends ManagerView {
         lblFantasyGame.setBounds(15, 55, 797, 51);
         getContentPane().add(lblFantasyGame);
         setTable();
+        setAllFormats(getContentPane());
     }
 
     /**Fills the table with the classification of the team, ordering the teams taking into accounts their points.

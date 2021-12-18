@@ -182,6 +182,7 @@ public class PlayerInfo extends ManagerView {
         lblTeam = new JLabel("");
         lblTeam.setBounds(573, 181, 171, 20);
         pnlResults.add(lblTeam);
+        setAllFormats(getContentPane());
     }
 
     /**Fills the list with the players that match with the search.
