@@ -8,17 +8,12 @@ import main.dbManagement.DataExtraction;
 
 import java.awt.EventQueue;
 
-import javax.swing.JPanel;
-import javax.swing.JTable;
-import javax.swing.JButton;
-import javax.swing.JScrollPane;
+import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.JLabel;
 import java.awt.SystemColor;
 import java.awt.Font;
 import java.util.ArrayList;
-import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -34,6 +29,7 @@ public class LeagueMenu extends ManagerView {
     private JButton btnMenu;
     private JButton btnSearchPlayer;
     private JButton btnLineUp;
+    private JButton btnAbandon;
     private JLabel lblFantasyGame;
 
     /**
@@ -144,6 +140,23 @@ public class LeagueMenu extends ManagerView {
         lblFantasyGame.setBackground(SystemColor.activeCaption);
         lblFantasyGame.setBounds(15, 55, 797, 51);
         getContentPane().add(lblFantasyGame);
+
+        btnAbandon = new JButton("Abandonar");
+        btnAbandon.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if(JOptionPane.showConfirmDialog(null,
+                        "¿Estás seguro de que quieres abandonar la liga?") == 0){
+                    league.getTeam(manager).delete();
+                    if(league.getTeamsList().size() < 2){
+                        league.delete();
+                    }
+                    goToView(new Menu(manager));
+                }
+            }
+        });
+        btnAbandon.setBounds(467, 466, 137, 29);
+        getContentPane().add(btnAbandon);
+
         setTable();
         setAllFormats(getContentPane());
     }
@@ -180,5 +193,4 @@ public class LeagueMenu extends ManagerView {
             }
         }
     }
-
 }

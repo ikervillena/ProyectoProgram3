@@ -5,6 +5,7 @@ import main.businessLogic.interfaces.IComparable;
 import main.businessLogic.interfaces.IDBConnection;
 import main.businessLogic.interfaces.IPositionClassification;
 import main.dbManagement.DBUtils;
+import main.dbManagement.DataDeletion;
 import main.dbManagement.DataExtraction;
 import main.dataLogic.people.Manager;
 import main.dataLogic.people.Player;
@@ -285,8 +286,31 @@ public class Team implements IDBConnection, IPositionClassification, IComparable
         DataUpdate.setBudget(this,(this.budget - money));
     }
 
+    /**Provides the league in which the team is participating.
+     * @return League in which the team participates.
+     */
+
+    public League getLeague(){
+        League league = null;
+        for(League l : DataExtraction.getAllLeagues()){
+            if (l.getTeamsList()
+                    .stream()
+                    .anyMatch(team -> team.equals(this))){
+                league = l;
+            }
+        }
+        return league;
+    }
+
     public ArrayList<Player> getGoalkeepers() {
         return getPlayers("Goalkeeper");
+    }
+
+    /**Deletes the Team from the DataBase.
+     */
+
+    public void delete(){
+        DataDeletion.deleteTeam(this);
     }
 
     @Override
@@ -324,12 +348,12 @@ public class Team implements IDBConnection, IPositionClassification, IComparable
     @Override
     public int compareTo(Team object) {
         if(this.getTotalPoints()>object.getTotalPoints()){
-            return 1;
+            return -1;
         } else{
             if(this.getTotalPoints()==object.getTotalPoints()){
                 return 0;
             } else{
-                return -1;
+                return 1;
             }
         }
     }

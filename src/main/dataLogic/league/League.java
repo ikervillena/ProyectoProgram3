@@ -1,12 +1,16 @@
 package main.dataLogic.league;
 
+import main.businessLogic.Bid;
+import main.businessLogic.MergeSort;
 import main.businessLogic.interfaces.IDBConnection;
 import main.dataLogic.people.Player;
 import main.dbManagement.DBUtils;
+import main.dbManagement.DataDeletion;
 import main.dbManagement.DataDestruction;
 import main.dbManagement.DataExtraction;
 import main.dataLogic.people.Manager;
 
+import java.sql.Array;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -108,6 +112,49 @@ public class League implements IDBConnection {
                 .orElse(null);
     }
 
+    /**Provides the list of bids made to the players that are free in the league.
+     * @return ArrayList<Bid> with the list of bids.
+     */
+
+    public ArrayList<Bid> getBids(){
+        return DataExtraction.getLeagueBids(this);
+    }
+
+    /**Accepts the higher Bid of a list of Bids, and deletes the rest of them
+     * @param bidsList ArrayList<Bid> with the list of Bids.
+     */
+
+    private void acceptHigherBid(ArrayList<Bid> bidsList){
+        new MergeSort<Bid>().mergeSort(bidsList);
+        for(int i = 0; i<bidsList.size(); i++){
+            if(i == 0){
+                bidsList.get(i).accept();
+            } else{
+                bidsList.get(i).delete();
+            }
+        }
+    }
+
+    /**This method accepts the higher bid made for each Player using Recursion and Lambda Expressions.
+     * @param bidsList ArrayList<Bid> with the list of bids that need to be taken into account.
+     */
+
+    public void acceptLeagueBids(ArrayList<Bid> bidsList){
+        if(bidsList.size() == 0){
+            return;
+        } else{
+            Player player = bidsList.get(0).getPlayer();
+            acceptHigherBid((ArrayList<Bid>) bidsList
+                    .stream()
+                    .filter(bid -> bid.getPlayer().equals(player))
+                    .collect(Collectors.toList()));
+            acceptLeagueBids((ArrayList<Bid>) bidsList
+                    .stream()
+                    .filter(bid -> !(bid.getPlayer().equals(player)))
+                    .collect(Collectors.toList()));
+        }
+    }
+
     /**Adds a team to a league, including it in the list of teams.
      * @param newTeam A Team that is being added to the league's list of teams.
      */
@@ -118,13 +165,11 @@ public class League implements IDBConnection {
         setTeamsList(list);
     }
 
-    /**Removes the information regarding de league from the Database (Stored in the tables League and Team).
-     * @throws SQLException Database connection exception.
+    /**Deletes the League from the DataBase.
      */
 
-    public void delete() throws SQLException {
-        DataDestruction.delete("league","league_id",getID());
-        DataDestruction.delete("team","league_id",getID());
+    public void delete(){
+        DataDeletion.deleteLeague(this);
     }
 
     /**Removes a team from a league, taking it off the list.
