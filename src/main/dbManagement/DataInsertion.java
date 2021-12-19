@@ -86,7 +86,6 @@ public class DataInsertion {
     private static void insertPlayFor(Team team){
         for(Player player : team.getPlayersList()){
             String sql = "INSERT INTO playfor(player_id, team_id) VALUES(?,?)";
-
             try (Connection conn = DBManager.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)){
                 pstmt.setInt(1, player.getID());
                 pstmt.setInt(2,team.getID());
@@ -210,6 +209,23 @@ public class DataInsertion {
             pstmt.setString(2, manager.getPassword());
             pstmt.setString(3, manager.getName());
             pstmt.setString(4, manager.getSurname());
+            pstmt.executeUpdate();
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    /**Inserts a player into a Team.
+     * @param player Player that needs to be saved.
+     * @param team Team in which the Player plays now.
+     */
+
+    public static void insertPlayFor(Player player, Team team){
+        String sql = "INSERT INTO playfor(player_id, team_id) VALUES(?,?)";
+        try (Connection conn = DBManager.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)){
+            pstmt.setInt(1, player.getID());
+            pstmt.setInt(2,team.getID());
             pstmt.executeUpdate();
         }
         catch (SQLException e) {

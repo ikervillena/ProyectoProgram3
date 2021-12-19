@@ -58,6 +58,7 @@ public class LeagueMenu extends ManagerView {
      * Create the frame.
      */
     public LeagueMenu(League league, Manager manager) {
+        super(league, manager);
         this.league = league;
         this.manager = manager;
         JScrollPane scrollPane = new JScrollPane();

@@ -8,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 import main.businessLogic.Statistic;
 import main.businessLogic.interfaces.INewData;
 import main.dataLogic.league.Club;
+import main.dataLogic.league.League;
 import main.dataLogic.people.Player;
 import main.dbManagement.DataExtraction;
 import main.dbManagement.DataInsertion;
@@ -25,7 +26,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Iker Villena Ona.
  */
 
-public class LoadMatches extends ManagerView implements INewData {
+public class LoadMatches extends JFrame implements INewData {
 
     private JPanel contentPane;
     private int nextRound;
@@ -71,6 +72,7 @@ public class LoadMatches extends ManagerView implements INewData {
         matchesList = DataExtraction.getMatches(nextRound);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(100, 100, 850, 600);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
@@ -203,6 +205,12 @@ public class LoadMatches extends ManagerView implements INewData {
      */
 
     private void refresh(){
+        //When all the statistics of a round are saves, the higher bids for each player in each league are accepted.
+        if(nextRound < DataExtraction.getNextRound()){
+            for(League l : DataExtraction.getAllLeagues()){
+                l.acceptLeagueBids(l.getBids());
+            }
+        }
         nextRound = DataExtraction.getNextRound();
         matchesList = DataExtraction.getMatches(nextRound);
         cmbxMatches.setModel(getMatchesModel());

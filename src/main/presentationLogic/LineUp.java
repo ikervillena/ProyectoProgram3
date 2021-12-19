@@ -72,6 +72,7 @@ public class LineUp extends ManagerView {
      * Create the frame.
      */
     public LineUp(League league, Manager manager) {
+        super(league, manager);
         this.team = league.getTeam(manager);
         availablePlayers = team.getPlayersList();
         alignedPlayers = new ArrayList<>();

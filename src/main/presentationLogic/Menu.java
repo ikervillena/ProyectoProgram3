@@ -17,7 +17,7 @@ import java.awt.event.ActionEvent;
  * @author Iker Villena Ona
  */
 
-public class Menu extends ManagerView {
+public class Menu extends JFrame {
 
     private Manager manager;
     private JPanel contentPane;
@@ -48,8 +48,8 @@ public class Menu extends ManagerView {
     public Menu(Manager manager) {
         this.manager = manager;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
         setBounds(100, 100, 800, 500);
+        setLocationRelativeTo(null);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
@@ -59,7 +59,8 @@ public class Menu extends ManagerView {
         cmbxLeagues.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 League chosenLeague = (League) cmbxLeagues.getModel().getSelectedItem();
-                goToView(new LeagueMenu(chosenLeague, manager));
+                new LeagueMenu(chosenLeague, manager).setVisible(true);
+                Menu.this.dispose();
             }
         });
         cmbxLeagues.setBounds(203, 217, 372, 52);

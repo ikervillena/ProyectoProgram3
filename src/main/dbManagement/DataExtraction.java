@@ -628,5 +628,20 @@ public class DataExtraction {
         return bidsList;
     }
 
+    public static ArrayList<Bid> getLeagueBids(League league){
+        ArrayList<Bid> bidsList = new ArrayList<>();
+        String sql = "SELECT league_id, from_team, player_id, fee FROM bid INNER JOIN team " +
+                "ON bid.from_team = team.team_id WHERE to_team IS NULL AND league_id = "+league.getID();
+        try (Connection conn = DBManager.connect(); Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                bidsList.add(new Bid(getTeam(rs.getInt("from_team")),null,
+                        getPlayer(rs.getInt("player_id")),rs.getFloat("fee")));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return bidsList;
+    }
 
 }

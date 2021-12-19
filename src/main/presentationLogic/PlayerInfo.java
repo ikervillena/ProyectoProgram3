@@ -23,6 +23,7 @@ import javax.swing.event.ListSelectionEvent;
 public class PlayerInfo extends ManagerView {
 
     private League league;
+    private Manager manager;
     private JPanel contentPane;
     private JPanel pnlSearch;
     private JButton btnBtnsearch;
@@ -65,7 +66,7 @@ public class PlayerInfo extends ManagerView {
      * Create the frame.
      */
     public PlayerInfo(League league, Manager manager) {
-
+        super(league, manager);
         this.league = league;
         pnlSearch = new JPanel();
         pnlSearch.setBounds(15, 16, 798, 120);
@@ -118,7 +119,7 @@ public class PlayerInfo extends ManagerView {
                         JOptionPane.showMessageDialog(null,"Este jugador te pertenece.");
                     }
                 } else{
-                    new BidMaker((Player) listPlayers.getSelectedValue(), league, DataExtraction.getManager("ikervillena")).setVisible(true);
+                    new BidMaker((Player) listPlayers.getSelectedValue(), league, manager).setVisible(true);
                 }
 
             }

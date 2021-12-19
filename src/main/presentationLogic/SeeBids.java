@@ -79,6 +79,7 @@ public class SeeBids extends ManagerView {
      * Create the frame.
      */
     public SeeBids(Manager manager, League league) {
+        super(league, manager);
         this.team = league.getTeam(manager);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

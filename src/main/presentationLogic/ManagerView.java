@@ -1,5 +1,7 @@
 package main.presentationLogic;
 
+import main.dataLogic.league.League;
+import main.dataLogic.people.Manager;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
@@ -23,8 +25,11 @@ public abstract class ManagerView extends JFrame {
     private JMenuItem mntmLogOut;
     private JMenuItem mntmExit;
     private JMenuItem mntmMainMenu;
+    private JMenuItem mntmSearchPlayer;
+    private JMenuItem mntmSeeBids;
+    private JMenuItem mntmNewMenuItem;
 
-    public ManagerView() {
+    public ManagerView(League league, Manager manager) {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 850, 600);
         setLocationRelativeTo(null);
@@ -45,6 +50,33 @@ public abstract class ManagerView extends JFrame {
                 goToView(new Login());
             }
         });
+
+        mntmSearchPlayer = new JMenuItem("Buscar jugador");
+        mntmSearchPlayer.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+        mntmSearchPlayer.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                goToView(new PlayerInfo(league,manager));
+            }
+        });
+        mnOptions.add(mntmSearchPlayer);
+
+        mntmSeeBids = new JMenuItem("Ver pujas");
+        mntmSeeBids.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+        mntmSeeBids.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                goToView(new SeeBids(manager,league));
+            }
+        });
+        mnOptions.add(mntmSeeBids);
+
+        mntmNewMenuItem = new JMenuItem("Alineaci\u00F3n");
+        mntmNewMenuItem.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+        mntmNewMenuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                goToView(new LineUp(league,manager));
+            }
+        });
+        mnOptions.add(mntmNewMenuItem);
         mntmLogOut.setBackground(UIManager.getColor("MenuItem.background"));
         mntmLogOut.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
         mnOptions.add(mntmLogOut);
@@ -62,7 +94,7 @@ public abstract class ManagerView extends JFrame {
         mntmMainMenu = new JMenuItem("Men\u00FA principal");
         mntmMainMenu.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                //goToView(new LeagueMenu(manager);
+                goToView(new Menu(manager));
             }
         });
         mntmMainMenu.setHorizontalAlignment(SwingConstants.CENTER);
@@ -163,5 +195,4 @@ public abstract class ManagerView extends JFrame {
         cellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
         list.setFont(new Font("Tahoma", Font.PLAIN, 14));
     }
-
 }
