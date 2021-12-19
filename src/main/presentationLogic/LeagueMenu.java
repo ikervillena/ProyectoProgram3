@@ -16,6 +16,7 @@ import java.awt.Font;
 import java.util.ArrayList;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.border.BevelBorder;
 
 public class LeagueMenu extends ManagerView {
 
@@ -31,6 +32,7 @@ public class LeagueMenu extends ManagerView {
     private JButton btnLineUp;
     private JButton btnAbandon;
     private JLabel lblFantasyGame;
+    private JProgressBar progressBar;
 
     /**
      * Launch the application.
@@ -58,7 +60,7 @@ public class LeagueMenu extends ManagerView {
         this.league = league;
         this.manager = manager;
         JScrollPane scrollPane = new JScrollPane();
-        scrollPane.setBounds(223, 114, 381, 340);
+        scrollPane.setBounds(223, 114, 381, 294);
         getContentPane().add(scrollPane);
 
         tblClassification = new JTable();
@@ -134,9 +136,10 @@ public class LeagueMenu extends ManagerView {
         pnl2.add(btnLineUp);
 
         lblFantasyGame = new JLabel("Fantasy Game");
+        lblFantasyGame.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
         lblFantasyGame.setOpaque(true);
         lblFantasyGame.setHorizontalAlignment(SwingConstants.CENTER);
-        lblFantasyGame.setFont(new Font("Tahoma", Font.BOLD, 16));
+        lblFantasyGame.setFont(new Font("Trebuchet MS", Font.BOLD, 25));
         lblFantasyGame.setBackground(SystemColor.activeCaption);
         lblFantasyGame.setBounds(15, 55, 797, 51);
         getContentPane().add(lblFantasyGame);
@@ -159,6 +162,12 @@ public class LeagueMenu extends ManagerView {
 
         setTable();
         setAllFormats(getContentPane());
+
+        progressBar = new JProgressBar();
+        progressBar.setMaximum(8);
+        progressBar.setValue(DataExtraction.getNextRound()-1);
+        progressBar.setBounds(223, 424, 381, 30);
+        getContentPane().add(progressBar);
     }
 
     /**Fills the table with the classification of the team, ordering the teams taking into accounts their points.

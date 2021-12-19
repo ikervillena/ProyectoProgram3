@@ -1,6 +1,7 @@
 package main.dataLogic.people;
 
 import main.businessLogic.Statistic;
+import main.businessLogic.interfaces.IComparable;
 import main.businessLogic.interfaces.IDBConnection;
 import main.dataLogic.league.Club;
 import main.dataLogic.league.League;
@@ -15,7 +16,7 @@ import java.util.stream.Collectors;
  * @author Iker Villena Ona.
  */
 
-public class Player implements IDBConnection {
+public class Player implements IDBConnection, IComparable<Player> {
 
     String name;
     String surname;
@@ -215,4 +216,16 @@ public class Player implements IDBConnection {
         return statsRecord;
     }
 
+    @Override
+    public int compareTo(Player object) {
+        if(this.getPosition().getIndex()>object.getPosition().getIndex()){
+            return 1;
+        } else{
+            if(this.getPosition().getIndex()==object.getPosition().getIndex()){
+                return 0;
+            } else{
+                return -1;
+            }
+        }
+    }
 }

@@ -99,13 +99,19 @@ public class Team implements IDBConnection, IPositionClassification, IComparable
      */
 
     public static boolean canGenerateTeam(ArrayList<Player> playersList){
-        if(numPlayers("Goalkeeper",playersList)>=1&&numPlayers("Defense",playersList)>=4&&
-        numPlayers("Midfielder",playersList)>=4&&numPlayers("Forward",playersList)>=4){
+        if(numPlayers("Goalkeeper",playersList)>=1&&numPlayers("Defense",playersList)>=5&&
+        numPlayers("Midfielder",playersList)>=5&&numPlayers("Forward",playersList)>=4){
             return true;
         }else{
             return false;
         }
     }
+
+    /**Provides the number of Players that play in a certain position.
+     * @param positionName Position's name.
+     * @param playersList ArrayList<Player> with the list of Players.
+     * @return Integer with the number of players from the list received as a parameter that play in the position specified.
+     */
 
     private static int numPlayers(String positionName, ArrayList<Player> playersList){
         int numPlayers = 0;

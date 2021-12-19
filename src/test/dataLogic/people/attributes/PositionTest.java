@@ -1,6 +1,5 @@
 package test.dataLogic.people.attributes;
 
-import main.businessLogic.Algorithm;
 import main.dataLogic.people.Player;
 import main.dataLogic.people.attributes.Position;
 import main.dbManagement.DataExtraction;

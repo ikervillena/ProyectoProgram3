@@ -47,7 +47,6 @@ public class SeeBids extends ManagerView {
     private JLabel lblReceivedBids;
     private JButton btnAccept;
     private JButton btnReject;
-    private JButton btnGoback;
     private JTable tblBidsMade;
     private JScrollPane scp1;
     private JButton btnDelete;
@@ -220,10 +219,6 @@ public class SeeBids extends ManagerView {
             }
         });
 
-        btnGoback = new JButton("Volver");
-        btnGoback.setBounds(648, 455, 144, 40);
-        contentPane.add(btnGoback);
-
         lblAvailablemoney1 = new JLabel("AvailableMoney");
         lblAvailablemoney1.setBorder(new LineBorder(new Color(0, 0, 0)));
         lblAvailablemoney1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -269,7 +264,7 @@ public class SeeBids extends ManagerView {
             model.addRow(new Object[]{teamName,b.getPlayer().getShirtName(),
                     b.getPlayer().getLastValue(),b.getFee()});
         }
-
+        setFormat(tblBidsMade);
         ((DefaultTableModel) tblReceivedBids.getModel()).setRowCount(0);
         DefaultTableModel model1 = (DefaultTableModel) tblReceivedBids.getModel();
         for(Bid b : team.getReceivedBids()){
@@ -281,5 +276,6 @@ public class SeeBids extends ManagerView {
                     b.getPlayer().getLastValue(),b.getFee()});
         }
         lblAvailablemoney.setText(Float.toString(team.getAvailableMoney()));
+        setFormat(tblReceivedBids);
     }
 }

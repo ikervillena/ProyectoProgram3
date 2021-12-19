@@ -60,6 +60,25 @@ public class Position {
         }
     }
 
+    /**Provides the Position's name in spanish.
+     * @return String with the Position's name in spanish.
+     */
+
+    public String toSpanish(){
+        switch(this.name){
+            case "Goalkeeper":
+                return "Portero";
+            case "Defense":
+                return "Defensa";
+            case "Midfielder":
+                return "Centrocampista";
+            case "Forward":
+                return "Delantero";
+            default:
+                return "Sin definir";
+        }
+    }
+
     @Override
     public String toString() {
         return "Position{" +

@@ -8,6 +8,7 @@ import main.dbManagement.DataExtraction;
 import main.presentationLogic.administrator.LoadMatches;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -92,8 +93,9 @@ public class Login extends JFrame implements INewData {
 
             }
         });
-        btnAccept.setBackground(SystemColor.activeCaptionBorder);
-        btnAccept.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        btnAccept.setBorder(new BevelBorder(BevelBorder.RAISED, SystemColor.infoText, SystemColor.controlShadow, null, null));
+        btnAccept.setBackground(SystemColor.scrollbar);
+        btnAccept.setFont(new Font("Tahoma", Font.PLAIN, 18));
         btnAccept.setBounds(310, 372, 157, 39);
         contentPane.add(btnAccept);
 
@@ -120,6 +122,9 @@ public class Login extends JFrame implements INewData {
                 }
             }
         });
+        tglbtnMode.setBorder(new BevelBorder(BevelBorder.RAISED, SystemColor.infoText, SystemColor.controlShadow, null, null));
+        tglbtnMode.setBackground(SystemColor.scrollbar);
+        tglbtnMode.setFont(new Font("Tahoma", Font.PLAIN, 18));
         tglbtnMode.setBounds(600, 16, 157, 39);
         contentPane.add(tglbtnMode);
 

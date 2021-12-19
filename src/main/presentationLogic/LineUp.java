@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
-import main.businessLogic.Algorithm;
+import main.businessLogic.QuickSort;
 import main.businessLogic.TacticalFormation;
 import main.dataLogic.league.League;
 import main.dataLogic.league.Squad;
@@ -112,19 +112,6 @@ public class LineUp extends ManagerView {
         contentPane.add(pnlGoalkeeper);
         pnlGoalkeeper.setLayout(new GridLayout(1, 0, 0, 0));
 
-        btnGoalkeeper = new JButton("");
-        btnGoalkeeper.setOpaque(false);
-        btnGoalkeeper.setContentAreaFilled(false);
-        btnGoalkeeper.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                setCmbxPlayers(btnGoalkeeper);
-                selectedPlayer = getPlayer(btnGoalkeeper.getText());
-            }
-        });
-        btnGoalkeeper.setSize(316, 88);
-        btnGoalkeeper.setLocation(45, 0);
-        pnlGoalkeeper.add(btnGoalkeeper);
-
         lblSoccerPitch = new JLabel("");
         lblSoccerPitch.setBounds(15, 16, 445, 479);
         ImageIcon image = new ImageIcon("images/SoccerPitch.jpg");
@@ -194,13 +181,13 @@ public class LineUp extends ManagerView {
 
         lblSubstitutes = new JLabel("Suplentes");
         lblSubstitutes.setHorizontalAlignment(SwingConstants.CENTER);
-        lblSubstitutes.setFont(new Font("Times New Roman", Font.BOLD, 16));
+        lblSubstitutes.setFont(new Font("Trebuchet MS", Font.BOLD,18));
         lblSubstitutes.setBounds(644, 227, 169, 26);
         contentPane.add(lblSubstitutes);
 
         lblStarters = new JLabel("Titulares");
         lblStarters.setHorizontalAlignment(SwingConstants.CENTER);
-        lblStarters.setFont(new Font("Times New Roman", Font.BOLD, 16));
+        lblStarters.setFont(new Font("Trebuchet MS", Font.BOLD,18));
         lblStarters.setBounds(475, 227, 169, 26);
         contentPane.add(lblStarters);
 
@@ -217,6 +204,19 @@ public class LineUp extends ManagerView {
         contentPane.add(btnSavesquad);
         setAllFormats(contentPane);
         setUp();
+
+        btnGoalkeeper = new JButton("");
+        btnGoalkeeper.setOpaque(false);
+        btnGoalkeeper.setContentAreaFilled(false);
+        btnGoalkeeper.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                setCmbxPlayers(btnGoalkeeper);
+                selectedPlayer = getPlayer(btnGoalkeeper.getText());
+            }
+        });
+        btnGoalkeeper.setSize(316, 88);
+        btnGoalkeeper.setLocation(45, 0);
+        pnlGoalkeeper.add(btnGoalkeeper);
     }
 
     private void setUp(){
@@ -244,7 +244,6 @@ public class LineUp extends ManagerView {
                 btnGoalkeeper.setText(p.toString());
             }
         }
-        // OTHER PANEL:
         addButtons(pnlForward, chosenFormation.getNumForwards(), getPositionPlayers("Defense",alignedPlayers));
     }
 
@@ -374,13 +373,16 @@ public class LineUp extends ManagerView {
 
     private void setLists(){
         DefaultListModel<Player> model1 = new DefaultListModel<>();
-        Algorithm.quickSortPlayers(alignedPlayers,0,alignedPlayers.size()-1);
+        QuickSort<Player> myQuickSort = new QuickSort<Player>();
+        myQuickSort.sort(alignedPlayers,0,alignedPlayers.size()-1);
         for (Player p : alignedPlayers){
             model1.addElement(p);
         }
         listStarters.setModel(model1);
         DefaultListModel<Player> model2 = new DefaultListModel<>();
-        for (Player p : getSubstitutes()){
+        ArrayList<Player> substitutes = getSubstitutes();
+        myQuickSort.sort(substitutes,0,substitutes.size()-1);
+        for (Player p : substitutes){
             model2.addElement(p);
         }
         listSubtitutes.setModel(model2);

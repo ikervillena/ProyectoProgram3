@@ -55,15 +55,14 @@ public class MergeSort <T extends IComparable>{
 
     public void mergeSort(ArrayList<T> array) {
         int middle;
-        ArrayList<T> left = new ArrayList<>();
-        ArrayList<T> right = new ArrayList<>();
         if (array.size() > 1) {
             middle = array.size() / 2;
+            ArrayList<T> left = new ArrayList<>();
+            ArrayList<T> right = new ArrayList<>();
             for (int i = 0; i < middle; i++)
                 left.add(array.get(i));
             for (int j = middle; j < array.size(); j++)
                 right.add(array.get(j));
-
             mergeSort(left);
             mergeSort(right);
             merge(array, left, right);

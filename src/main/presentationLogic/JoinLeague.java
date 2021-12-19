@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 
 import main.dataLogic.league.Team;
@@ -34,7 +35,7 @@ public class JoinLeague extends JFrame {
     private JLabel lblJoinLeague;
     private JLabel lblEntryCode;
     private JButton btnJoinLeague;
-
+    private JButton btnGoBack;
 
     /**
      * Launch the application.
@@ -57,7 +58,7 @@ public class JoinLeague extends JFrame {
      */
     public JoinLeague(Manager manager) {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 400, 500);
+        setBounds(100, 100, 800, 500);
         setLocationRelativeTo(null);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -67,19 +68,20 @@ public class JoinLeague extends JFrame {
         lblJoinLeague = new JLabel("Unirse a liga");
         lblJoinLeague.setHorizontalAlignment(SwingConstants.CENTER);
         lblJoinLeague.setFont(new Font("Tahoma", Font.BOLD, 40));
-        lblJoinLeague.setBounds(59, 77, 259, 49);
+        lblJoinLeague.setBounds(259, 77, 259, 49);
         contentPane.add(lblJoinLeague);
 
         lblEntryCode = new JLabel("C\u00F3digo de entrada");
         lblEntryCode.setHorizontalAlignment(SwingConstants.CENTER);
-        lblEntryCode.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        lblEntryCode.setBounds(19, 189, 146, 49);
+        lblEntryCode.setFont(new Font("Trebuchet MS", Font.BOLD, 18));
+        lblEntryCode.setBounds(188, 195, 185, 49);
         contentPane.add(lblEntryCode);
 
         txtEntryCode = new JTextField();
-        txtEntryCode.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        txtEntryCode.setHorizontalAlignment(SwingConstants.CENTER);
+        txtEntryCode.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
         txtEntryCode.setColumns(10);
-        txtEntryCode.setBounds(184, 189, 174, 49);
+        txtEntryCode.setBounds(392, 195, 201, 49);
         contentPane.add(txtEntryCode);
 
         btnJoinLeague = new JButton("Unirse a liga");
@@ -103,10 +105,24 @@ public class JoinLeague extends JFrame {
                 }
             }
         });
+        btnJoinLeague.setBorder(new BevelBorder(BevelBorder.RAISED, SystemColor.infoText, SystemColor.controlShadow, null, null));
+        btnJoinLeague.setBackground(SystemColor.scrollbar);
         btnJoinLeague.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        btnJoinLeague.setBackground(SystemColor.activeCaptionBorder);
-        btnJoinLeague.setBounds(93, 316, 174, 49);
+        btnJoinLeague.setBounds(302, 316, 174, 49);
         contentPane.add(btnJoinLeague);
+
+        btnGoBack = new JButton("Volver");
+        btnGoBack.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new Menu(manager).setVisible(true);
+                JoinLeague.this.dispose();
+            }
+        });
+        btnGoBack.setBorder(new BevelBorder(BevelBorder.RAISED, SystemColor.infoText, SystemColor.controlShadow, null, null));
+        btnGoBack.setBackground(SystemColor.scrollbar);
+        btnGoBack.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        btnGoBack.setBounds(619, 16, 144, 42);
+        contentPane.add(btnGoBack);
     }
 
 }

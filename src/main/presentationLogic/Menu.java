@@ -63,7 +63,7 @@ public class Menu extends JFrame {
                 Menu.this.dispose();
             }
         });
-        cmbxLeagues.setBounds(203, 217, 372, 52);
+        cmbxLeagues.setBounds(203, 217, 372, 40);
         cmbxLeagues.setModel(getLeaguesModel(manager));
         contentPane.add(cmbxLeagues);
 
@@ -107,5 +107,4 @@ public class Menu extends JFrame {
         }
         return model;
     }
-
 }

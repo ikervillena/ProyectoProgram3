@@ -157,7 +157,7 @@ public abstract class ManagerView extends JFrame {
      * @param table A JTable whose format needs to be changed.
      */
 
-    private void setFormat(JTable table){
+    public void setFormat(JTable table){
         for(int i = 0; i < table.getModel().getRowCount(); i ++){
             table.setRowHeight(i , 30);
         }
@@ -172,7 +172,7 @@ public abstract class ManagerView extends JFrame {
      * @param textField JTextField that needs to be formatted.
      */
 
-    private void setFormat(@NotNull JTextField textField){
+    private void setFormat(JTextField textField){
         textField.setFont(new Font("Trebuchet MS", Font.PLAIN,18));
     }
 
@@ -180,7 +180,7 @@ public abstract class ManagerView extends JFrame {
      * @param button JButton that needs to be formatted.
      */
 
-    private void setFormat(@NotNull JButton button){
+    private void setFormat(JButton button){
         button.setBorder(new BevelBorder(BevelBorder.RAISED, SystemColor.infoText, SystemColor.controlShadow, null, null));
         button.setBackground(SystemColor.scrollbar);
         button.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -190,9 +190,10 @@ public abstract class ManagerView extends JFrame {
      * @param list JList that needs to be formatted.
      */
 
-    private void setFormat(@NotNull JList list){
+    private void setFormat(JList list){
         DefaultListCellRenderer cellRenderer = (DefaultListCellRenderer) list.getCellRenderer();
         cellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
         list.setFont(new Font("Tahoma", Font.PLAIN, 14));
     }
+
 }

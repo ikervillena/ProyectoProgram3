@@ -112,7 +112,6 @@ public class TeamTest {
                 .stream()
                 .filter(player -> player.getPosition().getName().equals("Forward"))
                 .count());
-
     }
 
 }

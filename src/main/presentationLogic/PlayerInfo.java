@@ -128,39 +128,43 @@ public class PlayerInfo extends ManagerView {
         pnlResults.add(btnSign);
 
         lblName1 = new JLabel("Nombre:");
-        lblName1.setFont(new Font("Tahoma", Font.BOLD, 16));
-        lblName1.setBounds(427, 37, 117, 20);
+        lblName1.setFont(new Font("Trebuchet MS", Font.BOLD, 18));
+        lblName1.setBounds(447, 37, 117, 20);
         pnlResults.add(lblName1);
 
         lblSurname1 = new JLabel("Apellido");
-        lblSurname1.setFont(new Font("Tahoma", Font.BOLD, 16));
-        lblSurname1.setBounds(427, 73, 117, 20);
+        lblSurname1.setFont(new Font("Trebuchet MS", Font.BOLD, 18));
+        lblSurname1.setBounds(447, 73, 117, 20);
         pnlResults.add(lblSurname1);
 
         lblPosition1 = new JLabel("Posici\u00F3n:");
-        lblPosition1.setFont(new Font("Tahoma", Font.BOLD, 16));
-        lblPosition1.setBounds(427, 109, 117, 20);
+        lblPosition1.setFont(new Font("Trebuchet MS", Font.BOLD, 18));
+        lblPosition1.setBounds(447, 109, 117, 20);
         pnlResults.add(lblPosition1);
 
         lblShirtNumber1 = new JLabel("Dorsal:");
-        lblShirtNumber1.setFont(new Font("Tahoma", Font.BOLD, 16));
-        lblShirtNumber1.setBounds(427, 145, 117, 20);
+        lblShirtNumber1.setFont(new Font("Trebuchet MS", Font.BOLD, 18));
+        lblShirtNumber1.setBounds(447, 145, 117, 20);
         pnlResults.add(lblShirtNumber1);
 
         lblName = new JLabel("");
-        lblName.setBounds(573, 37, 171, 20);
+        lblName.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+        lblName.setBounds(593, 37, 171, 20);
         pnlResults.add(lblName);
 
         lblSurname = new JLabel("");
-        lblSurname.setBounds(573, 73, 171, 20);
+        lblSurname.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+        lblSurname.setBounds(593, 73, 171, 20);
         pnlResults.add(lblSurname);
 
         lblPosition = new JLabel("");
-        lblPosition.setBounds(573, 109, 171, 20);
+        lblPosition.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+        lblPosition.setBounds(593, 109, 171, 20);
         pnlResults.add(lblPosition);
 
         lblShirtnumber = new JLabel("");
-        lblShirtnumber.setBounds(573, 145, 171, 20);
+        lblShirtnumber.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+        lblShirtnumber.setBounds(593, 145, 171, 20);
         pnlResults.add(lblShirtnumber);
 
         btnSeevalue = new JButton("Evoluci\u00F3n de valor");
@@ -168,20 +172,19 @@ public class PlayerInfo extends ManagerView {
         btnSeevalue.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new PlayerValue((Player) listPlayers.getSelectedValue()).setVisible(true);
-                btnSeevalue.setEnabled(false);
-                btnSign.setEnabled(false);
             }
         });
         btnSeevalue.setBounds(427, 228, 356, 43);
         pnlResults.add(btnSeevalue);
 
         lblTeam1 = new JLabel("Equipo:");
-        lblTeam1.setFont(new Font("Tahoma", Font.BOLD, 16));
-        lblTeam1.setBounds(427, 181, 117, 20);
+        lblTeam1.setFont(new Font("Trebuchet MS", Font.BOLD, 18));
+        lblTeam1.setBounds(447, 181, 117, 20);
         pnlResults.add(lblTeam1);
 
         lblTeam = new JLabel("");
-        lblTeam.setBounds(573, 181, 171, 20);
+        lblTeam.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+        lblTeam.setBounds(593, 181, 171, 20);
         pnlResults.add(lblTeam);
         setAllFormats(getContentPane());
     }
@@ -205,7 +208,7 @@ public class PlayerInfo extends ManagerView {
         if(selectedPlayer != null){
             lblName.setText(selectedPlayer.getName());
             lblSurname.setText(selectedPlayer.getSurname());
-            lblPosition.setText(selectedPlayer.getPosition().getName());
+            lblPosition.setText(selectedPlayer.getPosition().toSpanish());
             lblShirtnumber.setText(String.valueOf(selectedPlayer.getShirtNumber()));
             Team team = selectedPlayer.getTeam(league);
             if(team == null){

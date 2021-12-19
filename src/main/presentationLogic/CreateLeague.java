@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 
 import main.dataLogic.people.Manager;
@@ -34,6 +35,7 @@ public class CreateLeague extends JFrame {
     private JLabel lblLeagueName;
     private JLabel lblEntryCode;
     private JButton btnCrearLiga;
+    private JButton btnGoback;
 
     /**
      * Launch the application.
@@ -56,7 +58,7 @@ public class CreateLeague extends JFrame {
      */
     public CreateLeague(Manager manager) {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 400, 500);
+        setBounds(100, 100, 800, 500);
         setLocationRelativeTo(null);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -66,31 +68,33 @@ public class CreateLeague extends JFrame {
         lblCreateLeague = new JLabel("Crear liga");
         lblCreateLeague.setHorizontalAlignment(SwingConstants.CENTER);
         lblCreateLeague.setFont(new Font("Tahoma", Font.BOLD, 40));
-        lblCreateLeague.setBounds(56, 61, 259, 49);
+        lblCreateLeague.setBounds(259, 61, 259, 49);
         contentPane.add(lblCreateLeague);
 
         lblLeagueName = new JLabel("Nombre de liga");
-        lblLeagueName.setHorizontalAlignment(SwingConstants.CENTER);
-        lblLeagueName.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        lblLeagueName.setBounds(19, 170, 146, 49);
+        lblLeagueName.setHorizontalAlignment(SwingConstants.LEFT);
+        lblLeagueName.setFont(new Font("Trebuchet MS", Font.BOLD, 18));
+        lblLeagueName.setBounds(195, 170, 180, 49);
         contentPane.add(lblLeagueName);
 
         lblEntryCode = new JLabel("C\u00F3digo de entrada");
-        lblEntryCode.setHorizontalAlignment(SwingConstants.CENTER);
-        lblEntryCode.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        lblEntryCode.setBounds(19, 250, 146, 49);
+        lblEntryCode.setHorizontalAlignment(SwingConstants.LEFT);
+        lblEntryCode.setFont(new Font("Trebuchet MS", Font.BOLD, 18));
+        lblEntryCode.setBounds(195, 250, 180, 49);
         contentPane.add(lblEntryCode);
 
         txtLeagueName = new JTextField();
-        txtLeagueName.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        txtLeagueName.setBounds(184, 170, 174, 49);
+        txtLeagueName.setHorizontalAlignment(SwingConstants.CENTER);
+        txtLeagueName.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+        txtLeagueName.setBounds(394, 170, 226, 49);
         contentPane.add(txtLeagueName);
         txtLeagueName.setColumns(10);
 
         txtEntryCode = new JTextField();
-        txtEntryCode.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        txtEntryCode.setHorizontalAlignment(SwingConstants.CENTER);
+        txtEntryCode.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
         txtEntryCode.setColumns(10);
-        txtEntryCode.setBounds(184, 250, 174, 49);
+        txtEntryCode.setBounds(394, 250, 226, 49);
         contentPane.add(txtEntryCode);
 
         btnCrearLiga = new JButton("Crear liga");
@@ -108,10 +112,23 @@ public class CreateLeague extends JFrame {
                 }
             }
         });
+        btnCrearLiga.setBorder(new BevelBorder(BevelBorder.RAISED, SystemColor.infoText, SystemColor.controlShadow, null, null));
+        btnCrearLiga.setBackground(SystemColor.scrollbar);
         btnCrearLiga.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        btnCrearLiga.setBackground(SystemColor.activeCaptionBorder);
-        btnCrearLiga.setBounds(102, 355, 174, 49);
+        btnCrearLiga.setBounds(302, 355, 174, 49);
         contentPane.add(btnCrearLiga);
-    }
 
+        btnGoback = new JButton("Volver");
+        btnGoback.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new Menu(manager).setVisible(true);
+                CreateLeague.this.dispose();
+            }
+        });
+        btnGoback.setBorder(new BevelBorder(BevelBorder.RAISED, SystemColor.infoText, SystemColor.controlShadow, null, null));
+        btnGoback.setBackground(SystemColor.scrollbar);
+        btnGoback.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        btnGoback.setBounds(619, 16, 144, 42);
+        contentPane.add(btnGoback);
+    }
 }
