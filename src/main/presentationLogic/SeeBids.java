@@ -1,16 +1,13 @@
 package main.presentationLogic;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import java.awt.SystemColor;
-import java.util.ArrayList;
 
 import javax.swing.border.LineBorder;
 
@@ -18,24 +15,19 @@ import main.businessLogic.Bid;
 import main.dataLogic.league.League;
 import main.dataLogic.league.Team;
 import main.dataLogic.people.Manager;
-import main.dataLogic.people.Player;
 import main.dbManagement.DataExtraction;
 
 import java.awt.Color;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.ListSelectionEvent;
 import javax.swing.JScrollPane;
 
-public class SeeBids extends ManagerView {
+public class SeeBids extends LeagueView {
 
     private League league;
     private Manager manager;
@@ -275,7 +267,7 @@ public class SeeBids extends ManagerView {
             model1.addRow(new Object[]{teamName,b.getPlayer().getShirtName(),
                     b.getPlayer().getLastValue(),b.getFee()});
         }
-        lblAvailablemoney.setText(Float.toString(team.getAvailableMoney()));
+        lblAvailablemoney.setText(Float.toString(Math.round(team.getAvailableMoney())));
         setFormat(tblReceivedBids);
     }
 }

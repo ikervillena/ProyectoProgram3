@@ -12,7 +12,6 @@ import main.dataLogic.league.League;
 import main.dataLogic.people.Player;
 import main.dbManagement.DataExtraction;
 import main.dbManagement.DataInsertion;
-import main.presentationLogic.ManagerView;
 
 import java.awt.Font;
 

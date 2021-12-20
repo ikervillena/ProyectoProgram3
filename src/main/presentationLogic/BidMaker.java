@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 
 import main.businessLogic.Bid;
@@ -18,6 +19,9 @@ import main.dbManagement.DataInsertion;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.SystemColor;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
 
 public class BidMaker extends JFrame implements INewData {
 
@@ -25,6 +29,7 @@ public class BidMaker extends JFrame implements INewData {
     private League league;
     private Manager manager;
     private JPanel contentPane;
+    private JPanel panel;
     private JLabel lblPlayer;
     private JLabel lblTeam1;
     private JLabel lblTeam;
@@ -67,40 +72,25 @@ public class BidMaker extends JFrame implements INewData {
         contentPane.setLayout(null);
 
         lblPlayer = new JLabel("<Name> <Surname>");
+        lblPlayer.setBorder(new LineBorder(new Color(0, 0, 0)));
+        lblPlayer.setOpaque(true);
+        lblPlayer.setBackground(SystemColor.activeCaption);
         lblPlayer.setHorizontalAlignment(SwingConstants.CENTER);
-        lblPlayer.setFont(new Font("Tahoma", Font.BOLD, 16));
-        lblPlayer.setBounds(15, 57, 448, 50);
+        lblPlayer.setFont(new Font("Trebuchet MS", Font.BOLD, 20));
+        lblPlayer.setBounds(38, 47, 397, 50);
         contentPane.add(lblPlayer);
 
-        lblTeam1 = new JLabel("Equipo:");
-        lblTeam1.setFont(new Font("Tahoma", Font.BOLD, 16));
-        lblTeam1.setBounds(51, 139, 171, 36);
-        contentPane.add(lblTeam1);
-
         lblTeam = new JLabel("");
+        lblTeam.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
         lblTeam.setHorizontalAlignment(SwingConstants.CENTER);
-        lblTeam.setBounds(237, 139, 171, 36);
+        lblTeam.setBounds(252, 139, 157, 36);
         contentPane.add(lblTeam);
 
-        lblValue1 = new JLabel("Valor (millones):");
-        lblValue1.setFont(new Font("Tahoma", Font.BOLD, 16));
-        lblValue1.setBounds(51, 191, 171, 36);
-        contentPane.add(lblValue1);
-
         lblValue = new JLabel("");
+        lblValue.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
         lblValue.setHorizontalAlignment(SwingConstants.CENTER);
-        lblValue.setBounds(237, 191, 171, 36);
+        lblValue.setBounds(252, 191, 157, 36);
         contentPane.add(lblValue);
-
-        lblOffer = new JLabel("Oferta (millones):");
-        lblOffer.setFont(new Font("Tahoma", Font.BOLD, 16));
-        lblOffer.setBounds(51, 243, 171, 36);
-        contentPane.add(lblOffer);
-
-        spnFee = new JSpinner();
-        spnFee.setModel(new SpinnerNumberModel(new Float(0), null, null, new Float(1)));
-        spnFee.setBounds(237, 243, 171, 36);
-        contentPane.add(spnFee);
 
         btnBid = new JButton("");
         btnBid.addActionListener(new ActionListener() {
@@ -113,8 +103,38 @@ public class BidMaker extends JFrame implements INewData {
                 }
             }
         });
+        btnBid.setBorder(new BevelBorder(BevelBorder.RAISED, SystemColor.infoText, SystemColor.controlShadow, null, null));
+        btnBid.setBackground(SystemColor.scrollbar);
+        btnBid.setFont(new Font("Tahoma", Font.PLAIN, 18));
         btnBid.setBounds(181, 339, 115, 29);
         contentPane.add(btnBid);
+
+        panel = new JPanel();
+        panel.setBackground(SystemColor.inactiveCaption);
+        panel.setBounds(38, 97, 397, 302);
+        contentPane.add(panel);
+        panel.setLayout(null);
+
+        spnFee = new JSpinner();
+        spnFee.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+        spnFee.setBounds(218, 136, 152, 36);
+        panel.add(spnFee);
+        spnFee.setModel(new SpinnerNumberModel(new Float(0), null, null, new Float(1)));
+
+        lblTeam1 = new JLabel("Equipo:");
+        lblTeam1.setBounds(32, 31, 171, 36);
+        panel.add(lblTeam1);
+        lblTeam1.setFont(new Font("Trebuchet MS", Font.BOLD, 18));
+
+        lblOffer = new JLabel("Oferta (millones):");
+        lblOffer.setBounds(32, 136, 171, 36);
+        panel.add(lblOffer);
+        lblOffer.setFont(new Font("Trebuchet MS", Font.BOLD, 18));
+
+        lblValue1 = new JLabel("Valor (millones):");
+        lblValue1.setBounds(32, 83, 171, 36);
+        panel.add(lblValue1);
+        lblValue1.setFont(new Font("Trebuchet MS", Font.BOLD, 18));
         setUp();
     }
 
@@ -159,5 +179,4 @@ public class BidMaker extends JFrame implements INewData {
         }
         return correct;
     }
-
 }

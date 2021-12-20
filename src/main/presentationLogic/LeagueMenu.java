@@ -18,7 +18,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.border.BevelBorder;
 
-public class LeagueMenu extends ManagerView {
+public class LeagueMenu extends LeagueView {
 
     private League league;
     private Manager manager;

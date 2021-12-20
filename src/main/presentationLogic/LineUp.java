@@ -23,7 +23,7 @@ import main.dbManagement.DataInsertion;
  * @author Iker Villena Ona.
  */
 
-public class LineUp extends ManagerView {
+public class LineUp extends LeagueView {
 
     private Team team;
     private TacticalFormation chosenFormation;
@@ -124,6 +124,7 @@ public class LineUp extends ManagerView {
             public void actionPerformed(ActionEvent e) {
                 chosenFormation = (TacticalFormation) cmbxFormations.getSelectedItem();
                 fulFillPanels();
+                setLists();
             }
         });
         setCmbxFormations();

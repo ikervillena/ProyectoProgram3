@@ -17,7 +17,7 @@ import java.awt.event.ActionEvent;
  * @author Iker Villena Ona.
  */
 
-public abstract class ManagerView extends JFrame {
+public abstract class LeagueView extends JFrame {
 
     private JPanel contentPane;
     private JMenuBar menuBar;
@@ -29,7 +29,7 @@ public abstract class ManagerView extends JFrame {
     private JMenuItem mntmSeeBids;
     private JMenuItem mntmNewMenuItem;
 
-    public ManagerView(League league, Manager manager) {
+    public LeagueView(League league, Manager manager) {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 850, 600);
         setLocationRelativeTo(null);
@@ -84,7 +84,7 @@ public abstract class ManagerView extends JFrame {
         mntmExit = new JMenuItem("Salir");
         mntmExit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                ManagerView.this.dispose();
+                LeagueView.this.dispose();
             }
         });
         mntmExit.setBackground(UIManager.getColor("MenuItem.background"));
@@ -113,7 +113,7 @@ public abstract class ManagerView extends JFrame {
 
     public void goToView(JFrame newView){
         newView.setVisible(true);
-        ManagerView.this.dispose();
+        LeagueView.this.dispose();
     }
 
     /**Applies a specific format for a component provided.

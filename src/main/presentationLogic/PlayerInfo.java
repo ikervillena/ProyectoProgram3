@@ -20,7 +20,7 @@ import javax.swing.event.ListSelectionEvent;
  * @author Iker Villena Ona.
  */
 
-public class PlayerInfo extends ManagerView {
+public class PlayerInfo extends LeagueView {
 
     private League league;
     private Manager manager;
