@@ -2,8 +2,6 @@ package main.presentationLogic;
 
 import main.dataLogic.league.League;
 import main.dataLogic.people.Manager;
-import org.jetbrains.annotations.NotNull;
-
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;

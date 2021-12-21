@@ -40,4 +40,24 @@ public class DataUpdate {
         }
     }
 
+    /**Updates the result of a match.
+     * @param homeClub Home club of the match.
+     * @param awayClub Away club of the match.
+     * @param homeGoals Goals scored by the home club.
+     * @param awayGoals Goals scored by the away club.
+     */
+
+    public static void updateMatch(String homeClub, String awayClub, int homeGoals, int awayGoals){
+        String sql = "UPDATE match SET homegoals = ?, awaygoals = ? WHERE homeclub = '"+homeClub+
+                "' AND awayclub = '"+awayClub+"'";
+        try (Connection conn = DBManager.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)){
+            pstmt.setInt(1,homeGoals);
+            pstmt.setInt(2,awayGoals);
+            pstmt.executeUpdate();
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
 }

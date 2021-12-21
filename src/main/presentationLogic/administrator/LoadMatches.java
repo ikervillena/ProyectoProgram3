@@ -1,6 +1,6 @@
 package main.presentationLogic.administrator;
 
-import java.awt.EventQueue;
+import java.awt.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -9,11 +9,12 @@ import main.businessLogic.Statistic;
 import main.businessLogic.interfaces.INewData;
 import main.dataLogic.league.Club;
 import main.dataLogic.league.League;
+import main.dataLogic.people.Administrator;
 import main.dataLogic.people.Player;
+import main.dbManagement.DataDeletion;
 import main.dbManagement.DataExtraction;
 import main.dbManagement.DataInsertion;
-
-import java.awt.Font;
+import main.dbManagement.DataUpdate;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -28,6 +29,7 @@ import javax.swing.table.DefaultTableModel;
 public class LoadMatches extends JFrame implements INewData {
 
     private JPanel contentPane;
+    private Administrator administrator;
     private int nextRound;
     private String[][] matchesList;
     private Club homeClub;
@@ -54,7 +56,7 @@ public class LoadMatches extends JFrame implements INewData {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    LoadMatches frame = new LoadMatches();
+                    LoadMatches frame = new LoadMatches(DataExtraction.getAllAdministrators().get(1));
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -66,7 +68,8 @@ public class LoadMatches extends JFrame implements INewData {
     /**
      * Create the frame.
      */
-    public LoadMatches() {
+    public LoadMatches(Administrator administrator) {
+        this.administrator = administrator;
         nextRound = DataExtraction.getNextRound();
         matchesList = DataExtraction.getMatches(nextRound);
 
@@ -188,6 +191,8 @@ public class LoadMatches extends JFrame implements INewData {
                 if(checkFields()){
                     saveStatistics((DefaultTableModel) tblHomePlayers.getModel(),homeClub, (int) spnAwayClub.getValue());
                     saveStatistics((DefaultTableModel) tblAwayPlayers.getModel(),awayClub, (int) spnHomeClub.getValue());
+                    DataUpdate.updateMatch(homeClub.getName(),awayClub.getName(),(int) spnHomeClub.getValue(),
+                            (int) spnAwayClub.getValue());
                     JOptionPane.showMessageDialog(null,"Las estadísticas del partido han sido guardadas correctamente.");
                     refresh();
                 }
@@ -197,6 +202,25 @@ public class LoadMatches extends JFrame implements INewData {
         btnSaveMatch.setBounds(566, 366, 171, 29);
         contentPane.add(btnSaveMatch);
         btnSaveMatch.setVisible(false);
+
+        //If the administrator has full access, he is allowed to restart the league.
+        if(administrator.isFullAccess()){
+            JButton btnRestart = new JButton("Reiniciar juego");
+            btnRestart.setFont(new Font("Tahoma", Font.PLAIN, 18));
+            btnRestart.setBackground(SystemColor.activeCaptionBorder);
+            btnRestart.setBounds(50, 425, 155, 52);
+            btnRestart.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    if(JOptionPane.showConfirmDialog(null,
+                            "¿Estás seguro de que quieres reiniciar el juego?") == 0){
+                        DataDeletion.cleanTable("league");
+                        DataDeletion.cleanTable("statistic");
+                    }
+                }
+            });
+            contentPane.add(btnRestart);
+        }
+
     }
 
     /**This method is used for initializing the Components after saving a match to the Database.
@@ -204,7 +228,7 @@ public class LoadMatches extends JFrame implements INewData {
      */
 
     private void refresh(){
-        //When all the statistics of a round are saves, the higher bids for each player in each league are accepted.
+        //When all the statistics of a round are saved, the higher bids for each player in each league are accepted.
         if(nextRound < DataExtraction.getNextRound()){
             for(League l : DataExtraction.getAllLeagues()){
                 l.acceptLeagueBids(l.getBids());

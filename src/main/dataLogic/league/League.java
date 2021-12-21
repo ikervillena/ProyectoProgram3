@@ -6,7 +6,6 @@ import main.businessLogic.interfaces.IDBConnection;
 import main.dataLogic.people.Player;
 import main.dbManagement.DBUtils;
 import main.dbManagement.DataDeletion;
-import main.dbManagement.DataDestruction;
 import main.dbManagement.DataExtraction;
 import main.dataLogic.people.Manager;
 

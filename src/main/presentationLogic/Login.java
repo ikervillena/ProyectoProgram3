@@ -84,7 +84,7 @@ public class Login extends JFrame implements INewData {
                         if(user instanceof Manager){
                             goToView(new Menu((Manager) user));
                         }else{
-                            goToView(new LoadMatches());
+                            goToView(new LoadMatches((Administrator) user));
                         }
                     } else{
                         JOptionPane.showMessageDialog(null,"Contraseña incorrecta.");

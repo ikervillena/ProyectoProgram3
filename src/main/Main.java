@@ -1,7 +1,6 @@
 package main;
 
 import main.dbManagement.DBManager;
-import main.dbManagement.DataDestruction;
 
 import java.sql.SQLException;
 

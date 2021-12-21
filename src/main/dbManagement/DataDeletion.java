@@ -75,4 +75,20 @@ public class DataDeletion {
         }
     }
 
+    /**Cleans a table.
+     * @param tableName String with the name of the table from which data needs to be removed.
+     */
+
+    public static void cleanTable(String tableName){
+        String sql = "delete from ?";
+        try(Connection conn = DBManager.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)){
+            pstmt.setString(1,tableName);
+            pstmt.executeUpdate();
+        }
+        catch (SQLException e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+
 }
