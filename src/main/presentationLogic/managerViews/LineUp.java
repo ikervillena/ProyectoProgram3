@@ -1,4 +1,4 @@
-package main.presentationLogic;
+package main.presentationLogic.managerViews;
 
 import java.awt.*;
 
@@ -51,28 +51,12 @@ public class LineUp extends LeagueView {
     private JButton btnSavesquad;
 
     /**
-     * Launch the application.
-     */
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    League league = DataExtraction.getAllLeagues().get(0);
-                    Manager manager = league.getTeamsList().get(0).getManager();
-                    LineUp frame = new LineUp(league,manager);
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    /**
      * Create the frame.
      */
+
     public LineUp(League league, Manager manager) {
         super(league, manager);
+        this.setTitle("Alineación");
         this.team = league.getTeam(manager);
         availablePlayers = team.getPlayersList();
         alignedPlayers = new ArrayList<>();

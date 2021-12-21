@@ -1,6 +1,4 @@
-package main.presentationLogic;
-
-import java.awt.EventQueue;
+package main.presentationLogic.managerViews;
 
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -15,7 +13,6 @@ import main.businessLogic.Bid;
 import main.dataLogic.league.League;
 import main.dataLogic.league.Team;
 import main.dataLogic.people.Manager;
-import main.dbManagement.DataExtraction;
 
 import java.awt.Color;
 import javax.swing.JOptionPane;
@@ -27,9 +24,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 
+/**This frame allows the user to see the bids that the team has made and received.
+ * @author Iker Villena Ona.
+ */
+
 public class SeeBids extends LeagueView {
 
-    private League league;
+    private League league1;
     private Manager manager;
     private Team team;
     private JPanel contentPane;
@@ -47,30 +48,13 @@ public class SeeBids extends LeagueView {
     private JLabel lblAvailablemoney1;
     private JLabel lblAvailablemoney;
 
-
-    /**
-     * Launch the application.
-     */
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    League league = DataExtraction.getAllLeagues().get(0);
-                    Manager manager = league.getTeamsList().get(0).getManager();
-                    SeeBids frame = new SeeBids(manager,league);
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
     /**
      * Create the frame.
      */
+
     public SeeBids(Manager manager, League league) {
         super(league, manager);
+        this.setTitle("Ver pujas");
         this.team = league.getTeam(manager);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

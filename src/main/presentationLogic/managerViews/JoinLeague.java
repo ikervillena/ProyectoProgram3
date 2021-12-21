@@ -1,7 +1,4 @@
-package main.presentationLogic;
-
-
-import java.awt.EventQueue;
+package main.presentationLogic.managerViews;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -38,25 +35,11 @@ public class JoinLeague extends JFrame {
     private JButton btnGoBack;
 
     /**
-     * Launch the application.
-     */
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    JoinLeague frame = new JoinLeague(DataExtraction.getManager("ikervillena"));
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    /**
      * Create the frame.
      */
+
     public JoinLeague(Manager manager) {
+        this.setTitle("Unirse a liga");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 800, 500);
         setLocationRelativeTo(null);

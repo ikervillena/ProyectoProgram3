@@ -9,8 +9,6 @@ import main.dbManagement.DataDeletion;
 import main.dbManagement.DataExtraction;
 import main.dataLogic.people.Manager;
 
-import java.sql.Array;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 

@@ -1,6 +1,4 @@
-package main.presentationLogic;
-
-import java.awt.EventQueue;
+package main.presentationLogic.managerViews;
 
 import javax.swing.*;
 
@@ -20,7 +18,7 @@ import javax.swing.event.ListSelectionEvent;
  * @author Iker Villena Ona.
  */
 
-public class PlayerInfo extends LeagueView {
+public class SearchPlayer extends LeagueView {
 
     private League league;
     private Manager manager;
@@ -44,29 +42,13 @@ public class PlayerInfo extends LeagueView {
     private JButton btnSeevalue;
     private JLabel lblTeam;
 
-
-    /**
-     * Launch the application.
-     */
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    PlayerInfo frame = new PlayerInfo(DataExtraction.getAllLeagues().get(0),
-                            DataExtraction.getAllLeagues().get(0).getTeamsList().get(1).getManager());
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
     /**
      * Create the frame.
      */
-    public PlayerInfo(League league, Manager manager) {
+
+    public SearchPlayer(League league, Manager manager) {
         super(league, manager);
+        this.setTitle("Buscar jugador");
         this.league = league;
         pnlSearch = new JPanel();
         pnlSearch.setBounds(15, 16, 798, 120);

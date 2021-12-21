@@ -1,4 +1,4 @@
-package main.presentationLogic;
+package main.presentationLogic.managerViews;
 
 import main.dataLogic.league.League;
 import main.dataLogic.people.Manager;
@@ -53,7 +53,7 @@ public abstract class LeagueView extends JFrame {
         mntmSearchPlayer.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
         mntmSearchPlayer.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                goToView(new PlayerInfo(league,manager));
+                goToView(new SearchPlayer(league,manager));
             }
         });
         mnOptions.add(mntmSearchPlayer);

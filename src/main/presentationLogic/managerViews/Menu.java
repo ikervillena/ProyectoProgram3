@@ -1,4 +1,4 @@
-package main.presentationLogic;
+package main.presentationLogic.managerViews;
 
 import java.awt.*;
 
@@ -7,7 +7,6 @@ import javax.swing.border.EmptyBorder;
 
 import main.dataLogic.league.League;
 import main.dataLogic.people.Manager;
-import main.dbManagement.DataExtraction;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -27,25 +26,11 @@ public class Menu extends JFrame {
     private JButton btnJoinLeague;
 
     /**
-     * Launch the application.
-     */
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    Menu frame = new Menu(DataExtraction.getManager("ikervillena"));
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    /**
      * Create the frame.
      */
+
     public Menu(Manager manager) {
+        this.setTitle("Menú");
         this.manager = manager;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 800, 500);

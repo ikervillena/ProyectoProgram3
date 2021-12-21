@@ -1,4 +1,4 @@
-package main.presentationLogic;
+package main.presentationLogic.managerViews;
 
 import main.dataLogic.people.Player;
 import main.dbManagement.DataExtraction;
@@ -17,6 +17,10 @@ import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.util.Arrays;
 
+/**This frame allows the user to see a graphical representation of a player's value evolution.
+ * @author Iker Villena Ona.
+ */
+
 public class PlayerValue extends JFrame {
 
     private JPanel contentPane;
@@ -24,26 +28,11 @@ public class PlayerValue extends JFrame {
     private JLabel lblPlayername;
 
     /**
-     * Launch the application.
-     */
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-
-                    PlayerValue frame = new PlayerValue(DataExtraction.getAllPlayers().get(0));
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    /**
      * Create the frame.
      */
+
     public PlayerValue(Player player) {
+        this.setTitle("Evolución de valor");
         this.valueEvolution =Arrays.copyOfRange(player.getValueHistory(),0,player.getStatsRecord().size()+1);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 500, 500);

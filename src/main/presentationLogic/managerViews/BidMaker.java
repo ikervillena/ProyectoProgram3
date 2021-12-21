@@ -1,7 +1,4 @@
-package main.presentationLogic;
-
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+package main.presentationLogic.managerViews;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -13,8 +10,6 @@ import main.dataLogic.league.League;
 import main.dataLogic.league.Team;
 import main.dataLogic.people.Manager;
 import main.dataLogic.people.Player;
-import main.dbManagement.DataExtraction;
-import main.dbManagement.DataInsertion;
 
 import java.awt.Font;
 import java.awt.event.ActionListener;
@@ -22,6 +17,10 @@ import java.awt.event.ActionEvent;
 import java.awt.SystemColor;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
+
+/**This frame allows the users to make bids for signing up new players.
+ * @author Iker Villena Ona.
+ */
 
 public class BidMaker extends JFrame implements INewData {
 
@@ -40,26 +39,11 @@ public class BidMaker extends JFrame implements INewData {
     private JButton btnBid;
 
     /**
-     * Launch the application.
-     */
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    BidMaker frame = new BidMaker(DataExtraction.getPlayer(1),DataExtraction.getAllLeagues().get(0),
-                            DataExtraction.getAllManagers().get(0));
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    /**
      * Create the frame.
      */
+
     public BidMaker(Player player,League league, Manager manager) {
+        this.setTitle("Hacer puja");
         this.player = player;
         this.league = league;
         this.manager = manager;

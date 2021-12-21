@@ -8,6 +8,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+/** This class contains methods needed to delete data from the Database.
+ * @author Iker Villena Ona
+ */
+
 public class DataDeletion {
 
     public static void delete(String table, String colValue1, int value1,String colvValue2, int value2){

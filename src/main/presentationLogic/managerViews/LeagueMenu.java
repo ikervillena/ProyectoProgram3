@@ -1,12 +1,10 @@
-package main.presentationLogic;
+package main.presentationLogic.managerViews;
 
 import main.businessLogic.MergeSort;
 import main.dataLogic.league.League;
 import main.dataLogic.league.Team;
 import main.dataLogic.people.Manager;
 import main.dbManagement.DataExtraction;
-
-import java.awt.EventQueue;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -17,6 +15,10 @@ import java.util.ArrayList;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.border.BevelBorder;
+
+/**This frame is the menu of the league and allows the user to see the classification and get to other views..
+ * @author Iker Villena Ona.
+ */
 
 public class LeagueMenu extends LeagueView {
 
@@ -35,28 +37,12 @@ public class LeagueMenu extends LeagueView {
     private JProgressBar progressBar;
 
     /**
-     * Launch the application.
-     */
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    League league = DataExtraction.getAllLeagues().get(0);
-                    Manager manager = league.getTeamsList().get(0).getManager();
-                    LeagueMenu frame = new LeagueMenu(league, manager);
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    /**
      * Create the frame.
      */
+
     public LeagueMenu(League league, Manager manager) {
         super(league, manager);
+        this.setTitle("Menú de liga");
         this.league = league;
         this.manager = manager;
         JScrollPane scrollPane = new JScrollPane();
@@ -120,7 +106,7 @@ public class LeagueMenu extends LeagueView {
         btnSearchPlayer = new JButton("Buscar jugador");
         btnSearchPlayer.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                goToView(new PlayerInfo(league, manager));
+                goToView(new SearchPlayer(league, manager));
             }
         });
         btnSearchPlayer.setBounds(0, 0, 193, 170);

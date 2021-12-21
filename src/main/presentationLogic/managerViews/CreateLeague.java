@@ -1,4 +1,4 @@
-package main.presentationLogic;
+package main.presentationLogic.managerViews;
 
 import java.awt.EventQueue;
 
@@ -38,25 +38,11 @@ public class CreateLeague extends JFrame {
     private JButton btnGoback;
 
     /**
-     * Launch the application.
-     */
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    CreateLeague frame = new CreateLeague(DataExtraction.getManager("ikervillena"));
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    /**
      * Create the frame.
      */
+
     public CreateLeague(Manager manager) {
+        this.setTitle("Crear liga");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 800, 500);
         setLocationRelativeTo(null);

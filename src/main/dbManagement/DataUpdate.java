@@ -7,6 +7,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+/** This class contains methods needed to update data from the Database.
+ * @author Iker Villena Ona
+ */
+
 public class DataUpdate {
 
     public static void setBudget(Team team, float newBudget){

@@ -26,7 +26,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Iker Villena Ona.
  */
 
-public class LoadMatches extends JFrame implements INewData {
+public class LoadMatches extends JFrame {
 
     private JPanel contentPane;
     private Administrator administrator;
@@ -50,31 +50,18 @@ public class LoadMatches extends JFrame implements INewData {
     private JTabbedPane tbpAwayClub;
 
     /**
-     * Launch the application.
-     */
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    LoadMatches frame = new LoadMatches(DataExtraction.getAllAdministrators().get(1));
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    /**
      * Create the frame.
      */
+
     public LoadMatches(Administrator administrator) {
+        this.setTitle("Cargar partidos");
         this.administrator = administrator;
         nextRound = DataExtraction.getNextRound();
         matchesList = DataExtraction.getMatches(nextRound);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 850, 600);
+        setLocationRelativeTo(null);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
@@ -188,14 +175,12 @@ public class LoadMatches extends JFrame implements INewData {
         btnSaveMatch = new JButton("Guardar partido");
         btnSaveMatch.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if(checkFields()){
-                    saveStatistics((DefaultTableModel) tblHomePlayers.getModel(),homeClub, (int) spnAwayClub.getValue());
-                    saveStatistics((DefaultTableModel) tblAwayPlayers.getModel(),awayClub, (int) spnHomeClub.getValue());
-                    DataUpdate.updateMatch(homeClub.getName(),awayClub.getName(),(int) spnHomeClub.getValue(),
-                            (int) spnAwayClub.getValue());
-                    JOptionPane.showMessageDialog(null,"Las estadísticas del partido han sido guardadas correctamente.");
-                    refresh();
-                }
+            saveStatistics((DefaultTableModel) tblHomePlayers.getModel(),homeClub, (int) spnAwayClub.getValue());
+            saveStatistics((DefaultTableModel) tblAwayPlayers.getModel(),awayClub, (int) spnHomeClub.getValue());
+            DataUpdate.updateMatch(homeClub.getName(),awayClub.getName(),(int) spnHomeClub.getValue(),
+                    (int) spnAwayClub.getValue());
+            JOptionPane.showMessageDialog(null,"Las estadísticas del partido han sido guardadas correctamente.");
+            refresh();
             }
         });
         btnSaveMatch.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
@@ -252,16 +237,6 @@ public class LoadMatches extends JFrame implements INewData {
             model.addElement(matchesList[i][0]+" - "+matchesList[i][1]);
         }
         return model;
-    }
-
-    /**Checks whether the information regarding player's statistics stored in the tables are valid or not.
-     * @return A boolean with the value "true" if the information is correct and with the value "false" if it is not.
-     */
-
-    //checkFields() method is still unresolved.
-    @Override
-    public boolean checkFields() {
-        return true;
     }
 
     /**Extracts information from the table and saves the statistics of a club's players and its value evolution to the Database.
