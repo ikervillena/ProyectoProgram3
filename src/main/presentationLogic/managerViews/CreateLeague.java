@@ -84,18 +84,16 @@ public class CreateLeague extends JFrame {
         contentPane.add(txtEntryCode);
 
         btnCrearLiga = new JButton("Crear liga");
-        btnCrearLiga.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String leagueName = txtLeagueName.getText();
-                String entryCode = txtEntryCode.getText();
-                if(!DataValidation.checkEntryCode(entryCode)){
-                    manager.createLeague(leagueName, entryCode);
-                    JFrame nextView = new Menu(manager);
-                    nextView.setVisible(true);
-                    CreateLeague.this.dispose();
-                } else{
-                    JOptionPane.showMessageDialog(null, "El código de entrada ya está en uso.");
-                }
+        btnCrearLiga.addActionListener(e -> {
+            String leagueName = txtLeagueName.getText();
+            String entryCode = txtEntryCode.getText();
+            if(!DataValidation.checkEntryCode(entryCode)){
+                manager.createLeague(leagueName, entryCode);
+                JFrame nextView = new Menu(manager);
+                nextView.setVisible(true);
+                CreateLeague.this.dispose();
+            } else{
+                JOptionPane.showMessageDialog(null, "El código de entrada ya está en uso.");
             }
         });
         btnCrearLiga.setBorder(new BevelBorder(BevelBorder.RAISED, SystemColor.infoText, SystemColor.controlShadow, null, null));
@@ -105,11 +103,9 @@ public class CreateLeague extends JFrame {
         contentPane.add(btnCrearLiga);
 
         btnGoback = new JButton("Volver");
-        btnGoback.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                new Menu(manager).setVisible(true);
-                CreateLeague.this.dispose();
-            }
+        btnGoback.addActionListener(e -> {
+            new Menu(manager).setVisible(true);
+            CreateLeague.this.dispose();
         });
         btnGoback.setBorder(new BevelBorder(BevelBorder.RAISED, SystemColor.infoText, SystemColor.controlShadow, null, null));
         btnGoback.setBackground(SystemColor.scrollbar);

@@ -24,6 +24,7 @@ public class Menu extends JFrame {
     private JLabel lblLeagues;
     private JButton btnCreateLeague;
     private JButton btnJoinLeague;
+    private JButton btnLogOut;
 
     /**
      * Create the frame.
@@ -41,12 +42,10 @@ public class Menu extends JFrame {
         contentPane.setLayout(null);
 
         cmbxLeagues = new JComboBox();
-        cmbxLeagues.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                League chosenLeague = (League) cmbxLeagues.getModel().getSelectedItem();
-                new LeagueMenu(chosenLeague, manager).setVisible(true);
-                Menu.this.dispose();
-            }
+        cmbxLeagues.addActionListener(e -> {
+            League chosenLeague = (League) cmbxLeagues.getModel().getSelectedItem();
+            new LeagueMenu(chosenLeague, manager).setVisible(true);
+            Menu.this.dispose();
         });
         cmbxLeagues.setBounds(203, 217, 372, 40);
         cmbxLeagues.setModel(getLeaguesModel(manager));
@@ -62,28 +61,39 @@ public class Menu extends JFrame {
         btnCreateLeague = new JButton("Crear liga");
         btnCreateLeague.setBackground(SystemColor.activeCaptionBorder);
         btnCreateLeague.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        btnCreateLeague.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                JFrame nextView = new CreateLeague(manager);
-                nextView.setVisible(true);
-                Menu.this.dispose();
-            }
+        btnCreateLeague.addActionListener(e -> {
+            JFrame nextView = new CreateLeague(manager);
+            nextView.setVisible(true);
+            Menu.this.dispose();
         });
         btnCreateLeague.setBounds(203, 322, 155, 52);
         contentPane.add(btnCreateLeague);
         btnJoinLeague = new JButton("Unirse a liga");
-        btnJoinLeague.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                JFrame nextView = new JoinLeague(manager);
-                nextView.setVisible(true);
-                Menu.this.dispose();
-            }
+        btnJoinLeague.addActionListener(e -> {
+            JFrame nextView = new JoinLeague(manager);
+            nextView.setVisible(true);
+            Menu.this.dispose();
         });
         btnJoinLeague.setBackground(SystemColor.activeCaptionBorder);
         btnJoinLeague.setFont(new Font("Tahoma", Font.PLAIN, 18));
         btnJoinLeague.setBounds(420, 322, 155, 52);
         contentPane.add(btnJoinLeague);
+
+        btnLogOut = new JButton("Cerrar sesi\u00F3n");
+        btnLogOut.addActionListener(e -> {
+            Menu.this.dispose();
+            new Login().setVisible(true);
+        });
+        btnLogOut.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        btnLogOut.setBackground(SystemColor.activeCaptionBorder);
+        btnLogOut.setBounds(608, 16, 155, 52);
+        contentPane.add(btnLogOut);
     }
+
+    /**Provides a model with the leagues in which the Manager competes.
+      * @param manager Manager who competes in the leagues.
+     * @return DefaultComboBoxModel<League> with all the leagues in which the Manager competes.
+     */
 
     private DefaultComboBoxModel<League> getLeaguesModel(Manager manager){
         DefaultComboBoxModel<League> model = new DefaultComboBoxModel<League>();

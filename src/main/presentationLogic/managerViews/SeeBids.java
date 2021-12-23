@@ -84,35 +84,23 @@ public class SeeBids extends LeagueView {
         tblBidsMade = new JTable();
         scp1.setViewportView(tblBidsMade);
         tblBidsMade.setModel(new DefaultTableModel(
-                new Object[][] {
-                },
-                new String[] {
-                        "Equipo", "Jugador", "Valor", "Oferta"
-                }
-        ) {
-            Class[] columnTypes = new Class[] {
-                    String.class, String.class, Float.class, Float.class
-            };
+                new Object[][] {}, new String[] {"Equipo", "Jugador", "Valor", "Oferta"}){
+            Class[] columnTypes = new Class[] {String.class, String.class, Float.class, Float.class};
             public Class getColumnClass(int columnIndex) {
                 return columnTypes[columnIndex];
             }
-            boolean[] columnEditables = new boolean[] {
-                    false, false, false, false
-            };
+            boolean[] columnEditables = new boolean[] {false, false, false, false};
             public boolean isCellEditable(int row, int column) {
                 return columnEditables[column];
-            }
-        });
+            }});
 
         btnDelete = new JButton("Borrar");
-        btnDelete.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if(tblBidsMade.getSelectedRow()>=0){
-                    team.getBidsMade().get(tblBidsMade.getSelectedRow()).delete();
-                    setUp();
-                } else{
-                    JOptionPane.showMessageDialog(null, "No has seleccionado ninguna puja");
-                }
+        btnDelete.addActionListener(e -> {
+            if(tblBidsMade.getSelectedRow()>=0){
+                team.getBidsMade().get(tblBidsMade.getSelectedRow()).delete();
+                setUp();
+            } else{
+                JOptionPane.showMessageDialog(null, "No has seleccionado ninguna puja");
             }
         });
         btnDelete.setBounds(195, 330, 132, 39);
@@ -139,30 +127,26 @@ public class SeeBids extends LeagueView {
         pnlReceivedBids.add(lblReceivedBids);
 
         btnAccept = new JButton("Aceptar");
-        btnAccept.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if(tblReceivedBids.getSelectedRow()>=0){
-                    Bid bid = team.getReceivedBids().get(tblReceivedBids.getSelectedRow());
-                    bid.accept();
-                    setUp();
-                }else{
-                    JOptionPane.showMessageDialog(null, "No has seleccionado ninguna puja");
-                }
+        btnAccept.addActionListener(e -> {
+            if(tblReceivedBids.getSelectedRow()>=0){
+                Bid bid = team.getReceivedBids().get(tblReceivedBids.getSelectedRow());
+                bid.accept();
+                setUp();
+            }else{
+                JOptionPane.showMessageDialog(null, "No has seleccionado ninguna puja");
             }
         });
         btnAccept.setBounds(194, 329, 132, 40);
         pnlReceivedBids.add(btnAccept);
 
         btnReject = new JButton("Rechazar");
-        btnReject.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if(tblReceivedBids.getSelectedRow()>=0){
-                    Bid bid = team.getReceivedBids().get(tblReceivedBids.getSelectedRow());
-                    bid.delete();
-                    setUp();
-                }else{
-                    JOptionPane.showMessageDialog(null, "No has seleccionado ninguna puja");
-                }
+        btnReject.addActionListener(e -> {
+            if(tblReceivedBids.getSelectedRow()>=0){
+                Bid bid = team.getReceivedBids().get(tblReceivedBids.getSelectedRow());
+                bid.delete();
+                setUp();
+            }else{
+                JOptionPane.showMessageDialog(null, "No has seleccionado ninguna puja");
             }
         });
         btnReject.setBounds(35, 329, 132, 40);
@@ -175,25 +159,11 @@ public class SeeBids extends LeagueView {
         tblReceivedBids = new JTable();
         scp2.setViewportView(tblReceivedBids);
         tblReceivedBids.setModel(new DefaultTableModel(
-                new Object[][] {
-                },
-                new String[] {
-                        "Equipo", "Jugador", "Valor", "Oferta"
-                }
-        ) {
-            Class[] columnTypes = new Class[] {
-                    String.class, String.class, Float.class, Float.class
-            };
-            public Class getColumnClass(int columnIndex) {
-                return columnTypes[columnIndex];
-            }
-            boolean[] columnEditables = new boolean[] {
-                    false, false, false, false
-            };
-            public boolean isCellEditable(int row, int column) {
-                return columnEditables[column];
-            }
-        });
+                new Object[][] {}, new String[] {"Equipo", "Jugador", "Valor", "Oferta"}){
+            Class[] columnTypes = new Class[] {String.class, String.class, Float.class, Float.class};
+            public Class getColumnClass(int columnIndex) {return columnTypes[columnIndex];}
+            boolean[] columnEditables = new boolean[] {false, false, false, false};
+            public boolean isCellEditable(int row, int column) {return columnEditables[column];}});
 
         lblAvailablemoney1 = new JLabel("AvailableMoney");
         lblAvailablemoney1.setBorder(new LineBorder(new Color(0, 0, 0)));

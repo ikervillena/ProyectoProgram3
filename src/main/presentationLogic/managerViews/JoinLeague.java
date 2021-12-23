@@ -68,24 +68,22 @@ public class JoinLeague extends JFrame {
         contentPane.add(txtEntryCode);
 
         btnJoinLeague = new JButton("Unirse a liga");
-        btnJoinLeague.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if(DataValidation.checkEntryCode(txtEntryCode.getText())){
-                    if(!manager.alreadyInLeague(txtEntryCode.getText())){
-                        if(Team.canGenerateTeam(DataExtraction.getLeague(txtEntryCode.getText()).getFreePlayers())){
-                            manager.joinLeague(txtEntryCode.getText());
-                            JFrame nextView = new Menu(manager);
-                            nextView.setVisible(true);
-                            JoinLeague.this.dispose();
-                        } else{
-                            JOptionPane.showMessageDialog(null,"No es posible, la liga ha alcanzado el número máximo de participantes.");
-                        }
+        btnJoinLeague.addActionListener(e -> {
+            if(DataValidation.checkEntryCode(txtEntryCode.getText())){
+                if(!manager.alreadyInLeague(txtEntryCode.getText())){
+                    if(Team.canGenerateTeam(DataExtraction.getLeague(txtEntryCode.getText()).getFreePlayers())){
+                        manager.joinLeague(txtEntryCode.getText());
+                        JFrame nextView = new Menu(manager);
+                        nextView.setVisible(true);
+                        JoinLeague.this.dispose();
                     } else{
-                        JOptionPane.showMessageDialog(null, "No es posible unirse, ya estás participando en esta liga.");
+                        JOptionPane.showMessageDialog(null,"No es posible, la liga ha alcanzado el número máximo de participantes.");
                     }
                 } else{
-                    JOptionPane.showMessageDialog(null, "El código de entrada no pertenece a ninguna liga.");
+                    JOptionPane.showMessageDialog(null, "No es posible unirse, ya estás participando en esta liga.");
                 }
+            } else{
+                JOptionPane.showMessageDialog(null, "El código de entrada no pertenece a ninguna liga.");
             }
         });
         btnJoinLeague.setBorder(new BevelBorder(BevelBorder.RAISED, SystemColor.infoText, SystemColor.controlShadow, null, null));
@@ -95,11 +93,9 @@ public class JoinLeague extends JFrame {
         contentPane.add(btnJoinLeague);
 
         btnGoBack = new JButton("Volver");
-        btnGoBack.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                new Menu(manager).setVisible(true);
-                JoinLeague.this.dispose();
-            }
+        btnGoBack.addActionListener(e -> {
+            new Menu(manager).setVisible(true);
+            JoinLeague.this.dispose();
         });
         btnGoBack.setBorder(new BevelBorder(BevelBorder.RAISED, SystemColor.infoText, SystemColor.controlShadow, null, null));
         btnGoBack.setBackground(SystemColor.scrollbar);

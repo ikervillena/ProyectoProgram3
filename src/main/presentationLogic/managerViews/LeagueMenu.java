@@ -51,21 +51,12 @@ public class LeagueMenu extends LeagueView {
 
         tblClassification = new JTable();
         tblClassification.setModel(new DefaultTableModel(
-                new Object[][] {
-                },
-                new String[] {
-                        "Ranking", "Equipo", "Points"
-                }
-        ) {
-            Class[] columnTypes = new Class[] {
-                    Integer.class, String.class, Integer.class
-            };
+                new Object[][] {}, new String[] {"Ranking", "Equipo", "Points"}) {
+            Class[] columnTypes = new Class[] {Integer.class, String.class, Integer.class};
             public Class getColumnClass(int columnIndex) {
                 return columnTypes[columnIndex];
             }
-            boolean[] columnEditables = new boolean[] {
-                    false, false, false
-            };
+            boolean[] columnEditables = new boolean[] {false, false, false};
             public boolean isCellEditable(int row, int column) {
                 return columnEditables[column];
             }
@@ -81,19 +72,15 @@ public class LeagueMenu extends LeagueView {
         pnl1.setLayout(null);
 
         btnBids = new JButton("Pujas");
-        btnBids.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                goToView(new SeeBids(manager, league));
-            }
+        btnBids.addActionListener(e -> {
+            goToView(new SeeBids(manager, league));
         });
         btnBids.setBounds(0, 0, 193, 170);
         pnl1.add(btnBids);
 
         btnMenu = new JButton("Men\u00FA");
-        btnMenu.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                goToView(new Menu(manager));
-            }
+        btnMenu.addActionListener(e -> {
+            goToView(new Menu(manager));
         });
         btnMenu.setBounds(0, 170, 193, 170);
         pnl1.add(btnMenu);
@@ -104,19 +91,15 @@ public class LeagueMenu extends LeagueView {
         getContentPane().add(pnl2);
 
         btnSearchPlayer = new JButton("Buscar jugador");
-        btnSearchPlayer.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                goToView(new SearchPlayer(league, manager));
-            }
+        btnSearchPlayer.addActionListener(e -> {
+            goToView(new SearchPlayer(league, manager));
         });
         btnSearchPlayer.setBounds(0, 0, 193, 170);
         pnl2.add(btnSearchPlayer);
 
         btnLineUp = new JButton("Alineaci\u00F3n");
-        btnLineUp.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                goToView(new LineUp(league,manager));
-            }
+        btnLineUp.addActionListener(e -> {
+            goToView(new LineUp(league,manager));
         });
         btnLineUp.setBounds(0, 170, 193, 170);
         pnl2.add(btnLineUp);
@@ -131,29 +114,27 @@ public class LeagueMenu extends LeagueView {
         getContentPane().add(lblFantasyGame);
 
         btnAbandon = new JButton("Abandonar");
-        btnAbandon.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if(JOptionPane.showConfirmDialog(null,
-                        "¿Estás seguro de que quieres abandonar la liga?") == 0){
-                    league.getTeam(manager).delete();
-                    if(league.getTeamsList().size() < 2){
-                        league.delete();
-                    }
-                    goToView(new Menu(manager));
+        btnAbandon.addActionListener(e -> {
+            if(JOptionPane.showConfirmDialog(null,
+                    "¿Estás seguro de que quieres abandonar la liga?") == 0){
+                league.getTeam(manager).delete();
+                if(league.getTeamsList().size() < 2){
+                    league.delete();
                 }
+                goToView(new Menu(manager));
             }
         });
         btnAbandon.setBounds(467, 466, 137, 29);
         getContentPane().add(btnAbandon);
-
-        setTable();
-        setAllFormats(getContentPane());
 
         progressBar = new JProgressBar();
         progressBar.setMaximum(8);
         progressBar.setValue(DataExtraction.getNextRound()-1);
         progressBar.setBounds(223, 424, 381, 30);
         getContentPane().add(progressBar);
+
+        setTable();
+        setAllFormats(getContentPane());
     }
 
     /**Fills the table with the classification of the team, ordering the teams taking into accounts their points.

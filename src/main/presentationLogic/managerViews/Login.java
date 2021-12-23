@@ -52,30 +52,27 @@ public class Login extends JFrame implements INewData {
         contentPane.setLayout(null);
 
         btnAccept = new JButton("Iniciar sesión");
-        btnAccept.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if(tglbtnMode.isSelected()){
-                    if(checkFields()){
-                        Manager newManager = new Manager(txtUsername1.getText(),pswPassword1.getText(),
-                                txtName.getText(),txtSurname.getText());
-                        newManager.save();
-                        JOptionPane.showMessageDialog(null, "La cuenta ha sido creada con éxito.");
-                        goToView(new Menu(newManager));
+        btnAccept.addActionListener(e -> {
+            if(tglbtnMode.isSelected()){
+                if(checkFields()){
+                    Manager newManager = new Manager(txtUsername1.getText(),pswPassword1.getText(),
+                            txtName.getText(),txtSurname.getText());
+                    newManager.save();
+                    JOptionPane.showMessageDialog(null, "La cuenta ha sido creada con éxito.");
+                    goToView(new Menu(newManager));
+                }
+            } else{
+                User user = getUser(txtUsername.getText(),pswPassword.getText());
+                if(user != null){
+                    JOptionPane.showMessageDialog(null, user.getLoginText());
+                    if(user instanceof Manager){
+                        goToView(new Menu((Manager) user));
+                    }else{
+                        goToView(new LoadMatches((Administrator) user));
                     }
                 } else{
-                    User user = getUser(txtUsername.getText(),pswPassword.getText());
-                    if(user != null){
-                        JOptionPane.showMessageDialog(null, user.getLoginText());
-                        if(user instanceof Manager){
-                            goToView(new Menu((Manager) user));
-                        }else{
-                            goToView(new LoadMatches((Administrator) user));
-                        }
-                    } else{
-                        JOptionPane.showMessageDialog(null,"Contraseña incorrecta.");
-                    }
-                }
-
+                    JOptionPane.showMessageDialog(null,"Contraseña incorrecta.");
+               }
             }
         });
         btnAccept.setBorder(new BevelBorder(BevelBorder.RAISED, SystemColor.infoText, SystemColor.controlShadow, null, null));
@@ -91,20 +88,17 @@ public class Login extends JFrame implements INewData {
         contentPane.add(lblLogIn);
 
         tglbtnMode = new JToggleButton("Crear cuenta");
-        tglbtnMode.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if(tglbtnMode.isSelected()){
-                    tglbtnMode.setText("Iniciar sesión");
-                    lblLogIn.setText("Crear cuenta");
-                    btnAccept.setText("Crear cuenta");
-                    setPanel(pnlSignUp);
-
-                } else{
-                    tglbtnMode.setText("Crear cuenta");
-                    lblLogIn.setText("Iniciar sesión");
-                    btnAccept.setText("Iniciar sesión");
-                    setPanel(pnlLogin);
-                }
+        tglbtnMode.addActionListener(e -> {
+            if(tglbtnMode.isSelected()){
+                tglbtnMode.setText("Iniciar sesión");
+                lblLogIn.setText("Crear cuenta");
+                btnAccept.setText("Crear cuenta");
+                setPanel(pnlSignUp);
+            } else{
+                tglbtnMode.setText("Crear cuenta");
+                lblLogIn.setText("Iniciar sesión");
+                btnAccept.setText("Iniciar sesión");
+                setPanel(pnlLogin);
             }
         });
         tglbtnMode.setBorder(new BevelBorder(BevelBorder.RAISED, SystemColor.infoText, SystemColor.controlShadow, null, null));

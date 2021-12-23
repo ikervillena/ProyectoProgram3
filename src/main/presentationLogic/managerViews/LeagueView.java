@@ -43,36 +43,28 @@ public abstract class LeagueView extends JFrame {
         menuBar.add(mnOptions);
 
         mntmLogOut = new JMenuItem("Cerrar sesi\u00F3n");
-        mntmLogOut.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                goToView(new Login());
-            }
+        mntmLogOut.addActionListener(e -> {
+            goToView(new Login());
         });
 
         mntmSearchPlayer = new JMenuItem("Buscar jugador");
         mntmSearchPlayer.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
-        mntmSearchPlayer.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                goToView(new SearchPlayer(league,manager));
-            }
+        mntmSearchPlayer.addActionListener(e -> {
+            goToView(new SearchPlayer(league,manager));
         });
         mnOptions.add(mntmSearchPlayer);
 
         mntmSeeBids = new JMenuItem("Ver pujas");
         mntmSeeBids.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
-        mntmSeeBids.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                goToView(new SeeBids(manager,league));
-            }
+        mntmSeeBids.addActionListener(e -> {
+            goToView(new SeeBids(manager,league));
         });
         mnOptions.add(mntmSeeBids);
 
         mntmNewMenuItem = new JMenuItem("Alineaci\u00F3n");
         mntmNewMenuItem.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
-        mntmNewMenuItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                goToView(new LineUp(league,manager));
-            }
+        mntmNewMenuItem.addActionListener(e -> {
+            goToView(new LineUp(league,manager));
         });
         mnOptions.add(mntmNewMenuItem);
         mntmLogOut.setBackground(UIManager.getColor("MenuItem.background"));
@@ -80,20 +72,16 @@ public abstract class LeagueView extends JFrame {
         mnOptions.add(mntmLogOut);
 
         mntmExit = new JMenuItem("Salir");
-        mntmExit.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                LeagueView.this.dispose();
-            }
+        mntmExit.addActionListener(e -> {
+            LeagueView.this.dispose();
         });
         mntmExit.setBackground(UIManager.getColor("MenuItem.background"));
         mntmExit.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
         mnOptions.add(mntmExit);
 
         mntmMainMenu = new JMenuItem("Men\u00FA principal");
-        mntmMainMenu.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                goToView(new Menu(manager));
-            }
+        mntmMainMenu.addActionListener(e -> {
+            goToView(new Menu(manager));
         });
         mntmMainMenu.setHorizontalAlignment(SwingConstants.CENTER);
         mntmMainMenu.setBackground(UIManager.getColor("MenuItem.background"));

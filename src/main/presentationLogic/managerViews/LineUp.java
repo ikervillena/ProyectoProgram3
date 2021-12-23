@@ -104,12 +104,10 @@ public class LineUp extends LeagueView {
         contentPane.add(lblSoccerPitch);
 
         cmbxFormations = new JComboBox();
-        cmbxFormations.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                chosenFormation = (TacticalFormation) cmbxFormations.getSelectedItem();
-                fulFillPanels();
-                setLists();
-            }
+        cmbxFormations.addActionListener(e -> {
+            chosenFormation = (TacticalFormation) cmbxFormations.getSelectedItem();
+            fulFillPanels();
+            setLists();
         });
         setCmbxFormations();
         cmbxFormations.setBounds(475, 29, 338, 26);
@@ -123,29 +121,25 @@ public class LineUp extends LeagueView {
         panel.setLayout(null);
 
         cmbxPlayers = new JComboBox();
-        cmbxPlayers.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                btnAddPlayer.setEnabled(true);
-            }
+        cmbxPlayers.addActionListener(e -> {
+            btnAddPlayer.setEnabled(true);
         });
         cmbxPlayers.setBounds(55, 31, 227, 34);
         panel.add(cmbxPlayers);
 
         btnAddPlayer = new JButton("A\u00F1adir jugador");
         btnAddPlayer.setEnabled(false);
-        btnAddPlayer.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if(selectedPlayer != null){
-                    alignedPlayers.remove(selectedPlayer);
-                    selectedPlayer = null;
-                }
-                Player alignedPlayer = (Player) cmbxPlayers.getSelectedItem();
-                alignedPlayers.add(alignedPlayer);
-                fulFillPanels();
-                btnAddPlayer.setEnabled(false);
-                panel.setVisible(false);
-                setLists();
+        btnAddPlayer.addActionListener(e -> {
+            if(selectedPlayer != null){
+                alignedPlayers.remove(selectedPlayer);
+                selectedPlayer = null;
             }
+            Player alignedPlayer = (Player) cmbxPlayers.getSelectedItem();
+            alignedPlayers.add(alignedPlayer);
+            fulFillPanels();
+            btnAddPlayer.setEnabled(false);
+            panel.setVisible(false);
+            setLists();
         });
         btnAddPlayer.setBounds(99, 90, 139, 34);
         panel.add(btnAddPlayer);
@@ -177,13 +171,11 @@ public class LineUp extends LeagueView {
         contentPane.add(lblStarters);
 
         btnSavesquad = new JButton("Guardar alineaci\u00F3n");
-        btnSavesquad.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+        btnSavesquad.addActionListener(e -> {
                 // Insert Squad:
-                DataDeletion.delete("squad","team_id",team.getID(),"round_num",DataExtraction.getNextRound());
-                DataInsertion.insertSquad(team, new Squad(DataExtraction.getNextRound(),chosenFormation, alignedPlayers));
-                JOptionPane.showMessageDialog(null,"La alineación ha sido guardada correctamente.");
-            }
+            DataDeletion.delete("squad","team_id",team.getID(),"round_num",DataExtraction.getNextRound());
+            DataInsertion.insertSquad(team, new Squad(DataExtraction.getNextRound(),chosenFormation, alignedPlayers));
+            JOptionPane.showMessageDialog(null,"La alineación ha sido guardada correctamente.");
         });
         btnSavesquad.setBounds(475, 466, 338, 29);
         contentPane.add(btnSavesquad);
@@ -193,11 +185,9 @@ public class LineUp extends LeagueView {
         btnGoalkeeper = new JButton("");
         btnGoalkeeper.setOpaque(false);
         btnGoalkeeper.setContentAreaFilled(false);
-        btnGoalkeeper.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                setCmbxPlayers(btnGoalkeeper);
-                selectedPlayer = getPlayer(btnGoalkeeper.getText());
-            }
+        btnGoalkeeper.addActionListener(e -> {
+            setCmbxPlayers(btnGoalkeeper);
+            selectedPlayer = getPlayer(btnGoalkeeper.getText());
         });
         btnGoalkeeper.setSize(316, 88);
         btnGoalkeeper.setLocation(45, 0);
