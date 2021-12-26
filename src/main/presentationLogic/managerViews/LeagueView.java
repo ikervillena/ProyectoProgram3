@@ -2,13 +2,12 @@ package main.presentationLogic.managerViews;
 
 import main.dataLogic.league.League;
 import main.dataLogic.people.Manager;
+import main.presentationLogic.Login;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 /**This class sets the template of all the frames that are aimed at managers (not administrators).
  * It sets the size, characteristics and the menu that is going to be needed in other frames.

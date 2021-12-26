@@ -6,22 +6,17 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import java.awt.SystemColor;
-
 import javax.swing.border.LineBorder;
-
-import main.businessLogic.Bid;
+import main.dataLogic.league.Bid;
 import main.dataLogic.league.League;
 import main.dataLogic.league.Team;
 import main.dataLogic.people.Manager;
-
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 
 /**This frame allows the user to see the bids that the team has made and received.
@@ -165,7 +160,7 @@ public class SeeBids extends LeagueView {
             boolean[] columnEditables = new boolean[] {false, false, false, false};
             public boolean isCellEditable(int row, int column) {return columnEditables[column];}});
 
-        lblAvailablemoney1 = new JLabel("AvailableMoney");
+        lblAvailablemoney1 = new JLabel("Dinero disponible");
         lblAvailablemoney1.setBorder(new LineBorder(new Color(0, 0, 0)));
         lblAvailablemoney1.setHorizontalAlignment(SwingConstants.CENTER);
         lblAvailablemoney1.setFont(new Font("Tahoma", Font.BOLD, 16));

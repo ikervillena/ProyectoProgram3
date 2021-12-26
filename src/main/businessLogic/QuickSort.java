@@ -1,10 +1,13 @@
 package main.businessLogic;
 
 import main.businessLogic.interfaces.IComparable;
-import main.dataLogic.people.Player;
-
 import java.util.ArrayList;
 import java.util.Collections;
+
+/**This class is aimed at ordering an ArrayList of objects that implement the interface IComparable, using
+ * the Quick Sort algorithm.
+ * @author Iker Villena Ona
+ */
 
 public class QuickSort <T extends IComparable>{
 

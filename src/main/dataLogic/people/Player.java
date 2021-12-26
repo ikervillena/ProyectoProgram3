@@ -8,7 +8,6 @@ import main.dataLogic.league.League;
 import main.dataLogic.league.Team;
 import main.dataLogic.people.attributes.Position;
 import main.dbManagement.DataExtraction;
-
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 

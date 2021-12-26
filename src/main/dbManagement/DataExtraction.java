@@ -1,8 +1,8 @@
 package main.dbManagement;
 
-import main.businessLogic.Bid;
 import main.businessLogic.Statistic;
-import main.businessLogic.TacticalFormation;
+import main.dataLogic.league.Bid;
+import main.dataLogic.league.TacticalFormation;
 import main.dataLogic.league.Club;
 import main.dataLogic.league.League;
 import main.dataLogic.league.Squad;
@@ -11,7 +11,6 @@ import main.dataLogic.people.Administrator;
 import main.dataLogic.people.attributes.Position;
 import main.dataLogic.people.Manager;
 import main.dataLogic.people.Player;
-
 import java.sql.*;
 import java.util.ArrayList;
 

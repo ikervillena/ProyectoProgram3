@@ -3,14 +3,12 @@ package main.presentationLogic.managerViews;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
-
-import main.businessLogic.Bid;
 import main.businessLogic.interfaces.INewData;
+import main.dataLogic.league.Bid;
 import main.dataLogic.league.League;
 import main.dataLogic.league.Team;
 import main.dataLogic.people.Manager;
 import main.dataLogic.people.Player;
-
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;

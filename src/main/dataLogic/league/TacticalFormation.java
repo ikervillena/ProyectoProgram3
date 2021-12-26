@@ -1,4 +1,4 @@
-package main.businessLogic;
+package main.dataLogic.league;
 
 import main.businessLogic.interfaces.IComparable;
 import main.businessLogic.interfaces.IDBConnection;

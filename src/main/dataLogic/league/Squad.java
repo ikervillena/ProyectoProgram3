@@ -1,6 +1,5 @@
 package main.dataLogic.league;
 
-import main.businessLogic.TacticalFormation;
 import main.businessLogic.interfaces.IPositionClassification;
 import main.dataLogic.people.Player;
 import java.util.ArrayList;

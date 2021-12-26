@@ -18,8 +18,6 @@ import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.SystemColor;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 /**This JFrame allows the user to join a league that is already registered in the Database.
  * @author Iker Villena Ona

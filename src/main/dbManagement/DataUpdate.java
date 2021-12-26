@@ -2,7 +2,6 @@ package main.dbManagement;
 
 import main.dataLogic.league.Team;
 import main.dataLogic.people.Player;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

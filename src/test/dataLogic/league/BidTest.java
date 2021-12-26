@@ -1,9 +1,8 @@
-package test.businessLogic;
+package test.dataLogic.league;
 
-import main.businessLogic.Bid;
+import main.dataLogic.league.Bid;
 import org.junit.Before;
 import org.junit.Test;
-
 import static junit.framework.TestCase.assertEquals;
 
 public class BidTest {

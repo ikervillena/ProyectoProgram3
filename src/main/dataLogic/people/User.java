@@ -4,7 +4,7 @@ package main.dataLogic.people;
  * @author Iker Villena Ona.
  */
 
-public class User {
+public abstract class User {
     String username;
     String password;
 

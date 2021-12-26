@@ -1,15 +1,11 @@
 package main.presentationLogic.managerViews;
 
 import java.awt.*;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
 import main.dataLogic.league.League;
 import main.dataLogic.people.Manager;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import main.presentationLogic.Login;
 
 /**This JFrame shows a list of leagues in which the manager provided competes.
  * It also provides access to the "JoinLeague.java" and "CreateLeague.java" JFrames.
@@ -47,6 +43,10 @@ public class Menu extends JFrame {
             new LeagueMenu(chosenLeague, manager).setVisible(true);
             Menu.this.dispose();
         });
+        cmbxLeagues.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+        DefaultListCellRenderer listRenderer = new DefaultListCellRenderer();
+        listRenderer.setHorizontalAlignment(DefaultListCellRenderer.CENTER);
+        cmbxLeagues.setRenderer(listRenderer);
         cmbxLeagues.setBounds(203, 217, 372, 40);
         cmbxLeagues.setModel(getLeaguesModel(manager));
         contentPane.add(cmbxLeagues);
@@ -60,10 +60,9 @@ public class Menu extends JFrame {
 
         btnCreateLeague = new JButton("Crear liga");
         btnCreateLeague.setBackground(SystemColor.activeCaptionBorder);
-        btnCreateLeague.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        btnCreateLeague.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
         btnCreateLeague.addActionListener(e -> {
-            JFrame nextView = new CreateLeague(manager);
-            nextView.setVisible(true);
+            new CreateLeague(manager).setVisible(true);
             Menu.this.dispose();
         });
         btnCreateLeague.setBounds(203, 322, 155, 52);
@@ -84,7 +83,7 @@ public class Menu extends JFrame {
             Menu.this.dispose();
             new Login().setVisible(true);
         });
-        btnLogOut.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        btnLogOut.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
         btnLogOut.setBackground(SystemColor.activeCaptionBorder);
         btnLogOut.setBounds(608, 16, 155, 52);
         contentPane.add(btnLogOut);

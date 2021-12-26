@@ -1,6 +1,5 @@
 package main.dataLogic.league;
 
-import main.businessLogic.Bid;
 import main.businessLogic.MergeSort;
 import main.businessLogic.interfaces.IDBConnection;
 import main.dataLogic.people.Player;
@@ -8,7 +7,6 @@ import main.dbManagement.DBUtils;
 import main.dbManagement.DataDeletion;
 import main.dbManagement.DataExtraction;
 import main.dataLogic.people.Manager;
-
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 

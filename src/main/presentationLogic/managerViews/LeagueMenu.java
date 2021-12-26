@@ -5,15 +5,12 @@ import main.dataLogic.league.League;
 import main.dataLogic.league.Team;
 import main.dataLogic.people.Manager;
 import main.dbManagement.DataExtraction;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.SystemColor;
 import java.awt.Font;
 import java.util.ArrayList;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import javax.swing.border.BevelBorder;
 
 /**This frame is the menu of the league and allows the user to see the classification and get to other views..

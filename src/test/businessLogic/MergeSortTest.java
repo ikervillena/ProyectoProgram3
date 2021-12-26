@@ -1,13 +1,11 @@
 package test.businessLogic;
 
 import main.businessLogic.MergeSort;
-import main.businessLogic.TacticalFormation;
+import main.dataLogic.league.TacticalFormation;
 import main.dbManagement.DataExtraction;
 import org.junit.Before;
 import org.junit.Test;
-
 import java.util.ArrayList;
-
 import static org.junit.Assert.fail;
 
 public class MergeSortTest {

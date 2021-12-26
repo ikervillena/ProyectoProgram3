@@ -6,8 +6,6 @@ import main.dbManagement.DataExtraction;
 import main.dataLogic.league.League;
 import main.dbManagement.DataInsertion;
 import main.dbManagement.DataValidation;
-
-import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 

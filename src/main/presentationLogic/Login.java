@@ -1,18 +1,16 @@
-package main.presentationLogic.managerViews;
+package main.presentationLogic;
 
 import main.businessLogic.interfaces.INewData;
 import main.dataLogic.people.Administrator;
 import main.dataLogic.people.Manager;
 import main.dataLogic.people.User;
 import main.dbManagement.DataExtraction;
-import main.presentationLogic.administrator.LoadMatches;
-
+import main.presentationLogic.administratorViews.LoadMatches;
+import main.presentationLogic.managerViews.Menu;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /** This JFrame allows the user to Log in.
@@ -59,7 +57,7 @@ public class Login extends JFrame implements INewData {
                             txtName.getText(),txtSurname.getText());
                     newManager.save();
                     JOptionPane.showMessageDialog(null, "La cuenta ha sido creada con éxito.");
-                    goToView(new Menu(newManager));
+                    goToView(new main.presentationLogic.managerViews.Menu(newManager));
                 }
             } else{
                 User user = getUser(txtUsername.getText(),pswPassword.getText());
@@ -77,7 +75,7 @@ public class Login extends JFrame implements INewData {
         });
         btnAccept.setBorder(new BevelBorder(BevelBorder.RAISED, SystemColor.infoText, SystemColor.controlShadow, null, null));
         btnAccept.setBackground(SystemColor.scrollbar);
-        btnAccept.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        btnAccept.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
         btnAccept.setBounds(310, 372, 157, 39);
         contentPane.add(btnAccept);
 
@@ -103,7 +101,7 @@ public class Login extends JFrame implements INewData {
         });
         tglbtnMode.setBorder(new BevelBorder(BevelBorder.RAISED, SystemColor.infoText, SystemColor.controlShadow, null, null));
         tglbtnMode.setBackground(SystemColor.scrollbar);
-        tglbtnMode.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        tglbtnMode.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
         tglbtnMode.setBounds(600, 16, 157, 39);
         contentPane.add(tglbtnMode);
 
@@ -121,17 +119,17 @@ public class Login extends JFrame implements INewData {
         pswPassword1.setBounds(125, 159, 259, 39);
         pnlSignUp.add(pswPassword1);
         pswPassword1.setHorizontalAlignment(SwingConstants.CENTER);
-        pswPassword1.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        pswPassword1.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
 
         JLabel lblPassword1 = new JLabel("Contrase\u00F1a");
         lblPassword1.setBounds(0, 159, 110, 39);
         pnlSignUp.add(lblPassword1);
-        lblPassword1.setFont(new Font("Tahoma", Font.BOLD, 16));
+        lblPassword1.setFont(new Font("Trebuchet MS", Font.BOLD, 18));
 
         JLabel lblUser1 = new JLabel("Usuario");
         lblUser1.setBounds(0, 104, 110, 39);
         pnlSignUp.add(lblUser1);
-        lblUser1.setFont(new Font("Tahoma", Font.BOLD, 16));
+        lblUser1.setFont(new Font("Trebuchet MS", Font.BOLD, 18));
 
         txtUsername1 = new JTextField();
         txtUsername1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -142,7 +140,7 @@ public class Login extends JFrame implements INewData {
         JLabel lblSurname = new JLabel("Apellido");
         lblSurname.setBounds(0, 49, 110, 39);
         pnlSignUp.add(lblSurname);
-        lblSurname.setFont(new Font("Tahoma", Font.BOLD, 16));
+        lblSurname.setFont(new Font("Trebuchet MS", Font.BOLD, 18));
 
         txtSurname = new JTextField();
         txtSurname.setHorizontalAlignment(SwingConstants.CENTER);
@@ -153,7 +151,7 @@ public class Login extends JFrame implements INewData {
         JLabel lblName = new JLabel("Nombre");
         lblName.setBounds(0, 0, 110, 39);
         pnlSignUp.add(lblName);
-        lblName.setFont(new Font("Tahoma", Font.BOLD, 16));
+        lblName.setFont(new Font("Trebuchet MS", Font.BOLD, 18));
 
         txtName = new JTextField();
         txtName.setHorizontalAlignment(SwingConstants.CENTER);
@@ -168,16 +166,16 @@ public class Login extends JFrame implements INewData {
         pswPassword = new JPasswordField();
         pswPassword.setBounds(125, 117, 259, 39);
         pnlLogin.add(pswPassword);
-        pswPassword.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        pswPassword.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
         pswPassword.setHorizontalAlignment(SwingConstants.CENTER);
 
         lblPassword = new JLabel("Contrase\u00F1a");
         lblPassword.setBounds(0, 118, 110, 39);
         pnlLogin.add(lblPassword);
-        lblPassword.setFont(new Font("Tahoma", Font.BOLD, 16));
+        lblPassword.setFont(new Font("Trebuchet MS", Font.BOLD, 18));
 
         JLabel lblUser = new JLabel("Usuario");
-        lblUser.setFont(new Font("Tahoma", Font.BOLD, 16));
+        lblUser.setFont(new Font("Trebuchet MS", Font.BOLD, 18));
         lblUser.setBounds(0, 40, 110, 39);
         pnlLogin.add(lblUser);
 

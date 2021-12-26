@@ -5,7 +5,6 @@ import main.dataLogic.people.Manager;
 import main.dbManagement.DataExtraction;
 import main.dbManagement.DataValidation;
 import org.junit.Test;
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 

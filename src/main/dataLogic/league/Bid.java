@@ -1,11 +1,14 @@
-package main.businessLogic;
+package main.dataLogic.league;
 
 import main.businessLogic.interfaces.IComparable;
-import main.dataLogic.league.Team;
 import main.dataLogic.people.Player;
 import main.dbManagement.DataDeletion;
 import main.dbManagement.DataInsertion;
 import main.dbManagement.DataUpdate;
+
+/**This class represents a Bid made from a Team for a Player.
+ * @author Iker Villena Ona
+ */
 
 public class Bid implements IComparable<Bid>{
 

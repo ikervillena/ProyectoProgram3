@@ -6,7 +6,6 @@ import main.dataLogic.league.Team;
 import main.dataLogic.people.Player;
 import main.dbManagement.DataExtraction;
 import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
 
 /** This class has the aim of testing the methods implemented in the class "Squad.java".

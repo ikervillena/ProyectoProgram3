@@ -1,6 +1,5 @@
 package test.dataLogic.league;
 
-import main.businessLogic.Bid;
 import main.businessLogic.Statistic;
 import main.dataLogic.league.League;
 import main.dataLogic.league.Squad;
@@ -9,9 +8,7 @@ import main.dataLogic.people.Player;
 import main.dbManagement.DataExtraction;
 import org.junit.Before;
 import org.junit.Test;
-
 import java.util.ArrayList;
-
 import static org.junit.Assert.*;
 
 public class TeamTest {

@@ -1,9 +1,8 @@
 package main.dbManagement;
 
-import main.businessLogic.Bid;
+import main.dataLogic.league.Bid;
 import main.dataLogic.league.League;
 import main.dataLogic.league.Team;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

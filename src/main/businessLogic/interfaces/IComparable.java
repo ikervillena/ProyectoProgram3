@@ -1,5 +1,9 @@
 package main.businessLogic.interfaces;
 
+/**Contains the methods needed for implementing quickSort and mergeSort.
+ * @author Iker Villena Ona
+ */
+
 public interface IComparable <T>{
 
     /**Compares two objects.

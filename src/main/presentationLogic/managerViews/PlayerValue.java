@@ -1,14 +1,10 @@
 package main.presentationLogic.managerViews;
 
 import main.dataLogic.people.Player;
-import main.dbManagement.DataExtraction;
-
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;

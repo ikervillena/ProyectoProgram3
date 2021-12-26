@@ -3,16 +3,11 @@ package test.dataLogic.people;
 import main.businessLogic.Statistic;
 import main.dataLogic.league.League;
 import main.dataLogic.league.Team;
-import main.dataLogic.people.Manager;
 import main.dataLogic.people.Player;
 import main.dbManagement.DataExtraction;
-import main.dbManagement.DataUpdate;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-
 import static org.junit.Assert.*;
 
 public class PlayerTest {

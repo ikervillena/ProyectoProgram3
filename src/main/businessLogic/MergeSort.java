@@ -1,8 +1,12 @@
 package main.businessLogic;
 
 import main.businessLogic.interfaces.IComparable;
-
 import java.util.ArrayList;
+
+/**This class is aimed at ordering an ArrayList of objects that implement the interface IComparable, using
+ * the Merge Sort algorithm.
+ * @author Iker Villena Ona
+ */
 
 public class MergeSort <T extends IComparable>{
 

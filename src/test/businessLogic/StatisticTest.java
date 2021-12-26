@@ -3,7 +3,6 @@ package test.businessLogic;
 import main.businessLogic.Statistic;
 import main.dataLogic.people.attributes.Position;
 import org.junit.Test;
-
 import static org.junit.Assert.*;
 
 public class StatisticTest{

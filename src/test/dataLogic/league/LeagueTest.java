@@ -7,9 +7,7 @@ import main.dataLogic.people.Player;
 import main.dbManagement.DataExtraction;
 import org.junit.Before;
 import org.junit.Test;
-
 import java.util.ArrayList;
-
 import static org.junit.Assert.*;
 
 /** This class has the aim of testing the methods implemented in the class "League.java".

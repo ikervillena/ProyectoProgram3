@@ -1,6 +1,5 @@
 package main.dataLogic.league;
 
-import main.businessLogic.Bid;
 import main.businessLogic.interfaces.IComparable;
 import main.businessLogic.interfaces.IDBConnection;
 import main.businessLogic.interfaces.IPositionClassification;
@@ -10,7 +9,6 @@ import main.dbManagement.DataExtraction;
 import main.dataLogic.people.Manager;
 import main.dataLogic.people.Player;
 import main.dbManagement.DataUpdate;
-
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 

@@ -1,17 +1,15 @@
 package main.presentationLogic.managerViews;
 
 import java.awt.*;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
-
 import main.businessLogic.QuickSort;
-import main.businessLogic.TacticalFormation;
 import main.dataLogic.league.League;
 import main.dataLogic.league.Squad;
+import main.dataLogic.league.TacticalFormation;
 import main.dataLogic.league.Team;
 import main.dataLogic.people.Manager;
 import main.dataLogic.people.Player;
@@ -197,7 +195,7 @@ public class LineUp extends LeagueView {
     private void setUp(){
         availablePlayers = team.getPlayersList();
         //Formation by default:
-        chosenFormation = DataExtraction.getAllFormations().get(1);
+        chosenFormation = DataExtraction.getAllFormations().get(2);
         alignedPlayers = new ArrayList<>();
         for(Squad s : team.getSquadRecord()){
             if(s.getRoundNum() == DataExtraction.getNextRound()){

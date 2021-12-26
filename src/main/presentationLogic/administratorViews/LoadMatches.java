@@ -1,12 +1,9 @@
-package main.presentationLogic.administrator;
+package main.presentationLogic.administratorViews;
 
 import java.awt.*;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
 import main.businessLogic.Statistic;
-import main.businessLogic.interfaces.INewData;
 import main.dataLogic.league.Club;
 import main.dataLogic.league.League;
 import main.dataLogic.people.Administrator;
@@ -15,10 +12,8 @@ import main.dbManagement.DataDeletion;
 import main.dbManagement.DataExtraction;
 import main.dbManagement.DataInsertion;
 import main.dbManagement.DataUpdate;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
@@ -87,12 +82,12 @@ public class LoadMatches extends JFrame {
 
         lblRound = new JLabel("Jornada "+DataExtraction.getNextRound());
         lblRound.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
-        lblRound.setBounds(25, 45, 143, 26);
+        lblRound.setBounds(60, 45, 143, 26);
         contentPane.add(lblRound);
 
         panelMatch = new JPanel();
         panelMatch.setVisible(false);
-        panelMatch.setBounds(41, 87, 696, 262);
+        panelMatch.setBounds(60, 100, 696, 262);
         contentPane.add(panelMatch);
         panelMatch.setLayout(null);
 
@@ -184,14 +179,15 @@ public class LoadMatches extends JFrame {
             }
         });
         btnSaveMatch.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
-        btnSaveMatch.setBounds(566, 366, 171, 29);
+        btnSaveMatch.setBackground(SystemColor.activeCaptionBorder);
+        btnSaveMatch.setBounds(566, 390, 171, 40);
         contentPane.add(btnSaveMatch);
         btnSaveMatch.setVisible(false);
 
         //If the administrator has full access, he is allowed to restart the league.
         if(administrator.isFullAccess()){
             JButton btnRestart = new JButton("Reiniciar juego");
-            btnRestart.setFont(new Font("Tahoma", Font.PLAIN, 18));
+            btnRestart.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
             btnRestart.setBackground(SystemColor.activeCaptionBorder);
             btnRestart.setBounds(50, 425, 155, 52);
             btnRestart.addActionListener(new ActionListener() {

@@ -1,7 +1,6 @@
 package main.dataLogic.people.attributes;
 
 import main.dbManagement.DataExtraction;
-
 import java.util.ArrayList;
 
 /**Represents a position in which a player usually plays: goalkeeper/defender/midfielder/forward.
@@ -81,17 +80,14 @@ public class Position {
 
     @Override
     public String toString() {
-        return "Position{" +
-                "name='" + name + '\'' +
-                ", shortName='" + shortName + '\'' +
-                ", pointsForGoal=" + pointsForGoal +
-                ", pointsForAssist=" + pointsForAssist +
-                ", pointsForNoGoalsAgainst=" + pointsForNoGoalsAgainst +
-                ", pointsForGoalsAgainst=" + pointsForGoalsAgainst +
-                '}';
+        return shortName;
     }
 
     public String getName() {return name;}
+
+    public String getShortName() {
+        return shortName;
+    }
 
     public int getPointsForGoal() {
         return pointsForGoal;

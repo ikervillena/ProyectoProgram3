@@ -1,26 +1,18 @@
 package main.presentationLogic.managerViews;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
-
 import main.dataLogic.people.Manager;
-import main.dbManagement.DataExtraction;
 import main.dbManagement.DataValidation;
-
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.SystemColor;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 /**This JFrame allows the user to create a new league and save it to the Database.
  * @author Iker Villena Ona
